@@ -8,8 +8,11 @@
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_constraint_layout_top"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/main_title"
@@ -36,29 +39,37 @@
             app:layout_constraintTop_toBottomOf="@id/main_subtitle"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/main_recycler_view_water_plants"
-            app:layout_constraintStart_toStartOf="parent">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/main_text_all_plants"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/main_all_plants"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                />
-
-            <androidx.recyclerview.widget.RecyclerView
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main_constraint_layout_bottom"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/main_text_all_plants"
-                app:layout_constraintStart_toStartOf="parent"
-                />
+                android:layout_height="match_parent"
+                app:behavior_hideable="false"
+                app:behavior_peekHeight="350dp"
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/main_text_all_plants"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_all_plants"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/main_text_all_plants"
+                    app:layout_constraintStart_toStartOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
