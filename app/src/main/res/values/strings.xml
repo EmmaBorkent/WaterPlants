@@ -4,5 +4,6 @@
     <!-- activity_main.xml -->
     <string name="main_title">Water Plants</string>
     <string name="main_subtitle">You have %s%d plants to water today</string>
+    <string name="main_all_plants">All Plants</string>
 
 </resources>
