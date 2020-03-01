@@ -6,4 +6,9 @@
     <string name="main_subtitle">You have %s%d plants to water today</string>
     <string name="main_all_plants">All Plants</string>
 
+    <!-- recycler_view_water_plants.xml -->
+    <string name="rv_water_plants_name">Plant Name</string>
+    <string name="rv_water_plants_species">Plant Species</string>
+    <string name="rv_water_plants_logo_desc">Water Plant</string>
+
 </resources>
