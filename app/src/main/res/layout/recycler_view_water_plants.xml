@@ -20,7 +20,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/rv_text_plant_species"
             android:text="@string/rv_water_plants_name"
-            android:layout_margin="@dimen/basic_margin"
+            android:layout_margin="@dimen/margin_basic"
             />
 
         <TextView
@@ -31,7 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/rv_water_plants_species"
-            android:layout_margin="@dimen/basic_margin"
+            android:layout_margin="@dimen/margin_basic"
             />
 
 
