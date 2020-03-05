@@ -1,5 +1,6 @@
 package com.emmaborkent.waterplants
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -24,6 +25,11 @@ class MainActivity : AppCompatActivity() {
 
         layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         main_recycler_view_water_plants.layoutManager = layoutManager
+
+        add_new_plant.setOnClickListener {
+            val newPlantIntent = Intent(this, NewPlantActivity::class.java)
+            startActivity(newPlantIntent)
+        }
 
     }
 

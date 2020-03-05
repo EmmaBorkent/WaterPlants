@@ -8,20 +8,10 @@
     tools:context=".NewPlantActivity">
 
     <TextView
-        android:id="@+id/new_plant_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="@dimen/margin_basic"
-        android:text="@string/new_plant_title"
-        />
-
-    <TextView
         android:id="@+id/new_plant_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/new_plant_title"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/new_plant_name"
@@ -45,7 +35,7 @@
         android:layout_height="0dp"
         android:contentDescription="@string/plant_image_description"
         android:src="@drawable/strelizia"
-        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/new_plant_species"

@@ -7,6 +7,7 @@
     <string name="main_all_plants">All Plants</string>
 
     <!-- activity_new_plant.xml -->
+    <!-- NewPlantActivity.kt -->
     <string name="new_plant_title">New Plant</string>
     <string name="new_plant_name">Strelizia</string>
     <string name="new_plant_species">Strelizia Nicolai</string>
