@@ -16,30 +16,22 @@
             android:id="@+id/rv_text_plant_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/rv_text_plant_species"
             android:text="@string/rv_water_plants_name"
             />
 
         <TextView
+            android:id="@+id/rv_text_plant_species"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/rv_text_plant_name"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/rv_water_plants_species"
             />
 
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_002_drop"
-            android:contentDescription="@string/rv_water_plants_logo_desc"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="8dp"
-            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

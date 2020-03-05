@@ -16,14 +16,24 @@
         android:background="@android:color/holo_green_dark">
 
         <TextView
+            android:id="@+id/main_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
             android:id="@+id/main_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/main_subtitle"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_title"
             app:layout_constraintStart_toStartOf="parent"
             />
 
+        <!-- Set Horizontal with LayoutManager -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_recycler_view_water_plants"
             android:layout_width="match_parent"
@@ -73,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        app:srcCompat="@drawable/ic_plant_with_leaves_in_a_pot"
+        app:srcCompat="@drawable/ic_add_black_24dp"
         />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
