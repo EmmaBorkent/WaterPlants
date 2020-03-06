@@ -4,5 +4,5 @@
     <dimen name="margin_small">8dp</dimen>
 
     <dimen name="card_corner">6dp</dimen>
-    <dimen name="card_elevation">6dp</dimen>
+    <dimen name="elevation">6dp</dimen>
 </resources>
