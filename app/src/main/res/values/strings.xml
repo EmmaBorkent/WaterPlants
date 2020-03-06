@@ -19,6 +19,7 @@
     <string name="new_plant_end_date_hint">20/12/20</string>
     <string name="new_plant_repeat">Repeat</string>
     <string name="new_plant_repeat_hint">Repeat every …</string>
+    <string name="new_plant_save_toast">Cannot Save. Please fill out all fields.</string>
 
     <!-- recycler_view_water_plants.xml -->
     <!-- recycler_view_all_plants.xml -->

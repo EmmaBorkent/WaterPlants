@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.database.Plant
 import com.emmaborkent.waterplants.database.PlantDatabaseHandler
+import kotlinx.android.synthetic.main.activity_new_plant.*
 
 class NewPlantActivity : AppCompatActivity() {
 
@@ -31,7 +33,25 @@ class NewPlantActivity : AppCompatActivity() {
     }
 
     private fun saveNewPlant() {
-        val plant = Plant()
-        PlantDatabaseHandler(this).createPlant(plant)
+
+        if (new_plant_name_edit.text.isBlank() || new_plant_species_edit.text.isBlank() ||
+            new_plant_date_edit.text.isBlank() || new_plant_repeat_edit.text.isBlank()) {
+
+            val toast = Toast.makeText(this, R.string.new_plant_save_toast,
+                Toast.LENGTH_SHORT)
+            toast.show()
+
+        } else {
+
+            val toast = Toast.makeText(this, "Saved! ;)",
+                Toast.LENGTH_SHORT)
+            toast.show()
+
+
+            val plant = Plant()
+
+            PlantDatabaseHandler(this).createPlant(plant)
+
+        }
     }
 }
