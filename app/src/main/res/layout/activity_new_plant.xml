@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".NewPlantActivity">
 
-    <include layout="@layout/toolbar" />
+    <include
+        layout="@layout/toolbar"
+        android:id="@+id/new_plant_toolbar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

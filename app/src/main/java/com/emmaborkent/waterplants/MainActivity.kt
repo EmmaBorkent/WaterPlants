@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(findViewById(R.id.main_toolbar))
 
         bottomSheetBehavior = BottomSheetBehavior.from<ConstraintLayout>(main_constraint_layout_bottom)
         bottomSheet()
