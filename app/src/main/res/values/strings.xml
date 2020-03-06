@@ -10,16 +10,23 @@
     <!-- NewPlantActivity.kt -->
     <string name="new_plant_toolbar">Add New Plant</string>
     <string name="new_plant_title">New Plant</string>
-    <string name="new_plant_name">Strelizia</string>
-    <string name="new_plant_species">Strelizia Nicolai</string>
+    <string name="new_plant_name">Name</string>
+    <string name="new_plant_name_hint">Pick a plant name</string>
+    <string name="new_plant_species">Species</string>
+    <string name="new_plant_species_hint">What is the plant species?</string>
     <string name="new_plant_choose_image">Pick Image</string>
     <string name="new_plant_end_date">End date</string>
-    <string name="new_plant_repeat">Repeat every …</string>
+    <string name="new_plant_end_date_hint">20/12/20</string>
+    <string name="new_plant_repeat">Repeat</string>
+    <string name="new_plant_repeat_hint">Repeat every …</string>
 
     <!-- recycler_view_water_plants.xml -->
     <!-- recycler_view_all_plants.xml -->
     <string name="rv_water_plants_name">Plant Name</string>
     <string name="rv_water_plants_species">Plant Species</string>
+
+    <!-- toolbar_menu.xml -->
+    <string name="menu_action_save">Save</string>
 
     <!-- Plant Image Description -->
     <string name="plant_image_description">Plant Image</string>
