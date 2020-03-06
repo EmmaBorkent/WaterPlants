@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,12 +21,12 @@
         </activity>
 
         <activity
-            android:name=".NewPlantActivity"
-            android:parentActivityName="com.emmaborkent.waterplants.MainActivity">
+            android:name=".ui.NewPlantActivity"
+            android:parentActivityName="com.emmaborkent.waterplants.ui.MainActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.emmaborkent.waterplants.MainActivity" />
+                android:value="com.emmaborkent.waterplants.ui.MainActivity" />
 
         </activity>
     </application>

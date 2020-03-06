@@ -1,7 +1,8 @@
-package com.emmaborkent.waterplants
+package com.emmaborkent.waterplants.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.emmaborkent.waterplants.R
 
 class NewPlantActivity : AppCompatActivity() {
 
