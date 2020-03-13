@@ -84,6 +84,7 @@
                     android:layout_marginTop="@dimen/margin_basic"
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_small"
+                    android:layout_marginBottom="@dimen/margin_basic"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

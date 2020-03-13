@@ -1,54 +1,37 @@
 package com.emmaborkent.waterplants.ui
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
+import android.view.Menu
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.emmaborkent.waterplants.R
-import com.emmaborkent.waterplants.database.Plant
-import com.emmaborkent.waterplants.database.PlantDatabaseHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_plant_details.*
 
-class MainActivity : AppCompatActivity() {
+class PlantDetailsActivity : AppCompatActivity() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-    private lateinit var layoutManager: LinearLayoutManager
-    private lateinit var allPlantsAdapter: AllPlantsRecyclerAdapter
-    private lateinit var dbHandler: PlantDatabaseHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.main_toolbar))
+        setContentView(R.layout.activity_plant_details)
+        setSupportActionBar(findViewById(R.id.detail_plant_toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        bottomSheetBehavior = BottomSheetBehavior.from(main_constraint_layout_bottom)
+        bottomSheetBehavior = BottomSheetBehavior.from(detail_constraint_layout_bottom)
         bottomSheet()
+    }
 
-        layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
-            false)
-        main_recycler_view_water_plants.layoutManager = layoutManager
-
-        add_new_plant.setOnClickListener {
-            // Intent to add new plant
-//            val newPlantIntent = Intent(this, NewPlantActivity::class.java)
-//            startActivity(newPlantIntent)
-
-            // TEST Detail Activity
-            val detailPlantIntent = Intent(this, PlantDetailsActivity::class.java)
-            startActivity(detailPlantIntent)
-        }
-
-        showAllPlants()
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu_detail_plant, menu)
+        return true
     }
 
     private fun bottomSheet() {
-
         // Get display height to calculate peekHeight for the Bottom Sheet
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
@@ -73,17 +56,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-    }
-
-    private fun showAllPlants() {
-        dbHandler = PlantDatabaseHandler(this)
-        val allPlantsList: ArrayList<Plant> = dbHandler.readAllPlants()
-        allPlantsList.reverse()
-
-        layoutManager = GridLayoutManager(this, 2)
-        main_recycler_view_all_plants.layoutManager = layoutManager
-
-        allPlantsAdapter = AllPlantsRecyclerAdapter(allPlantsList, this)
-        main_recycler_view_all_plants.adapter = allPlantsAdapter
     }
 }

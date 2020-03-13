@@ -37,7 +37,7 @@ class NewPlantActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        menuInflater.inflate(R.menu.toolbar_menu_new_plant, menu)
         return true
     }
 
@@ -64,7 +64,7 @@ class NewPlantActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG).show()
             } else {
                 createPlant()
-                
+
                 // Intent to go back to the main screen
                 val mainActivityIntent = Intent(this,  MainActivity::class.java)
                 startActivity(mainActivityIntent)

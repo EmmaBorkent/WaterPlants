@@ -6,8 +6,14 @@
     <string name="main_subtitle">You have %s%d plants to water today</string>
     <string name="main_all_plants">All Plants</string>
 
+    <!-- recycler_view_water_plants.xml -->
+    <!-- recycler_view_all_plants.xml -->
+    <string name="rv_water_plants_name">Plant Name</string>
+    <string name="rv_water_plants_species">Plant Species</string>
+
     <!-- activity_new_plant.xml -->
     <!-- NewPlantActivity.kt -->
+    <!-- activity_plant_details.xml -->
     <string name="new_plant_toolbar">Add New Plant</string>
     <string name="new_plant_title">New Plant</string>
     <string name="new_plant_name">Name</string>
@@ -21,15 +27,23 @@
     <string name="new_plant_repeat_hint">Repeat every …</string>
     <string name="new_plant_save_toast">Cannot Save. Please fill out all fields.</string>
 
-    <!-- recycler_view_water_plants.xml -->
-    <!-- recycler_view_all_plants.xml -->
-    <string name="rv_water_plants_name">Plant Name</string>
-    <string name="rv_water_plants_species">Plant Species</string>
+    <string name="detail_drag_handle">Drag Handle</string>
+    <string name="detail_water_in">Water In</string>
+    <string name="detail_pray_in">Spray In</string>
+    <string name="detail_water_in_days">%s%d days</string>
+    <string name="detail_spray_in_days">%s%d days</string>
+    <string name="detail_water_repeat">every %s%d days</string>
+    <string name="detail_spray_repeat">every %s%d days</string>
 
-    <!-- toolbar_menu.xml -->
+    <!-- toolbar_menu_new_plant.xml -->
     <string name="menu_action_save">Save</string>
+
+    <!-- toolbar_menu_detail_plant.xml -->
+    <string name="menu_action_edit">Edit</string>
 
     <!-- Plant Image Description -->
     <string name="plant_image_description">Plant Image</string>
+    <string name="plant_image_water">Water Plant</string>
+    <string name="plant_image_drops">Spray Plant</string>
 
 </resources>
