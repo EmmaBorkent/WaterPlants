@@ -9,6 +9,7 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emmaborkent.waterplants.R
+import com.emmaborkent.waterplants.database.PlantDatabaseHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.main_toolbar))
 
-        bottomSheetBehavior = BottomSheetBehavior.from<ConstraintLayout>(main_constraint_layout_bottom)
+        bottomSheetBehavior = BottomSheetBehavior.from(main_constraint_layout_bottom)
         bottomSheet()
 
         layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -32,6 +33,9 @@ class MainActivity : AppCompatActivity() {
             val newPlantIntent = Intent(this, NewPlantActivity::class.java)
             startActivity(newPlantIntent)
         }
+
+        // Check how many items are in the database
+//        main_subtitle.text = PlantDatabaseHandler(this).getCount().toString()
 
     }
 

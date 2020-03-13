@@ -64,6 +64,10 @@ class NewPlantActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG).show()
             } else {
                 createPlant()
+                
+                // Intent to go back to the main screen
+                val mainActivityIntent = Intent(this,  MainActivity::class.java)
+                startActivity(mainActivityIntent)
             }
 
             val toast = Toast.makeText(this, "Saved! ;)",
@@ -91,8 +95,10 @@ class NewPlantActivity : AppCompatActivity() {
         var result = false
 
         if (imageView.drawable != null) {
-            val constantState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                context.resources.getDrawable(R.drawable.ic_image_black_24dp, context.theme).constantState
+            val constantState = if (Build.VERSION.SDK_INT >= Build
+                    .VERSION_CODES.LOLLIPOP) {
+                context.resources.getDrawable(R.drawable.ic_image_black_24dp, context.theme)
+                    .constantState
             } else {
                 context.resources.getDrawable(R.drawable.ic_image_black_24dp).constantState
             }
@@ -112,8 +118,8 @@ class NewPlantActivity : AppCompatActivity() {
         const val PERMISSION_CODE = 1001
     }
 
+    // Intent to open the image gallery
     private fun openImageGallery() {
-        // Intent to open the image gallery
         val setImageIntent = Intent(Intent.ACTION_GET_CONTENT)
         setImageIntent.type = "image/*"
         startActivityForResult(setImageIntent, PICK_IMAGE_CODE)
@@ -121,10 +127,6 @@ class NewPlantActivity : AppCompatActivity() {
 
     @Suppress("UNUSED_PARAMETER")
     fun pickImage(view: View) {
-        val toast = Toast.makeText(this, "Opening Image Gallery",
-            Toast.LENGTH_SHORT)
-        toast.show()
-
         // Check runtime permission
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) ==
@@ -153,16 +155,17 @@ class NewPlantActivity : AppCompatActivity() {
             PERMISSION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager
                         .PERMISSION_DENIED) {
-                    // Permission from popup is granted
-                    openImageGallery()
-                } else {
                     // Permission from popup is denied
                     Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Permission from popup is granted
+                    openImageGallery()
                 }
             }
         }
     }
 
+    // Function to set the chosen image as the background of the imageView
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE_CODE) {
             new_plant_image.setImageURI(data?.data)
