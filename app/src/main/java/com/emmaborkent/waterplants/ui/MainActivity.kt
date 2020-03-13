@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
         bottomSheetBehavior = BottomSheetBehavior.from(main_constraint_layout_bottom)
         bottomSheet()
 
-        layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
+            false)
         main_recycler_view_water_plants.layoutManager = layoutManager
 
         add_new_plant.setOnClickListener {
@@ -48,7 +49,8 @@ class MainActivity : AppCompatActivity() {
         val halfScreenHeight = displayMetrics.heightPixels*0.41
         bottomSheetBehavior.peekHeight = halfScreenHeight.toInt()
 
-        bottomSheetBehavior.addBottomSheetCallback(object: BottomSheetBehavior.BottomSheetCallback() {
+        bottomSheetBehavior.addBottomSheetCallback(object: BottomSheetBehavior
+        .BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
