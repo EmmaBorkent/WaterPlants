@@ -3,6 +3,6 @@
     <dimen name="margin_basic">16dp</dimen>
     <dimen name="margin_small">8dp</dimen>
 
-    <dimen name="card_corner">6dp</dimen>
-    <dimen name="elevation">6dp</dimen>
+    <dimen name="card_corner">4dp</dimen>
+    <dimen name="elevation">4dp</dimen>
 </resources>

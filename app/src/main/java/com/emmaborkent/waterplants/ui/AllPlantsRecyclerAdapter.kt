@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.database.Plant
 
-class AllPlantsRecyclerAdapter(private val plantsList: ArrayList<Plant>, private val context: Context)
+class AllPlantsRecyclerAdapter(private val plantsList: ArrayList<Plant>,
+                               private val context: Context)
     : RecyclerView.Adapter<AllPlantsRecyclerAdapter.PlantsHolder>() {
 
     override fun onCreateViewHolder(

@@ -76,11 +76,14 @@
                     />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/main_recycler_view_all_plants"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/main_text_all_plants"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:layout_margin="@dimen/margin_basic"
+                    android:layout_marginTop="@dimen/margin_basic"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_small"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

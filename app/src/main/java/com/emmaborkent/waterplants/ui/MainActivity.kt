@@ -7,8 +7,10 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emmaborkent.waterplants.R
+import com.emmaborkent.waterplants.database.Plant
 import com.emmaborkent.waterplants.database.PlantDatabaseHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,6 +19,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var allPlantsAdapter: AllPlantsRecyclerAdapter
+    private lateinit var dbHandler: PlantDatabaseHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +39,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(newPlantIntent)
         }
 
-        // Check how many items are in the database
-//        main_subtitle.text = PlantDatabaseHandler(this).getCount().toString()
-
+        showAllPlants()
     }
 
     private fun bottomSheet() {
@@ -66,6 +68,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
 
+    private fun showAllPlants() {
+        dbHandler = PlantDatabaseHandler(this)
+        val allPlantsList: ArrayList<Plant> = dbHandler.readAllPlants()
+
+        layoutManager = GridLayoutManager(this, 2)
+        main_recycler_view_all_plants.layoutManager = layoutManager
+
+        allPlantsAdapter = AllPlantsRecyclerAdapter(allPlantsList, this)
+        main_recycler_view_all_plants.adapter = allPlantsAdapter
     }
 }
