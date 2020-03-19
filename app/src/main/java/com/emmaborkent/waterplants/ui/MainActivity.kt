@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-    private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var allPlantsLayoutManager: LinearLayoutManager
     private lateinit var allPlantsAdapter: AllPlantsRecyclerAdapter
     private lateinit var dbHandler: PlantDatabaseHandler
 
@@ -30,18 +30,13 @@ class MainActivity : AppCompatActivity() {
         bottomSheetBehavior = BottomSheetBehavior.from(main_constraint_layout_bottom)
         bottomSheet()
 
-        layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
+        allPlantsLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
             false)
-        main_recycler_view_water_plants.layoutManager = layoutManager
+        main_recycler_view_water_plants.layoutManager = allPlantsLayoutManager
 
         add_new_plant.setOnClickListener {
-            // Intent to add new plant
-//            val newPlantIntent = Intent(this, NewPlantActivity::class.java)
-//            startActivity(newPlantIntent)
-
-            // TEST Detail Activity
-            val detailPlantIntent = Intent(this, PlantDetailsActivity::class.java)
-            startActivity(detailPlantIntent)
+            val newPlantIntent = Intent(this, NewPlantActivity::class.java)
+            startActivity(newPlantIntent)
         }
 
         showAllPlants()
@@ -77,13 +72,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun showAllPlants() {
         dbHandler = PlantDatabaseHandler(this)
-        val allPlantsList: ArrayList<Plant> = dbHandler.readAllPlants()
-        allPlantsList.reverse()
+        val allPlants: ArrayList<Plant> = dbHandler.readAllPlants()
+        allPlants.reverse()
 
-        layoutManager = GridLayoutManager(this, 2)
-        main_recycler_view_all_plants.layoutManager = layoutManager
+        allPlantsLayoutManager = GridLayoutManager(this, 2)
+        main_recycler_view_all_plants.layoutManager = allPlantsLayoutManager
 
-        allPlantsAdapter = AllPlantsRecyclerAdapter(allPlantsList, this)
+        allPlantsAdapter = AllPlantsRecyclerAdapter(allPlants, this) { plant ->
+            val openPlantDetails = Intent(this, PlantDetailsActivity::class.java)
+            Log.d("INTENT", "the send item id is ${plant.id}")
+            openPlantDetails.putExtra("PLANT_ID", plant.id)
+            startActivity(openPlantDetails)
+        }
         main_recycler_view_all_plants.adapter = allPlantsAdapter
     }
 }

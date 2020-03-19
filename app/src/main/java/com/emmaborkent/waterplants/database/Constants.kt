@@ -1,4 +1,4 @@
-package com.emmaborkent.waterplants
+package com.emmaborkent.waterplants.database
 
 // Database Constants
 const val DATABASE_NAME: String = "com.emmaborkent.waterplants.plants.db"

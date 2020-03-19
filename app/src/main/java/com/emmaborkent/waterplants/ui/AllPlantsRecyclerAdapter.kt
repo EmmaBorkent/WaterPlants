@@ -12,7 +12,8 @@ import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.database.Plant
 
 class AllPlantsRecyclerAdapter(private val plantsList: ArrayList<Plant>,
-                               private val context: Context)
+                               private val context: Context,
+                               private val clickListener: (Plant) -> Unit)
     : RecyclerView.Adapter<AllPlantsRecyclerAdapter.PlantsHolder>() {
 
     override fun onCreateViewHolder(
@@ -29,7 +30,7 @@ class AllPlantsRecyclerAdapter(private val plantsList: ArrayList<Plant>,
     }
 
     override fun onBindViewHolder(holder: AllPlantsRecyclerAdapter.PlantsHolder, position: Int) {
-        holder.bindPlants(plantsList[position])
+        holder.bindPlants(plantsList[position], clickListener)
     }
 
     inner class PlantsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -39,9 +40,10 @@ class AllPlantsRecyclerAdapter(private val plantsList: ArrayList<Plant>,
         private val plantName = itemView
             .findViewById<TextView>(R.id.rv_all_plants_text)
 
-        fun bindPlants(plant: Plant) {
+        fun bindPlants(plant: Plant, clickListener: (Plant) -> Unit) {
             plantImage.setImageURI(Uri.parse(plant.image))
             plantName.text = plant.name
+            itemView.setOnClickListener { clickListener(plant) }
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.emmaborkent.waterplants.ui
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -8,12 +9,14 @@ import android.view.Menu
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.emmaborkent.waterplants.R
+import com.emmaborkent.waterplants.database.PlantDatabaseHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_plant_details.*
 
 class PlantDetailsActivity : AppCompatActivity() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+    private lateinit var dbHandler: PlantDatabaseHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +27,21 @@ class PlantDetailsActivity : AppCompatActivity() {
 
         bottomSheetBehavior = BottomSheetBehavior.from(detail_constraint_layout_bottom)
         bottomSheet()
+
+        // Get data from Intent and use ID to read info from database
+        val plantID = intent.getLongExtra("PLANT_ID", 0)
+        Log.d("INTENT", "the item id is $plantID")
+
+        // Read plant from database
+//        dbHandler = PlantDatabaseHandler(this)
+//        val plant = dbHandler.readPlant(plantID)
+//        detail_plant_name.text = plant.name
+//        detail_plant_species.text = plant.species
+//        detail_plant_image.setImageURI(Uri.parse(plant.image))
+//        detail_text_water_in_days.text.toString().format("%d", plant.endDate)
+//        detail_text_spray_in_days.text.toString().format("%d", plant.endDate)
+//        detail_text_water_repeat.text.toString().format("%d", plant.repeat)
+//        detail_text_spray_repeat.text.toString().format("%d", plant.repeat)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

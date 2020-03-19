@@ -65,9 +65,8 @@ class NewPlantActivity : AppCompatActivity() {
             } else {
                 createPlant()
 
-                // Intent to go back to the main screen
-                val mainActivityIntent = Intent(this,  MainActivity::class.java)
-                startActivity(mainActivityIntent)
+                val goBackToHomeScreen = Intent(this,  MainActivity::class.java)
+                startActivity(goBackToHomeScreen)
             }
 
             val toast = Toast.makeText(this, "Saved! ;)",
@@ -84,8 +83,8 @@ class NewPlantActivity : AppCompatActivity() {
         plant.name = new_plant_name_edit.text.toString()
         plant.species = new_plant_species_edit.text.toString()
         plant.image = newPlantImage.toString()
-        plant.endDate = new_plant_date_edit.text.toString().toLong()
-        plant.repeat = new_plant_repeat_edit.text.toString().toLong()
+        plant.dayPlantNeedsWater = new_plant_date_edit.text.toString().toLong()
+        plant.daysInBetweenWater = new_plant_repeat_edit.text.toString().toLong()
         PlantDatabaseHandler(this).createPlant(plant)
     }
 
@@ -118,11 +117,10 @@ class NewPlantActivity : AppCompatActivity() {
         const val PERMISSION_CODE = 1001
     }
 
-    // Intent to open the image gallery
     private fun openImageGallery() {
-        val setImageIntent = Intent(Intent.ACTION_GET_CONTENT)
-        setImageIntent.type = "image/*"
-        startActivityForResult(setImageIntent, PICK_IMAGE_CODE)
+        val openImageGallery = Intent(Intent.ACTION_GET_CONTENT)
+        openImageGallery.type = "image/*"
+        startActivityForResult(openImageGallery, PICK_IMAGE_CODE)
     }
 
     @Suppress("UNUSED_PARAMETER")

@@ -5,10 +5,12 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-import com.emmaborkent.waterplants.*
 
 class PlantDatabaseHandler(context: Context) :
-    SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
+    SQLiteOpenHelper(context,
+        DATABASE_NAME, null,
+        DATABASE_VERSION
+    ) {
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createPlantsTable = "CREATE TABLE " + TABLE_NAME + "(" +
@@ -37,8 +39,8 @@ class PlantDatabaseHandler(context: Context) :
         values.put(KEY_PLANT_NAME, plant.name)
         values.put(KEY_PLANT_SPECIES, plant.species)
         values.put(KEY_PLANT_IMAGE, plant.image)
-        values.put(KEY_PLANT_END_DATE, plant.endDate)
-        values.put(KEY_PLANT_REPEAT, plant.repeat)
+        values.put(KEY_PLANT_END_DATE, plant.dayPlantNeedsWater)
+        values.put(KEY_PLANT_REPEAT, plant.daysInBetweenWater)
 
         db.insert(TABLE_NAME, null, values)
         db.close()
@@ -48,14 +50,16 @@ class PlantDatabaseHandler(context: Context) :
 
     fun readPlant(id: Long): Plant {
         val db = readableDatabase
-        val cursor = db.query(TABLE_NAME,
+        val cursor = db.query(
+            TABLE_NAME,
             arrayOf(
                 KEY_ID,
                 KEY_PLANT_NAME,
                 KEY_PLANT_SPECIES,
                 KEY_PLANT_IMAGE,
                 KEY_PLANT_END_DATE,
-                KEY_PLANT_REPEAT), "$KEY_ID=?", arrayOf(id.toString()),
+                KEY_PLANT_REPEAT
+            ), "$KEY_ID=?", arrayOf(id.toString()),
             null, null, null, null
         )
 
@@ -64,8 +68,8 @@ class PlantDatabaseHandler(context: Context) :
         plant.name = cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))
         plant.species = cursor.getString(cursor.getColumnIndex(KEY_PLANT_SPECIES))
         plant.image = cursor.getString(cursor.getColumnIndex(KEY_PLANT_IMAGE))
-        plant.endDate = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_END_DATE))
-        plant.repeat = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_REPEAT))
+        plant.dayPlantNeedsWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_END_DATE))
+        plant.daysInBetweenWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_REPEAT))
 
         cursor.close()
         Log.d("PlantDatabaseHandler", "Reading a Plant from Database")
@@ -74,9 +78,9 @@ class PlantDatabaseHandler(context: Context) :
 
     fun readAllPlants(): ArrayList<Plant> {
         val db = readableDatabase
-        val list: ArrayList<Plant> = ArrayList()
-        val selectAll = "SELECT * FROM $TABLE_NAME"
-        val cursor = db.rawQuery(selectAll, null)
+        val allPlants: ArrayList<Plant> = ArrayList()
+        val queryAllPlants = "SELECT * FROM $TABLE_NAME"
+        val cursor = db.rawQuery(queryAllPlants, null)
 
         if (cursor.moveToFirst()) {
             do {
@@ -84,43 +88,19 @@ class PlantDatabaseHandler(context: Context) :
                 plant.name = cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))
                 plant.species = cursor.getString(cursor.getColumnIndex(KEY_PLANT_SPECIES))
                 plant.image = cursor.getString(cursor.getColumnIndex(KEY_PLANT_IMAGE))
-                plant.endDate = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_END_DATE))
-                plant.repeat = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_REPEAT))
+                plant.dayPlantNeedsWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_END_DATE))
+                plant.daysInBetweenWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_REPEAT))
 
-                list.add(plant)
+                allPlants.add(plant)
             } while (cursor.moveToNext())
         }
 
         cursor.close()
-        Log.d("PlantDatabaseHandler", "Reading All Plants from Database")
-        return list
+        return allPlants
     }
 
-    fun findDay(fromTime: Long, toTime: Long): ArrayList<Plant> {
-        val db = readableDatabase
-        val list: ArrayList<Plant> = ArrayList()
-        val query = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_END_DATE >= \"$toTime\" " +
-                "AND $KEY_PLANT_END_DATE <= \"$fromTime\""
-
-        val cursor = db.rawQuery(query, null)
-
-        if (cursor.moveToFirst()) {
-            do {
-                val plant = Plant()
-                plant.name = cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))
-                plant.species = cursor.getString(cursor.getColumnIndex(KEY_PLANT_SPECIES))
-                plant.image = cursor.getString(cursor.getColumnIndex(KEY_PLANT_IMAGE))
-                plant.endDate = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_END_DATE))
-                plant.repeat = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_REPEAT))
-
-                list.add(plant)
-            } while (cursor.moveToNext())
-        }
-
-        cursor.close()
-        Log.d("PlantDatabaseHandler",
-            "Reading Drinks from Database between $fromTime and $toTime")
-        return list
+    fun findPlantsOnDay(startTime: Long, endTime: Long): ArrayList<Plant> {
+        return getPlantsOnDay(startTime, endTime)
     }
 
     fun updatePlant(plant: Plant): Int {
@@ -129,8 +109,8 @@ class PlantDatabaseHandler(context: Context) :
         values.put(KEY_PLANT_NAME, plant.name)
         values.put(KEY_PLANT_SPECIES, plant.species)
         values.put(KEY_PLANT_IMAGE, plant.image)
-        values.put(KEY_PLANT_END_DATE, plant.endDate)
-        values.put(KEY_PLANT_REPEAT, plant.repeat)
+        values.put(KEY_PLANT_END_DATE, plant.dayPlantNeedsWater)
+        values.put(KEY_PLANT_REPEAT, plant.daysInBetweenWater)
 
         Log.d("PlantDatabaseHandler", "Plant is Updated")
         return db.update(TABLE_NAME, values, "$KEY_ID=?", arrayOf(plant.id.toString()))
@@ -144,7 +124,7 @@ class PlantDatabaseHandler(context: Context) :
         Log.d("PlantDatabaseHandler", "Plant is Deleted")
     }
 
-    fun getCount(): Int {
+    fun countAllPlants(): Int {
         val db = readableDatabase
         val countQuery = "SELECT * FROM $TABLE_NAME"
         val cursor = db.rawQuery(countQuery, null)
@@ -154,12 +134,16 @@ class PlantDatabaseHandler(context: Context) :
         return cursor.count
     }
 
-    fun getCountOfDay(fromTime: Long, toTime: Long): Int {
+    fun countPlantsOnDay(startTime: Long, endTime: Long): Int {
+        return getPlantsOnDay(startTime, endTime).count()
+    }
+
+    private fun getPlantsOnDay(startTime: Long, endTime: Long): ArrayList<Plant> {
         val db = readableDatabase
-        val list: ArrayList<Plant> = ArrayList()
-        val countQueryOfDay = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_END_DATE >= " +
-                "\"$toTime\" AND $KEY_PLANT_END_DATE <= \"$fromTime\""
-        val cursor = db.rawQuery(countQueryOfDay, null)
+        val allPlantsOnDay: ArrayList<Plant> = ArrayList()
+        val queryPlantsOnDay = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_END_DATE >= " +
+                "\"$endTime\" AND $KEY_PLANT_END_DATE <= \"$startTime\""
+        val cursor = db.rawQuery(queryPlantsOnDay, null)
 
         if (cursor.moveToFirst()) {
             do {
@@ -167,16 +151,14 @@ class PlantDatabaseHandler(context: Context) :
                 plant.name = cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))
                 plant.species = cursor.getString(cursor.getColumnIndex(KEY_PLANT_SPECIES))
                 plant.image = cursor.getString(cursor.getColumnIndex(KEY_PLANT_IMAGE))
-                plant.endDate = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_END_DATE))
-                plant.repeat = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_REPEAT))
+                plant.dayPlantNeedsWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_END_DATE))
+                plant.daysInBetweenWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_REPEAT))
 
-                list.add(plant)
+                allPlantsOnDay.add(plant)
             } while (cursor.moveToNext())
         }
 
         cursor.close()
-        Log.d("PlantDatabaseHandler", "There are ${list.count()} plants to Water " +
-                "between $fromTime and $toTime")
-        return list.count()
+        return allPlantsOnDay
     }
 }
