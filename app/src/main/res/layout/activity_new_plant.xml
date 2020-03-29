@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,8 +7,8 @@
     tools:context=".ui.NewPlantActivity">
 
     <include
-        layout="@layout/toolbar"
-        android:id="@+id/new_plant_toolbar" />
+        android:id="@+id/new_plant_toolbar"
+        layout="@layout/toolbar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,10 +16,10 @@
         android:layout_marginTop="?attr/actionBarSize">
 
         <TextView
-            android:id="@+id/new_plant_name_text"
+            android:id="@+id/text_plant_name"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.MaterialComponents.Headline5"
             android:layout_margin="@dimen/margin_basic"
             android:text="@string/new_plant_name"
             app:layout_constraintHorizontal_bias="0.5"
@@ -28,126 +27,168 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
-            android:id="@+id/new_plant_name_edit"
+            android:id="@+id/edit_plant_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_basic"
             android:hint="@string/new_plant_name_hint"
             android:inputType="text"
-            android:layout_marginEnd="@dimen/margin_basic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@id/new_plant_species_edit"
-            app:layout_constraintTop_toTopOf="@+id/new_plant_name_text"
+            app:layout_constraintStart_toStartOf="@id/edit_plant_species"
+            app:layout_constraintTop_toTopOf="@+id/text_plant_name"
             tools:ignore="Autofill" />
 
         <TextView
-            android:id="@+id/new_plant_species_text"
+            android:id="@+id/text_plant_species"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.MaterialComponents.Headline5"
-            android:layout_marginTop="@dimen/margin_small"
             android:layout_marginStart="@dimen/margin_basic"
+            android:layout_marginTop="@dimen/margin_small"
             android:text="@string/new_plant_species"
+            app:layout_constraintEnd_toStartOf="@id/edit_plant_species"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/new_plant_name_text"
-            app:layout_constraintEnd_toStartOf="@id/new_plant_species_edit"
-            app:layout_constraintHorizontal_bias="0.5"/>
+            app:layout_constraintTop_toBottomOf="@id/text_plant_name" />
 
         <EditText
-            android:id="@+id/new_plant_species_edit"
+            android:id="@+id/edit_plant_species"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="@string/new_plant_species_hint"
-            app:layout_constraintStart_toEndOf="@id/new_plant_species_text"
-            app:layout_constraintTop_toTopOf="@id/new_plant_species_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="@dimen/margin_basic"
             android:layout_marginStart="@dimen/margin_basic"
+            android:layout_marginEnd="@dimen/margin_basic"
+            android:hint="@string/new_plant_species_hint"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            tools:ignore="Autofill"
-            />
+            app:layout_constraintStart_toEndOf="@id/text_plant_species"
+            app:layout_constraintTop_toTopOf="@id/text_plant_species"
+            tools:ignore="Autofill" />
 
         <ImageView
-            android:id="@+id/new_plant_image"
+            android:id="@+id/image_plant"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/margin_basic"
             android:contentDescription="@string/plant_image_description"
             android:src="@drawable/ic_image_black_24dp"
+            app:layout_constraintBottom_toTopOf="@id/button_pick_image"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/new_plant_species_text"
-            app:layout_constraintBottom_toTopOf="@id/new_plant_choose_image_button"
-            />
+            app:layout_constraintTop_toBottomOf="@id/text_plant_species" />
 
         <Button
-            android:id="@+id/new_plant_choose_image_button"
+            android:id="@+id/button_pick_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
             android:layout_marginBottom="@dimen/margin_basic"
-            android:text="@string/new_plant_choose_image"
             android:onClick="pickImage"
-            app:layout_constraintEnd_toEndOf="@id/new_plant_image"
-            app:layout_constraintStart_toStartOf="@id/new_plant_image"
-            app:layout_constraintBottom_toTopOf="@id/new_plant_date_text"
-            app:layout_constraintVertical_bias="0"
-            />
+            android:text="@string/new_plant_choose_image"
+            app:layout_constraintBottom_toTopOf="@id/text_date_plants_needs_water"
+            app:layout_constraintEnd_toEndOf="@id/image_plant"
+            app:layout_constraintStart_toStartOf="@id/image_plant"
+            app:layout_constraintVertical_bias="0" />
 
         <TextView
-            android:id="@+id/new_plant_date_text"
+            android:id="@+id/text_date_plants_needs_water"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.MaterialComponents.Headline5"
-            android:layout_marginBottom="@dimen/margin_small"
             android:layout_marginStart="@dimen/margin_basic"
-            android:text="@string/new_plant_end_date"
+            android:layout_marginBottom="@dimen/margin_basic"
+            android:text="@string/new_plant_text_water_date"
+            app:layout_constraintBottom_toTopOf="@id/text_water_every_days"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/new_plant_repeat_text"
-            app:layout_constraintVertical_bias="10"
-            />
+            app:layout_constraintVertical_bias="10" />
 
         <EditText
-            android:id="@+id/new_plant_date_edit"
+            android:id="@+id/edit_date_plants_needs_water"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="date"
-            app:layout_constraintStart_toEndOf="@id/new_plant_date_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/new_plant_date_text"
             android:layout_marginEnd="@dimen/margin_basic"
-            android:layout_marginStart="@dimen/margin_basic"
-            android:hint="@string/new_plant_end_date_hint"
-            tools:ignore="Autofill"
-            />
+            android:hint="@string/new_plant_edit_hint_water_date"
+            android:inputType="date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/edit_water_every_days"
+            app:layout_constraintTop_toTopOf="@id/text_date_plants_needs_water"
+            tools:ignore="Autofill" />
 
         <TextView
-            android:id="@+id/new_plant_repeat_text"
+            android:id="@+id/text_water_every_days"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.MaterialComponents.Headline5"
-            android:layout_margin="@dimen/margin_basic"
-            android:text="@string/new_plant_repeat"
+            android:layout_marginBottom="@dimen/margin_basic"
+            android:layout_marginStart="@dimen/margin_basic"
+            android:text="@string/new_plant_text_water_every"
+            app:layout_constraintBottom_toTopOf="@id/text_date_plants_needs_mist"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="10"
-            />
+            app:layout_constraintVertical_bias="10" />
 
         <EditText
-            android:id="@+id/new_plant_repeat_edit"
+            android:id="@+id/edit_water_every_days"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            app:layout_constraintStart_toStartOf="@id/new_plant_date_edit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/new_plant_repeat_text"
-            android:hint="@string/new_plant_repeat_hint"
             android:layout_marginEnd="@dimen/margin_basic"
             android:layout_marginBottom="@dimen/margin_basic"
-            tools:ignore="Autofill"
-            />
+            android:layout_marginStart="@dimen/margin_basic"
+            android:hint="@string/new_plant_edit_hint_every"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_water_every_days"
+            app:layout_constraintTop_toTopOf="@id/text_water_every_days"
+            tools:ignore="Autofill" />
+
+        <TextView
+            android:id="@+id/text_date_plants_needs_mist"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_basic"
+            android:layout_marginBottom="@dimen/margin_basic"
+            android:text="@string/new_plant_text_mist_date"
+            app:layout_constraintBottom_toTopOf="@id/text_mist_every_days"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="10" />
+
+        <EditText
+            android:id="@+id/edit_date_plants_needs_mist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_basic"
+            android:hint="@string/new_plant_edit_hint_mist_date"
+            android:inputType="date"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/edit_water_every_days"
+            app:layout_constraintTop_toTopOf="@id/text_date_plants_needs_mist"
+            tools:ignore="Autofill" />
+
+        <TextView
+            android:id="@+id/text_mist_every_days"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_basic"
+            android:text="@string/new_plant_text_mist_every"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="10" />
+
+        <EditText
+            android:id="@+id/edit_mist_every_days"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_basic"
+            android:hint="@string/new_plant_edit_hint_every"
+            android:inputType="text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/edit_water_every_days"
+            app:layout_constraintTop_toTopOf="@id/text_mist_every_days"
+            app:layout_constraintBottom_toBottomOf="@id/text_mist_every_days"
+            tools:ignore="Autofill" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

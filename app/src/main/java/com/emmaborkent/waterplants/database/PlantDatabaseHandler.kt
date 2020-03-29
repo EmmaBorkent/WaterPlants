@@ -19,7 +19,7 @@ class PlantDatabaseHandler(context: Context) :
                 KEY_PLANT_SPECIES + " TEXT," +
                 KEY_PLANT_IMAGE + " TEXT," +
                 KEY_PLANT_WATER_DATE + " LONG," +
-                KEY_PLANT_DAYS_NEXT_WATER + " LONG" +
+                KEY_PLANT_DAYS_NEXT_WATER + " LONG," +
                 KEY_PLANT_MIST_DATE + " LONG," +
                 KEY_PLANT_DAYS_NEXT_MIST + " LONG" + ")"
 

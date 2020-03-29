@@ -21,10 +21,13 @@
     <string name="new_plant_species">Species</string>
     <string name="new_plant_species_hint">What is the plant species?</string>
     <string name="new_plant_choose_image">Pick Image</string>
-    <string name="new_plant_end_date">End date</string>
-    <string name="new_plant_end_date_hint">20/12/20</string>
-    <string name="new_plant_repeat">Repeat</string>
-    <string name="new_plant_repeat_hint">Repeat every …</string>
+    <string name="new_plant_text_water_date">Water on</string>
+    <string name="new_plant_edit_hint_water_date">20/12/20</string>
+    <string name="new_plant_text_water_every">Water again after</string>
+    <string name="new_plant_edit_hint_every">Repeat every …</string>
+    <string name="new_plant_text_mist_date">Mist on</string>
+    <string name="new_plant_edit_hint_mist_date">20/12/20</string>
+    <string name="new_plant_text_mist_every">Mist again after</string>
     <string name="new_plant_save_toast">Cannot Save. Please fill out all fields.</string>
 
     <string name="detail_drag_handle">Drag Handle</string>

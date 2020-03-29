@@ -50,8 +50,8 @@ class NewPlantActivity : AppCompatActivity() {
 
     private fun saveNewPlant() {
 
-        if (new_plant_name_edit.text.isBlank() || new_plant_species_edit.text.isBlank() ||
-            new_plant_date_edit.text.isBlank() || new_plant_repeat_edit.text.isBlank()) {
+        if (edit_plant_name.text.isBlank() || edit_plant_species.text.isBlank() ||
+            edit_date_plants_needs_water.text.isBlank() || edit_water_every_days.text.isBlank()) {
 
             val toast = Toast.makeText(this, R.string.new_plant_save_toast,
                 Toast.LENGTH_SHORT)
@@ -59,7 +59,7 @@ class NewPlantActivity : AppCompatActivity() {
 
         } else {
 
-            if (checkImageResource(this, new_plant_image)) {
+            if (checkImageResource(this, image_plant)) {
                 Toast.makeText(this, "Please select an image for this plant",
                     Toast.LENGTH_LONG).show()
             } else {
@@ -80,11 +80,11 @@ class NewPlantActivity : AppCompatActivity() {
         val newPlantImage = saveImageToInternalStorage()
 
         val plant = Plant()
-        plant.name = new_plant_name_edit.text.toString()
-        plant.species = new_plant_species_edit.text.toString()
+        plant.name = edit_plant_name.text.toString()
+        plant.species = edit_plant_species.text.toString()
         plant.image = newPlantImage.toString()
-        plant.datePlantNeedsWater = new_plant_date_edit.text.toString().toLong()
-        plant.daysToNextWater = new_plant_repeat_edit.text.toString().toLong()
+        plant.datePlantNeedsWater = edit_date_plants_needs_water.text.toString().toLong()
+        plant.daysToNextWater = edit_water_every_days.text.toString().toLong()
         PlantDatabaseHandler(this).createPlant(plant)
     }
 
@@ -166,7 +166,7 @@ class NewPlantActivity : AppCompatActivity() {
     // Function to set the chosen image as the background of the imageView
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE_CODE) {
-            new_plant_image.setImageURI(data?.data)
+            image_plant.setImageURI(data?.data)
 
             // Use this when an imageButton is used
 //            new_plant_image_button.setImageURI(data?.data)
@@ -177,7 +177,7 @@ class NewPlantActivity : AppCompatActivity() {
     // Function to save an image to internal storage
     private fun saveImageToInternalStorage(): Uri {
         // Get the image from drawable resource as drawable object
-        val drawable = new_plant_image.drawable as BitmapDrawable
+        val drawable = image_plant.drawable as BitmapDrawable
 
         // Get the bitmap from drawable object
         val bitmap = drawable.bitmap

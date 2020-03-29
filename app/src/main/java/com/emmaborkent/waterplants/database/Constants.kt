@@ -2,7 +2,7 @@ package com.emmaborkent.waterplants.database
 
 // Database Constants
 const val DATABASE_NAME: String = "com.emmaborkent.waterplants.plants.db"
-const val DATABASE_VERSION: Int = 1
+const val DATABASE_VERSION: Int = 2
 const val TABLE_NAME: String = "PLANTS"
 
 // Plant Table Column Names
