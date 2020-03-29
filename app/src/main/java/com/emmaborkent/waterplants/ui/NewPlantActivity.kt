@@ -83,8 +83,8 @@ class NewPlantActivity : AppCompatActivity() {
         plant.name = new_plant_name_edit.text.toString()
         plant.species = new_plant_species_edit.text.toString()
         plant.image = newPlantImage.toString()
-        plant.dayPlantNeedsWater = new_plant_date_edit.text.toString().toLong()
-        plant.daysInBetweenWater = new_plant_repeat_edit.text.toString().toLong()
+        plant.datePlantNeedsWater = new_plant_date_edit.text.toString().toLong()
+        plant.daysToNextWater = new_plant_repeat_edit.text.toString().toLong()
         PlantDatabaseHandler(this).createPlant(plant)
     }
 

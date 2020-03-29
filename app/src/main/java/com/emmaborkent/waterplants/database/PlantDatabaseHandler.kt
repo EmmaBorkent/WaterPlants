@@ -18,8 +18,10 @@ class PlantDatabaseHandler(context: Context) :
                 KEY_PLANT_NAME + " TEXT," +
                 KEY_PLANT_SPECIES + " TEXT," +
                 KEY_PLANT_IMAGE + " TEXT," +
-                KEY_PLANT_END_DATE + " LONG," +
-                KEY_PLANT_REPEAT + " LONG" + ")"
+                KEY_PLANT_WATER_DATE + " LONG," +
+                KEY_PLANT_DAYS_NEXT_WATER + " LONG" +
+                KEY_PLANT_MIST_DATE + " LONG," +
+                KEY_PLANT_DAYS_NEXT_MIST + " LONG" + ")"
 
         db?.execSQL(createPlantsTable)
         Log.d("PlantDatabaseHandler", "Database Table Created")
@@ -39,8 +41,10 @@ class PlantDatabaseHandler(context: Context) :
         values.put(KEY_PLANT_NAME, plant.name)
         values.put(KEY_PLANT_SPECIES, plant.species)
         values.put(KEY_PLANT_IMAGE, plant.image)
-        values.put(KEY_PLANT_END_DATE, plant.dayPlantNeedsWater)
-        values.put(KEY_PLANT_REPEAT, plant.daysInBetweenWater)
+        values.put(KEY_PLANT_WATER_DATE, plant.datePlantNeedsWater)
+        values.put(KEY_PLANT_DAYS_NEXT_WATER, plant.daysToNextWater)
+        values.put(KEY_PLANT_MIST_DATE, plant.datePlantNeedsMist)
+        values.put(KEY_PLANT_DAYS_NEXT_MIST, plant.daysToNextMist)
 
         db.insert(TABLE_NAME, null, values)
         db.close()
@@ -57,8 +61,10 @@ class PlantDatabaseHandler(context: Context) :
                 KEY_PLANT_NAME,
                 KEY_PLANT_SPECIES,
                 KEY_PLANT_IMAGE,
-                KEY_PLANT_END_DATE,
-                KEY_PLANT_REPEAT
+                KEY_PLANT_WATER_DATE,
+                KEY_PLANT_DAYS_NEXT_WATER,
+                KEY_PLANT_MIST_DATE,
+                KEY_PLANT_DAYS_NEXT_MIST
             ), "$KEY_ID=?", arrayOf(id.toString()),
             null, null, null, null
         )
@@ -68,8 +74,10 @@ class PlantDatabaseHandler(context: Context) :
         plant.name = cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))
         plant.species = cursor.getString(cursor.getColumnIndex(KEY_PLANT_SPECIES))
         plant.image = cursor.getString(cursor.getColumnIndex(KEY_PLANT_IMAGE))
-        plant.dayPlantNeedsWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_END_DATE))
-        plant.daysInBetweenWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_REPEAT))
+        plant.datePlantNeedsWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
+        plant.daysToNextWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_WATER))
+        plant.datePlantNeedsMist = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_MIST_DATE))
+        plant.datePlantNeedsMist = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_MIST))
 
         cursor.close()
         Log.d("PlantDatabaseHandler", "Reading a Plant from Database")
@@ -88,8 +96,10 @@ class PlantDatabaseHandler(context: Context) :
                 plant.name = cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))
                 plant.species = cursor.getString(cursor.getColumnIndex(KEY_PLANT_SPECIES))
                 plant.image = cursor.getString(cursor.getColumnIndex(KEY_PLANT_IMAGE))
-                plant.dayPlantNeedsWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_END_DATE))
-                plant.daysInBetweenWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_REPEAT))
+                plant.datePlantNeedsWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
+                plant.daysToNextWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_WATER))
+                plant.datePlantNeedsMist = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_MIST_DATE))
+                plant.daysToNextMist = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_MIST))
 
                 allPlants.add(plant)
             } while (cursor.moveToNext())
@@ -109,8 +119,10 @@ class PlantDatabaseHandler(context: Context) :
         values.put(KEY_PLANT_NAME, plant.name)
         values.put(KEY_PLANT_SPECIES, plant.species)
         values.put(KEY_PLANT_IMAGE, plant.image)
-        values.put(KEY_PLANT_END_DATE, plant.dayPlantNeedsWater)
-        values.put(KEY_PLANT_REPEAT, plant.daysInBetweenWater)
+        values.put(KEY_PLANT_WATER_DATE, plant.datePlantNeedsWater)
+        values.put(KEY_PLANT_DAYS_NEXT_WATER, plant.daysToNextWater)
+        values.put(KEY_PLANT_MIST_DATE, plant.datePlantNeedsMist)
+        values.put(KEY_PLANT_DAYS_NEXT_MIST, plant.daysToNextMist)
 
         Log.d("PlantDatabaseHandler", "Plant is Updated")
         return db.update(TABLE_NAME, values, "$KEY_ID=?", arrayOf(plant.id.toString()))
@@ -141,8 +153,8 @@ class PlantDatabaseHandler(context: Context) :
     private fun getPlantsOnDay(startTime: Long, endTime: Long): ArrayList<Plant> {
         val db = readableDatabase
         val allPlantsOnDay: ArrayList<Plant> = ArrayList()
-        val queryPlantsOnDay = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_END_DATE >= " +
-                "\"$endTime\" AND $KEY_PLANT_END_DATE <= \"$startTime\""
+        val queryPlantsOnDay = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_WATER_DATE >= " +
+                "\"$endTime\" AND $KEY_PLANT_WATER_DATE <= \"$startTime\""
         val cursor = db.rawQuery(queryPlantsOnDay, null)
 
         if (cursor.moveToFirst()) {
@@ -151,8 +163,10 @@ class PlantDatabaseHandler(context: Context) :
                 plant.name = cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))
                 plant.species = cursor.getString(cursor.getColumnIndex(KEY_PLANT_SPECIES))
                 plant.image = cursor.getString(cursor.getColumnIndex(KEY_PLANT_IMAGE))
-                plant.dayPlantNeedsWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_END_DATE))
-                plant.daysInBetweenWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_REPEAT))
+                plant.datePlantNeedsWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
+                plant.daysToNextWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_WATER))
+                plant.datePlantNeedsMist = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_MIST_DATE))
+                plant.daysToNextMist = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_MIST))
 
                 allPlantsOnDay.add(plant)
             } while (cursor.moveToNext())
