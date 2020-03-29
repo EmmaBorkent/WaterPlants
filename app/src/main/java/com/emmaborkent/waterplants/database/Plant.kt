@@ -12,6 +12,4 @@ class Plant {
     var datePlantNeedsMist: Long = 0
     var daysToNextMist: Long = 0
 
-
-
 }

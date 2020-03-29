@@ -1,6 +1,5 @@
 package com.emmaborkent.waterplants.ui
 
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -21,11 +20,11 @@ class PlantDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_details)
-        setSupportActionBar(findViewById(R.id.detail_plant_toolbar))
+        setSupportActionBar(findViewById(R.id.include_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        bottomSheetBehavior = BottomSheetBehavior.from(detail_constraint_layout_bottom)
+        bottomSheetBehavior = BottomSheetBehavior.from(constraint_bottom_sheet)
         bottomSheet()
 
         // Get data from Intent and use ID to read info from database
