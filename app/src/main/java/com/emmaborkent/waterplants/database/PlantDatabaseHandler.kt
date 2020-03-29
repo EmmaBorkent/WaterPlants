@@ -146,6 +146,20 @@ class PlantDatabaseHandler(context: Context) :
         return cursor.count
     }
 
+    fun printAllPlantIds() {
+        val db = readableDatabase
+        val queryAllPlants = "SELECT * FROM $TABLE_NAME"
+        val cursor = db.rawQuery(queryAllPlants, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                println("Plant ID: ${cursor.getInt(cursor.getColumnIndex(KEY_ID))}")
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+    }
+
     fun countPlantsOnDay(startTime: Long, endTime: Long): Int {
         return getPlantsOnDay(startTime, endTime).count()
     }

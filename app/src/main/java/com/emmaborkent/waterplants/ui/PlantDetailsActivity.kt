@@ -1,5 +1,6 @@
 package com.emmaborkent.waterplants.ui
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -29,18 +30,19 @@ class PlantDetailsActivity : AppCompatActivity() {
 
         // Get data from Intent and use ID to read info from database
         val plantID = intent.getLongExtra("PLANT_ID", 0)
-        Log.d("INTENT", "the item id is $plantID")
+        Log.d("INTENT", "Plant ID: $plantID")
 
         // Read plant from database
-//        dbHandler = PlantDatabaseHandler(this)
-//        val plant = dbHandler.readPlant(plantID)
-//        detail_plant_name.text = plant.name
-//        detail_plant_species.text = plant.species
-//        detail_plant_image.setImageURI(Uri.parse(plant.image))
-//        detail_text_water_in_days.text.toString().format("%d", plant.endDate)
-//        detail_text_spray_in_days.text.toString().format("%d", plant.endDate)
-//        detail_text_water_repeat.text.toString().format("%d", plant.repeat)
-//        detail_text_spray_repeat.text.toString().format("%d", plant.repeat)
+        dbHandler = PlantDatabaseHandler(this)
+        val plant = dbHandler.readPlant(plantID)
+        text_plant_name.text = plant.name
+        text_plant_species.text = plant.species
+        image_plant.setImageURI(Uri.parse(plant.image))
+        // TODO: create function to change datePlantNeedsWater to amount of days
+        text_water_in_days.text.toString().format("%d", plant.datePlantNeedsWater)
+        text_mist_in_days.text.toString().format("%d", plant.datePlantNeedsMist)
+        text_water_every_days.text.toString().format("%d", plant.daysToNextWater)
+        text_mist_every_days.text.toString().format("%d", plant.daysToNextMist)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -52,7 +54,7 @@ class PlantDetailsActivity : AppCompatActivity() {
         // Get display height to calculate peekHeight for the Bottom Sheet
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
-        // This might go wrong with screens with different pixel densities
+        // TODO: This might go wrong with screens with different pixel densities, think of a fix
         val halfScreenHeight = displayMetrics.heightPixels*0.41
         bottomSheetBehavior.peekHeight = halfScreenHeight.toInt()
 
