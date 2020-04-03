@@ -29,7 +29,7 @@ class PlantDetailsActivity : AppCompatActivity() {
         bottomSheet()
 
         // Get data from Intent and use ID to read info from database
-        val plantID = intent.getLongExtra("PLANT_ID", 0)
+        val plantID = intent.getIntExtra("PLANT_ID", 0)
         Log.d("INTENT", "Plant ID: $plantID")
 
         // Read plant from database
@@ -39,10 +39,14 @@ class PlantDetailsActivity : AppCompatActivity() {
         text_plant_species.text = plant.species
         image_plant.setImageURI(Uri.parse(plant.image))
         // TODO: create function to change datePlantNeedsWater to amount of days
-        text_water_in_days.text.toString().format("%d", plant.datePlantNeedsWater)
-        text_mist_in_days.text.toString().format("%d", plant.datePlantNeedsMist)
-        text_water_every_days.text.toString().format("%d", plant.daysToNextWater)
-        text_mist_every_days.text.toString().format("%d", plant.daysToNextMist)
+        text_water_in_days.text =
+            this.getString(R.string.detail_water_in_days, plant.datePlantNeedsWater)
+        text_mist_in_days.text =
+            this.getString(R.string.detail_mist_in_days, plant.datePlantNeedsMist)
+        text_water_every_days.text =
+            this.getString(R.string.detail_water_repeat, plant.daysToNextWater)
+        text_mist_every_days.text =
+            this.getString(R.string.detail_mist_repeat, plant.daysToNextMist)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -55,10 +59,10 @@ class PlantDetailsActivity : AppCompatActivity() {
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         // TODO: This might go wrong with screens with different pixel densities, think of a fix
-        val halfScreenHeight = displayMetrics.heightPixels*0.41
+        val halfScreenHeight = displayMetrics.heightPixels * 0.41
         bottomSheetBehavior.peekHeight = halfScreenHeight.toInt()
 
-        bottomSheetBehavior.addBottomSheetCallback(object: BottomSheetBehavior
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior
         .BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
 

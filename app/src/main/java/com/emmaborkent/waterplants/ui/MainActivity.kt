@@ -10,7 +10,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emmaborkent.waterplants.R
-import com.emmaborkent.waterplants.database.DATABASE_NAME
 import com.emmaborkent.waterplants.database.Plant
 import com.emmaborkent.waterplants.database.PlantDatabaseHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -31,16 +30,15 @@ class MainActivity : AppCompatActivity() {
         bottomSheetBehavior = BottomSheetBehavior.from(main_constraint_layout_bottom)
         bottomSheet()
 
-        allPlantsLayoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
-            false)
-        main_recycler_view_water_plants.layoutManager = allPlantsLayoutManager
-
         add_new_plant.setOnClickListener {
             val newPlantIntent = Intent(this, NewPlantActivity::class.java)
             startActivity(newPlantIntent)
         }
 
         showAllPlants()
+
+        PlantDatabaseHandler(this).printAllPlantIds()
+
     }
 
     private fun bottomSheet() {
@@ -80,10 +78,10 @@ class MainActivity : AppCompatActivity() {
         main_recycler_view_all_plants.layoutManager = allPlantsLayoutManager
 
         allPlantsAdapter = AllPlantsRecyclerAdapter(allPlants, this) { plant ->
-            val openPlantDetails = Intent(this, PlantDetailsActivity::class.java)
-            Log.d("INTENT", "the send item id is ${plant.id}")
-            openPlantDetails.putExtra("PLANT_ID", plant.id)
-            startActivity(openPlantDetails)
+            val plantDetailsIntent = Intent(this, PlantDetailsActivity::class.java)
+            Log.d("INTENT", "The plant ID is ${plant.id}")
+            plantDetailsIntent.putExtra("PLANT_ID", plant.id)
+            startActivity(plantDetailsIntent)
         }
         main_recycler_view_all_plants.adapter = allPlantsAdapter
     }

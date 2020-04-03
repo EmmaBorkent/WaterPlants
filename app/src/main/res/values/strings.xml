@@ -33,10 +33,10 @@
     <string name="detail_drag_handle">Drag Handle</string>
     <string name="detail_water_in">Water In</string>
     <string name="detail_pray_in">Spray In</string>
-    <string name="detail_water_in_days">%d days</string>
-    <string name="detail_spray_in_days">%d days</string>
-    <string name="detail_water_repeat">every %d days</string>
-    <string name="detail_spray_repeat">every %d days</string>
+    <string name="detail_water_in_days">%1$d days</string>
+    <string name="detail_mist_in_days">%1$d days</string>
+    <string name="detail_water_repeat">every %1$d days</string>
+    <string name="detail_mist_repeat">every %1$d days</string>
 
     <!-- toolbar_menu_new_plant.xml -->
     <string name="menu_action_save">Save</string>

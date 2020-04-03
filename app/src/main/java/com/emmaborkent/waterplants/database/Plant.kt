@@ -2,7 +2,7 @@ package com.emmaborkent.waterplants.database
 
 class Plant {
 
-    var id: Long = 0
+    var id: Int = 0
     lateinit var name: String
     lateinit var species: String
     lateinit var image: String
