@@ -84,19 +84,7 @@ class PlantDatabaseHandler(context: Context) :
         )
 
         cursor?.moveToFirst()
-        // TODO create function to create plant
         val plant = newPlantInstance(cursor)
-
-//        val plant = Plant()
-//        plant.id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
-//        plant.name = cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))
-//        plant.species = cursor.getString(cursor.getColumnIndex(KEY_PLANT_SPECIES))
-//        plant.image = cursor.getString(cursor.getColumnIndex(KEY_PLANT_IMAGE))
-//        plant.datePlantNeedsWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
-//        plant.daysToNextWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_WATER))
-//        plant.datePlantNeedsMist = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_MIST_DATE))
-//        plant.daysToNextMist = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_MIST))
-
         cursor.close()
         Log.d("PlantDatabaseHandler", "Reading a Plant from Database")
         return plant
@@ -111,16 +99,6 @@ class PlantDatabaseHandler(context: Context) :
         if (cursor.moveToFirst()) {
             do {
                 val plant = newPlantInstance(cursor)
-//                val plant = Plant()
-//                plant.id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
-//                plant.name = cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))
-//                plant.species = cursor.getString(cursor.getColumnIndex(KEY_PLANT_SPECIES))
-//                plant.image = cursor.getString(cursor.getColumnIndex(KEY_PLANT_IMAGE))
-//                plant.datePlantNeedsWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
-//                plant.daysToNextWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_WATER))
-//                plant.datePlantNeedsMist = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_MIST_DATE))
-//                plant.daysToNextMist = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_MIST))
-
                 allPlants.add(plant)
             } while (cursor.moveToNext())
         }
@@ -195,16 +173,6 @@ class PlantDatabaseHandler(context: Context) :
         if (cursor.moveToFirst()) {
             do {
                 val plant = newPlantInstance(cursor)
-//                val plant = Plant()
-//                plant.id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
-//                plant.name = cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))
-//                plant.species = cursor.getString(cursor.getColumnIndex(KEY_PLANT_SPECIES))
-//                plant.image = cursor.getString(cursor.getColumnIndex(KEY_PLANT_IMAGE))
-//                plant.datePlantNeedsWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
-//                plant.daysToNextWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_WATER))
-//                plant.datePlantNeedsMist = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_MIST_DATE))
-//                plant.daysToNextMist = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_MIST))
-
                 allPlantsOnDay.add(plant)
             } while (cursor.moveToNext())
         }

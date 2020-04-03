@@ -1,17 +1,20 @@
 package com.emmaborkent.waterplants.ui
 
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.database.PlantDatabaseHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_plant_details.*
+
 
 class PlantDetailsActivity : AppCompatActivity() {
 
@@ -47,11 +50,25 @@ class PlantDetailsActivity : AppCompatActivity() {
             this.getString(R.string.detail_water_repeat, plant.daysToNextWater)
         text_mist_every_days.text =
             this.getString(R.string.detail_mist_repeat, plant.daysToNextMist)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu_detail_plant, menu)
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_edit -> {
+                // TODO set action on edit plant
+                Toast.makeText(this, "Clicked Save", Toast.LENGTH_LONG).show()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
     }
 
     private fun bottomSheet() {
