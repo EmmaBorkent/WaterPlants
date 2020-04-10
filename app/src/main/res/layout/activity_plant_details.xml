@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,8 +7,8 @@
     tools:context=".ui.PlantDetailsActivity">
 
     <include
-        layout="@layout/toolbar"
-        android:id="@+id/include_toolbar" />
+        android:id="@+id/include_toolbar"
+        layout="@layout/toolbar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,39 +17,36 @@
 
         <ImageView
             android:id="@+id/image_plant"
-            android:contentDescription="@string/plant_image_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/strelizia"
+            android:contentDescription="@string/plant_image_description"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            tools:srcCompat="@drawable/strelizia" />
 
         <TextView
             android:id="@+id/text_plant_name"
+            style="@style/TextAppearance.MaterialComponents.Headline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/new_plant_name"
+            android:layout_margin="@dimen/margin_basic"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="@dimen/margin_basic"
-            style="@style/TextAppearance.MaterialComponents.Headline3"
-            />
+            tools:text="@string/new_plant_name" />
 
         <TextView
             android:id="@+id/text_plant_species"
+            style="@style/TextAppearance.MaterialComponents.Headline4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/new_plant_species"
-            app:layout_constraintTop_toBottomOf="@id/text_plant_name"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="@dimen/margin_basic"
             app:layout_constraintEnd_toEndOf="parent"
-            style="@style/TextAppearance.MaterialComponents.Headline4"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_plant_name"
+            tools:text="@string/new_plant_species" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
@@ -61,115 +57,106 @@
                 android:id="@+id/constraint_bottom_sheet"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@android:color/darker_gray"
                 app:behavior_hideable="false"
                 app:behavior_peekHeight="350dp"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-                android:background="@android:color/darker_gray">
+                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
                 <ImageView
                     android:id="@+id/image_drag_handle"
-                    android:src="@drawable/ic_drag_handle_black_24dp"
-                    android:contentDescription="@string/detail_drag_handle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:contentDescription="@string/detail_drag_handle"
                     app:layout_constraintEnd_toEndOf="parent"
-                    />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/ic_drag_handle_black_24dp" />
 
                 <TextView
                     android:id="@+id/text_give_water"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/detail_water_in"
-                    app:layout_constraintStart_toStartOf="@id/button_give_water"
-                    app:layout_constraintTop_toBottomOf="@id/image_drag_handle"
-                    app:layout_constraintEnd_toEndOf="@id/button_give_water"
                     android:layout_margin="@dimen/margin_basic"
-                    />
+                    android:text="@string/detail_water_in"
+                    app:layout_constraintEnd_toEndOf="@id/button_give_water"
+                    app:layout_constraintStart_toStartOf="@id/button_give_water"
+                    app:layout_constraintTop_toBottomOf="@id/image_drag_handle" />
 
                 <TextView
                     android:id="@+id/text_give_mist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/detail_pray_in"
-                    app:layout_constraintStart_toStartOf="@id/button_give_mist"
-                    app:layout_constraintTop_toBottomOf="@id/image_drag_handle"
-                    app:layout_constraintEnd_toEndOf="@id/button_give_mist"
                     android:layout_margin="@dimen/margin_basic"
-                    />
+                    android:text="@string/detail_pray_in"
+                    app:layout_constraintEnd_toEndOf="@id/button_give_mist"
+                    app:layout_constraintStart_toStartOf="@id/button_give_mist"
+                    app:layout_constraintTop_toBottomOf="@id/image_drag_handle" />
 
                 <ImageButton
                     android:id="@+id/button_give_water"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:src="@drawable/ic_002_drop"
-                    android:contentDescription="@string/plant_image_water"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_give_water"
-                    app:layout_constraintEnd_toStartOf="@id/button_give_mist"
                     android:layout_margin="@dimen/margin_basic"
-                    app:layout_constraintDimensionRatio="1"
+                    android:contentDescription="@string/plant_image_water"
                     android:scaleType="centerCrop"
-                    />
+                    android:src="@drawable/ic_002_drop"
+                    app:layout_constraintDimensionRatio="1"
+                    app:layout_constraintEnd_toStartOf="@id/button_give_mist"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_give_water" />
 
                 <ImageButton
                     android:id="@+id/button_give_mist"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:src="@drawable/ic_001_drops"
-                    android:contentDescription="@string/plant_image_drops"
-                    app:layout_constraintStart_toEndOf="@id/button_give_water"
-                    app:layout_constraintTop_toBottomOf="@id/text_give_mist"
-                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_margin="@dimen/margin_basic"
-                    app:layout_constraintDimensionRatio="1"
+                    android:contentDescription="@string/plant_image_drops"
                     android:scaleType="centerCrop"
-                    />
+                    android:src="@drawable/ic_001_drops"
+                    app:layout_constraintDimensionRatio="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/button_give_water"
+                    app:layout_constraintTop_toBottomOf="@id/text_give_mist" />
 
                 <TextView
                     android:id="@+id/text_water_in_days"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/detail_water_in_days"
+                    android:layout_margin="@dimen/margin_basic"
+                    app:layout_constraintEnd_toEndOf="@id/button_give_water"
                     app:layout_constraintStart_toStartOf="@id/button_give_water"
                     app:layout_constraintTop_toBottomOf="@id/button_give_water"
-                    app:layout_constraintEnd_toEndOf="@id/button_give_water"
-                    android:layout_margin="@dimen/margin_basic"
-                    />
+                    tools:text="@string/detail_days" />
 
                 <TextView
                     android:id="@+id/text_mist_in_days"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/detail_mist_in_days"
+                    android:layout_margin="@dimen/margin_basic"
+                    app:layout_constraintEnd_toEndOf="@id/button_give_mist"
                     app:layout_constraintStart_toStartOf="@id/button_give_mist"
                     app:layout_constraintTop_toBottomOf="@id/button_give_mist"
-                    app:layout_constraintEnd_toEndOf="@id/button_give_mist"
-                    android:layout_margin="@dimen/margin_basic"
-                    />
+                    tools:text="@string/detail_days" />
 
                 <TextView
                     android:id="@+id/text_water_every_days"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/detail_water_repeat"
+                    android:layout_marginTop="@dimen/margin_small"
+                    app:layout_constraintEnd_toEndOf="@id/text_water_in_days"
                     app:layout_constraintStart_toStartOf="@id/text_water_in_days"
                     app:layout_constraintTop_toBottomOf="@id/text_water_in_days"
-                    app:layout_constraintEnd_toEndOf="@id/text_water_in_days"
-                    android:layout_marginTop="@dimen/margin_small"
-                    />
+                    tools:text="@string/detail_every_days" />
 
                 <TextView
                     android:id="@+id/text_mist_every_days"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/detail_mist_repeat"
+                    android:layout_marginTop="@dimen/margin_small"
+                    app:layout_constraintEnd_toEndOf="@id/text_mist_in_days"
                     app:layout_constraintStart_toStartOf="@id/text_mist_in_days"
                     app:layout_constraintTop_toBottomOf="@id/text_mist_in_days"
-                    app:layout_constraintEnd_toEndOf="@id/text_mist_in_days"
-                    android:layout_marginTop="@dimen/margin_small"
-                    />
+                    tools:text="@string/detail_every_days" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

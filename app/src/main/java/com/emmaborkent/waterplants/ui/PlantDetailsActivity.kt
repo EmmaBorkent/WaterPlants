@@ -42,15 +42,15 @@ class PlantDetailsActivity : AppCompatActivity() {
         text_plant_species.text = plant.species
         image_plant.setImageURI(Uri.parse(plant.image))
         // TODO: create function to change datePlantNeedsWater to amount of days
-        text_water_in_days.text =
-            this.getString(R.string.detail_water_in_days, plant.datePlantNeedsWater)
-        text_mist_in_days.text =
-            this.getString(R.string.detail_mist_in_days, plant.datePlantNeedsMist)
-        text_water_every_days.text =
-            this.getString(R.string.detail_water_repeat, plant.daysToNextWater)
-        text_mist_every_days.text =
-            this.getString(R.string.detail_mist_repeat, plant.daysToNextMist)
-
+        // TODO: 10-4-2020 create function to change plurals text
+        text_water_in_days.text = resources
+            .getQuantityString(R.plurals.detail_water_in_days, 1, plant.datePlantNeedsWater)
+        text_mist_in_days.text = resources
+            .getQuantityString(R.plurals.detail_mist_in_days, 1, plant.datePlantNeedsMist)
+        text_water_every_days.text = resources
+            .getQuantityString(R.plurals.detail_water_repeat, 1, plant.daysToNextWater)
+        text_mist_every_days.text = resources
+            .getQuantityString(R.plurals.detail_mist_repeat, 1, plant.daysToNextMist)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -69,6 +69,7 @@ class PlantDetailsActivity : AppCompatActivity() {
                 super.onOptionsItemSelected(item)
             }
         }
+
     }
 
     private fun bottomSheet() {

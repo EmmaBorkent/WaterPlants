@@ -39,6 +39,9 @@ class MainActivity : AppCompatActivity() {
 
         PlantDatabaseHandler(this).printAllPlantIds()
 
+        // TODO: 10-4-2020 Create function to check amount of plants that need water 
+        // TODO: 10-4-2020 Create function that sets the plural of how many plants to water 
+
     }
 
     private fun bottomSheet() {
