@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         bottomSheet()
 
         add_new_plant.setOnClickListener {
-            val newPlantIntent = Intent(this, NewPlantActivity::class.java)
+            val newPlantIntent = Intent(this, AddEditPlantActivity::class.java)
             startActivity(newPlantIntent)
         }
 
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         PlantDatabaseHandler(this).printAllPlantIds()
 
-        // TODO: 10-4-2020 Create function to check amount of plants that need water 
+        // TODO: 10-4-2020 Create function to check amount of plants that need water, can only be done after dates are added to plants
         // TODO: 10-4-2020 Create function that sets the plural of how many plants to water 
 
     }
@@ -50,10 +50,10 @@ class MainActivity : AppCompatActivity() {
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         // This might go wrong with screens with different pixel densities
-        val halfScreenHeight = displayMetrics.heightPixels*0.41
+        val halfScreenHeight = displayMetrics.heightPixels * 0.41
         bottomSheetBehavior.peekHeight = halfScreenHeight.toInt()
 
-        bottomSheetBehavior.addBottomSheetCallback(object: BottomSheetBehavior
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior
         .BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
 
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
 
         allPlantsAdapter = AllPlantsRecyclerAdapter(allPlants, this) { plant ->
             val plantDetailsIntent = Intent(this, PlantDetailsActivity::class.java)
-            Log.d("INTENT", "The plant ID is ${plant.id}")
+            Log.d("INTENT", "Going to PlantDetailsActivity. Plant ID is: ${plant.id}")
             plantDetailsIntent.putExtra("PLANT_ID", plant.id)
             startActivity(plantDetailsIntent)
         }

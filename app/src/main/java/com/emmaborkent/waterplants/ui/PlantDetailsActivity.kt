@@ -1,5 +1,6 @@
 package com.emmaborkent.waterplants.ui
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -20,6 +21,7 @@ class PlantDetailsActivity : AppCompatActivity() {
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var dbHandler: PlantDatabaseHandler
+    private var plantID: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +34,8 @@ class PlantDetailsActivity : AppCompatActivity() {
         bottomSheet()
 
         // Get data from Intent and use ID to read info from database
-        val plantID = intent.getIntExtra("PLANT_ID", 0)
-        Log.d("INTENT", "Plant ID: $plantID")
+        plantID = intent.getIntExtra("PLANT_ID", 0)
+        Log.d("INTENT", "Receiving Intent from MainActivity. Plant ID is: $plantID")
 
         // Read plant from database
         dbHandler = PlantDatabaseHandler(this)
@@ -63,20 +65,23 @@ class PlantDetailsActivity : AppCompatActivity() {
             R.id.action_edit -> {
                 // TODO set action on edit plant
                 Toast.makeText(this, "Clicked Save", Toast.LENGTH_LONG).show()
+                val editPlantIntent = Intent(this, AddEditPlantActivity::class.java)
+                Log.d("INTENT", "Going to AddEditPlantActivity. Plant ID is: $plantID")
+                editPlantIntent.putExtra("PLANT_ID", plantID)
+                startActivity(editPlantIntent)
                 true
             }
             else -> {
                 super.onOptionsItemSelected(item)
             }
         }
-
     }
 
     private fun bottomSheet() {
         // Get display height to calculate peekHeight for the Bottom Sheet
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
-        // TODO: This might go wrong with screens with different pixel densities, think of a fix
+        // TODO: Setting the screen height this way might go wrong with screens with different pixel densities, think of a fix
         val halfScreenHeight = displayMetrics.heightPixels * 0.41
         bottomSheetBehavior.peekHeight = halfScreenHeight.toInt()
 

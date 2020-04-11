@@ -16,10 +16,11 @@
     <string name="rv_water_plants_name">Plant Name</string>
     <string name="rv_water_plants_species">Plant Species</string>
 
-    <!-- activity_new_plant.xml -->
-    <!-- NewPlantActivity.kt -->
+    <!-- activity_add_edit_plant.xmlt.xml -->
+    <!-- AddEditPlantActivity.kty.kt -->
     <!-- activity_plant_details.xml -->
     <string name="new_plant_toolbar">Add New Plant</string>
+    <string name="edit_plant_toolbar">Edit Plant</string>
     <string name="new_plant_name">Name</string>
     <string name="new_plant_name_hint">Pick a plant name</string>
     <string name="new_plant_species">Species</string>
@@ -32,7 +33,7 @@
     <string name="new_plant_text_mist_date">Mist on</string>
     <string name="new_plant_edit_hint_mist_date">20/12/20</string>
     <string name="new_plant_text_mist_every">Mist again after</string>
-    <string name="new_plant_save_toast">Cannot Save. Please fill out all fields.</string>
+    <string name="new_plant_save_toast">Cannot Save. Please fill in all fields.</string>
 
     <string name="detail_drag_handle">Drag Handle</string>
     <string name="detail_water_in">Water In</string>
@@ -56,8 +57,9 @@
         <item quantity="other">every %1$d days</item>
     </plurals>
 
-    <!-- toolbar_menu_new_plant.xml -->
+    <!-- toolbar_menu_add_edit_plant.xmlt.xml -->
     <string name="menu_action_save">Save</string>
+    <string name="menu_action_delete">Delete</string>
 
     <!-- toolbar_menu_detail_plant.xml -->
     <string name="menu_action_edit">Edit</string>
