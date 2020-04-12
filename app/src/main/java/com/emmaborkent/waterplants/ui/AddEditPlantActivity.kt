@@ -107,15 +107,15 @@ class AddEditPlantActivity : AppCompatActivity() {
     private fun saveNewPlantToDatabase() {
         if (!hasEmptyTextFields() && hasImageSelected()) {
             PlantDatabaseHandler(this).createPlant(plant())
+            goBackToHomeScreen()
         }
-        goBackToHomeScreen()
     }
 
     private fun updatePlantInDatabase() {
         if (!hasEmptyTextFields()) {
             PlantDatabaseHandler(this).updatePlant(plant())
+            goBackToHomeScreen()
         }
-        goBackToHomeScreen()
     }
 
     private fun deletePlantFromDatabase() {
@@ -135,27 +135,21 @@ class AddEditPlantActivity : AppCompatActivity() {
         Toast.makeText(this, R.string.new_plant_save_toast, Toast.LENGTH_SHORT).show()
     }
 
-    // TODO: 12-4-2020 improve hasImageSelected() function
-    @Suppress("DEPRECATION")
     private fun hasImageSelected(): Boolean {
-        var result = true
-        if (image_plant.drawable != null) {
-            val constantState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                this.resources.getDrawable(R.drawable.ic_image_black_24dp, this.theme).constantState
-            } else {
-                this.resources.getDrawable(R.drawable.ic_image_black_24dp).constantState
-            }
-            if (image_plant.drawable.constantState == constantState) {
-                warnToSelectImage()
-                result = false
-            }
+        val constantState =
+            this.resources.getDrawable(R.drawable.ic_image_black_24dp, this.theme).constantState
+        if (image_plant.drawable.constantState == constantState) {
+            warnToSelectImage()
+            return false
         }
-        return result
+        return true
     }
 
     private fun warnToSelectImage() {
-        Toast.makeText(this, "Please select an image for this plant",
-            Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            this, "Please select an image for this plant",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     // TODO: 12-4-2020 improve function newPlant() by removing the multiple if statements
