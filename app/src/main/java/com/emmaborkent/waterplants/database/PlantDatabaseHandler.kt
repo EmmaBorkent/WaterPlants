@@ -86,7 +86,7 @@ class PlantDatabaseHandler(context: Context) :
         cursor?.moveToFirst()
         val plant = newPlantInstance(cursor)
         cursor.close()
-        Log.d("PlantDatabaseHandler", "Reading a Plant from Database")
+        Log.d("PlantDatabaseHandler", "Reading Plant ${plant.id} from Database")
         return plant
     }
 
@@ -122,7 +122,7 @@ class PlantDatabaseHandler(context: Context) :
         values.put(KEY_PLANT_MIST_DATE, plant.datePlantNeedsMist)
         values.put(KEY_PLANT_DAYS_NEXT_MIST, plant.daysToNextMist)
 
-        Log.d("PlantDatabaseHandler", "Plant is Updated")
+        Log.d("PlantDatabaseHandler", "Plant ${plant.id} is Updated")
         return db.update(TABLE_NAME, values, "$KEY_ID=?", arrayOf(plant.id.toString()))
     }
 

@@ -63,8 +63,6 @@ class PlantDetailsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_edit -> {
-                // TODO set action on edit plant
-                Toast.makeText(this, "Clicked Save", Toast.LENGTH_LONG).show()
                 val editPlantIntent = Intent(this, AddEditPlantActivity::class.java)
                 Log.d("INTENT", "Going to AddEditPlantActivity. Plant ID is: $plantID")
                 editPlantIntent.putExtra("PLANT_ID", plantID)

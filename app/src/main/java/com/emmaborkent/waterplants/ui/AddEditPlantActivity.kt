@@ -10,7 +10,6 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -107,8 +106,21 @@ class AddEditPlantActivity : AppCompatActivity() {
 
     private fun saveNewPlantToDatabase() {
         if (!hasEmptyTextFields() && hasImageSelected()) {
-            PlantDatabaseHandler(this).createPlant(newPlant())
+            PlantDatabaseHandler(this).createPlant(plant())
         }
+        goBackToHomeScreen()
+    }
+
+    private fun updatePlantInDatabase() {
+        if (!hasEmptyTextFields()) {
+            PlantDatabaseHandler(this).updatePlant(plant())
+        }
+        goBackToHomeScreen()
+    }
+
+    private fun deletePlantFromDatabase() {
+        PlantDatabaseHandler(this).deletePlant(plantId())
+        goBackToHomeScreen()
     }
 
     private fun hasEmptyTextFields(): Boolean {
@@ -123,17 +135,22 @@ class AddEditPlantActivity : AppCompatActivity() {
         Toast.makeText(this, R.string.new_plant_save_toast, Toast.LENGTH_SHORT).show()
     }
 
+    // TODO: 12-4-2020 improve hasImageSelected() function
+    @Suppress("DEPRECATION")
     private fun hasImageSelected(): Boolean {
-        val defaultImage = resources.getDrawable(R.drawable.ic_image_black_24dp)
-        defaultImage
-        if (image_plant.drawable == defaultImage) {
-            warnToSelectImage()
-            Log.d("ADD_EDIT", "There is no new image selected")
-            return false
+        var result = true
+        if (image_plant.drawable != null) {
+            val constantState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                this.resources.getDrawable(R.drawable.ic_image_black_24dp, this.theme).constantState
+            } else {
+                this.resources.getDrawable(R.drawable.ic_image_black_24dp).constantState
+            }
+            if (image_plant.drawable.constantState == constantState) {
+                warnToSelectImage()
+                result = false
+            }
         }
-
-        Log.d("ADD_EDIT", "There is a new image selected")
-        return true
+        return result
     }
 
     private fun warnToSelectImage() {
@@ -141,52 +158,75 @@ class AddEditPlantActivity : AppCompatActivity() {
             Toast.LENGTH_LONG).show()
     }
 
-    private fun newPlant(): Plant {
+    // TODO: 12-4-2020 improve function newPlant() by removing the multiple if statements
+    private fun plant(): Plant {
+        // TODO: 12-4-2020 figure out is an new image saved every time a plant is updated?
         val plantImageUri = saveImageToInternalStorage()
 
         val plant = Plant()
+        if (isEditActivity()) {
+            plant.id = plantId()
+        }
         plant.name = edit_plant_name.text.toString()
         plant.species = edit_plant_species.text.toString()
         plant.image = plantImageUri.toString()
-        plant.datePlantNeedsWater = edit_date_plants_needs_water.text.toString().toLong()
-        plant.daysToNextWater = edit_water_every_days.text.toString().toLong()
-        plant.datePlantNeedsMist = edit_date_plants_needs_mist.text.toString().toLong()
-        plant.daysToNextMist = edit_mist_every_days.text.toString().toLong()
+        if (edit_date_plants_needs_water.text.isNotEmpty()) {
+            plant.datePlantNeedsWater = edit_date_plants_needs_water.text.toString().toLong()
+        }
+        if (edit_water_every_days.text.isNotEmpty()) {
+            plant.daysToNextWater = edit_water_every_days.text.toString().toLong()
+        }
+        if (edit_date_plants_needs_mist.text.isNotEmpty()) {
+            plant.datePlantNeedsMist = edit_date_plants_needs_mist.text.toString().toLong()
+        }
+        if (edit_mist_every_days.text.toString().isNotEmpty()) {
+            plant.daysToNextMist = edit_mist_every_days.text.toString().toLong()
+        }
         return plant
     }
 
+    // TODO: 12-4-2020 Improve function, it is too long and has too many comments
     private fun saveImageToInternalStorage(): Uri {
         // Get the image from drawable resource as drawable object
         val drawable = image_plant.drawable as BitmapDrawable
+
         // Get the bitmap from drawable object
         val bitmap = drawable.bitmap
+
         // Get the context wrapper instance
         val wrapper = ContextWrapper(applicationContext)
+
         // Initializing a new file
         // The below line returns a directory in internal storage
         var file = wrapper.getDir("plant_images", Context.MODE_PRIVATE)
+
         // Create a file to save the image
         file = File(file, "${UUID.randomUUID()}.jpg")
+
         try {
+            // Get the file output stream
             val stream: OutputStream = FileOutputStream(file)
+
+            // Compress bitmap
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+
+            // Flush the stream
             stream.flush()
+
+            // Close the stream
             stream.close()
         } catch (e: IOException) {
+            // Catch the exception
             e.printStackTrace()
         }
+
         // Return the saved image URI
         return Uri.parse(file.absolutePath)
     }
 
-    private fun updatePlantInDatabase() {
-        // TODO: 11-4-2020 implement updatePlantInDatabase function
-        Toast.makeText(this, "Update Plant", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun deletePlantFromDatabase() {
-        // TODO: 11-4-2020 implement deletePlantFromDatabase function
-        Toast.makeText(this, "Delete Plant", Toast.LENGTH_SHORT).show()
+    private fun goBackToHomeScreen() {
+        val homeIntent = Intent(this, MainActivity::class.java)
+        startActivity(homeIntent)
     }
 
     @Suppress("UNUSED_PARAMETER")
