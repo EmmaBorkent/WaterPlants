@@ -151,19 +151,27 @@ class AddEditPlantActivity : AppCompatActivity() {
             Toast.LENGTH_LONG
         ).show()
     }
-
-    // TODO: 12-4-2020 improve function newPlant() by removing the multiple if statements
+    
     private fun plant(): Plant {
         // TODO: 12-4-2020 figure out is an new image saved every time a plant is updated?
         val plantImageUri = saveImageToInternalStorage()
 
         val plant = Plant()
-        if (isEditActivity()) {
-            plant.id = plantId()
-        }
+        setPlantIdIfExists(plant)
         plant.name = edit_plant_name.text.toString()
         plant.species = edit_plant_species.text.toString()
         plant.image = plantImageUri.toString()
+        setOtherPlantFieldsIfTheyExist(plant)
+        return plant
+    }
+
+    private fun setPlantIdIfExists(plant: Plant) {
+        if (isEditActivity()) {
+            plant.id = plantId()
+        }
+    }
+
+    private fun setOtherPlantFieldsIfTheyExist(plant: Plant) {
         if (edit_date_plants_needs_water.text.isNotEmpty()) {
             plant.datePlantNeedsWater = edit_date_plants_needs_water.text.toString().toLong()
         }
@@ -176,7 +184,6 @@ class AddEditPlantActivity : AppCompatActivity() {
         if (edit_mist_every_days.text.toString().isNotEmpty()) {
             plant.daysToNextMist = edit_mist_every_days.text.toString().toLong()
         }
-        return plant
     }
 
     // TODO: 12-4-2020 Improve function, it is too long and has too many comments
