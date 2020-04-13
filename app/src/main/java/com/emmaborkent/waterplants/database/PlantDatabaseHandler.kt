@@ -36,7 +36,7 @@ class PlantDatabaseHandler(context: Context) :
 
     // CRUD - Create, Read, Update, Delete
 
-    fun createPlant(plant: Plant) {
+    fun savePlantToDatabase(plant: Plant) {
         val db = writableDatabase
         val values = ContentValues()
         values.put(KEY_PLANT_NAME, plant.name)
@@ -50,9 +50,10 @@ class PlantDatabaseHandler(context: Context) :
         db.insert(TABLE_NAME, null, values)
         db.close()
 
-        Log.d("PlantDatabaseHandler", "Created New Plant")
+        Log.d("PlantDatabaseHandler", "New plant is added to database")
     }
 
+    // TODO: 13-4-2020 improve database functions 
     private fun newPlantInstance(cursor: Cursor): Plant {
         val plant = Plant()
         plant.id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
@@ -111,7 +112,8 @@ class PlantDatabaseHandler(context: Context) :
         return getPlantsOnDay(startTime, endTime)
     }
 
-    fun updatePlant(plant: Plant): Int {
+    // TODO: 13-4-2020 Why has this function a return value? 
+    fun updatePlantInDatabase(plant: Plant): Int {
         val db = writableDatabase
         val values = ContentValues()
         values.put(KEY_PLANT_NAME, plant.name)

@@ -10,6 +10,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -26,6 +27,10 @@ import java.io.OutputStream
 import java.util.*
 
 class AddEditPlantActivity : AppCompatActivity() {
+
+    private var databaseHandler = PlantDatabaseHandler(this)
+    private var plant = Plant()
+    private var imageIsChanged: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +52,7 @@ class AddEditPlantActivity : AppCompatActivity() {
 
     private fun setupPageToEditPlant() {
         setEditActionBarTitle()
+        getPlantFromDatabase()
         setPlantDataToViews()
     }
 
@@ -54,8 +60,15 @@ class AddEditPlantActivity : AppCompatActivity() {
         supportActionBar?.setTitle(R.string.edit_plant_toolbar)
     }
 
+    private fun getPlantFromDatabase() {
+        plant = databaseHandler.readPlant(plantId())
+    }
+
+    private fun plantId(): Int {
+        return intent.getIntExtra("PLANT_ID", 0)
+    }
+
     private fun setPlantDataToViews() {
-        val plant = getPlantFromDatabase()
         // TODO: 10-4-2020 Change number fields to date fields
         edit_plant_name.setText(plant.name)
         edit_plant_species.setText(plant.species)
@@ -64,14 +77,6 @@ class AddEditPlantActivity : AppCompatActivity() {
         edit_water_every_days.setText(plant.daysToNextWater.toString())
         edit_date_plants_needs_mist.setText(plant.datePlantNeedsMist.toString())
         edit_mist_every_days.setText(plant.daysToNextMist.toString())
-    }
-
-    private fun getPlantFromDatabase(): Plant {
-        return PlantDatabaseHandler(this).readPlant(plantId())
-    }
-
-    private fun plantId(): Int {
-        return intent.getIntExtra("PLANT_ID", 0)
     }
 
     private fun setupPageToAddPlant() {
@@ -97,29 +102,31 @@ class AddEditPlantActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_save_new -> saveNewPlantToDatabase()
+            R.id.action_save_new -> createNewPlantAndSaveToDatabase()
             R.id.action_save_update -> updatePlantInDatabase()
             R.id.action_delete -> deletePlantFromDatabase()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun saveNewPlantToDatabase() {
+    private fun createNewPlantAndSaveToDatabase() {
         if (!hasEmptyTextFields() && hasImageSelected()) {
-            PlantDatabaseHandler(this).createPlant(plant())
+            createPlantFromFields()
+            databaseHandler.savePlantToDatabase(plant)
             goBackToHomeScreen()
         }
     }
 
     private fun updatePlantInDatabase() {
         if (!hasEmptyTextFields()) {
-            PlantDatabaseHandler(this).updatePlant(plant())
+            updatePlantFromFields()
+            databaseHandler.updatePlantInDatabase(plant)
             goBackToHomeScreen()
         }
     }
 
     private fun deletePlantFromDatabase() {
-        PlantDatabaseHandler(this).deletePlant(plantId())
+        databaseHandler.deletePlant(plantId())
         goBackToHomeScreen()
     }
 
@@ -135,10 +142,9 @@ class AddEditPlantActivity : AppCompatActivity() {
         Toast.makeText(this, R.string.new_plant_save_toast, Toast.LENGTH_SHORT).show()
     }
 
+    // TODO: 13-4-2020 improve hasImageSelected() function
     private fun hasImageSelected(): Boolean {
-        val constantState =
-            this.resources.getDrawable(R.drawable.ic_image_black_24dp, this.theme).constantState
-        if (image_plant.drawable.constantState == constantState) {
+        if (!imageIsChanged) {
             warnToSelectImage()
             return false
         }
@@ -151,24 +157,24 @@ class AddEditPlantActivity : AppCompatActivity() {
             Toast.LENGTH_LONG
         ).show()
     }
-    
-    private fun plant(): Plant {
-        // TODO: 12-4-2020 figure out is an new image saved every time a plant is updated?
-        val plantImageUri = saveImageToInternalStorage()
 
-        val plant = Plant()
-        setPlantIdIfExists(plant)
+    private fun createPlantFromFields() {
+        val plantImageUri = saveNewImageToInternalStorage()
+        plant.image = plantImageUri.toString()
         plant.name = edit_plant_name.text.toString()
         plant.species = edit_plant_species.text.toString()
-        plant.image = plantImageUri.toString()
         setOtherPlantFieldsIfTheyExist(plant)
-        return plant
     }
 
-    private fun setPlantIdIfExists(plant: Plant) {
-        if (isEditActivity()) {
-            plant.id = plantId()
+    private fun updatePlantFromFields() {
+        plant.id = plantId()
+        if (imageIsChanged) {
+            val plantImageUri = saveNewImageToInternalStorage()
+            plant.image = plantImageUri.toString()
         }
+        plant.name = edit_plant_name.text.toString()
+        plant.species = edit_plant_species.text.toString()
+        setOtherPlantFieldsIfTheyExist(plant)
     }
 
     private fun setOtherPlantFieldsIfTheyExist(plant: Plant) {
@@ -187,33 +193,26 @@ class AddEditPlantActivity : AppCompatActivity() {
     }
 
     // TODO: 12-4-2020 Improve function, it is too long and has too many comments
-    private fun saveImageToInternalStorage(): Uri {
+    private fun saveNewImageToInternalStorage(): Uri {
         // Get the image from drawable resource as drawable object
         val drawable = image_plant.drawable as BitmapDrawable
-
         // Get the bitmap from drawable object
         val bitmap = drawable.bitmap
-
         // Get the context wrapper instance
         val wrapper = ContextWrapper(applicationContext)
-
         // Initializing a new file
         // The below line returns a directory in internal storage
         var file = wrapper.getDir("plant_images", Context.MODE_PRIVATE)
-
         // Create a file to save the image
         file = File(file, "${UUID.randomUUID()}.jpg")
 
         try {
             // Get the file output stream
             val stream: OutputStream = FileOutputStream(file)
-
             // Compress bitmap
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-
             // Flush the stream
             stream.flush()
-
             // Close the stream
             stream.close()
         } catch (e: IOException) {
@@ -221,6 +220,7 @@ class AddEditPlantActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
+        Log.d("ADD_EDIT", "New Image saved")
         // Return the saved image URI
         return Uri.parse(file.absolutePath)
     }
@@ -230,6 +230,7 @@ class AddEditPlantActivity : AppCompatActivity() {
         startActivity(homeIntent)
     }
 
+    // TODO: 13-4-2020 improve pickImage() function
     @Suppress("UNUSED_PARAMETER")
     fun pickImage(view: View) {
         // Check runtime permission
@@ -252,12 +253,6 @@ class AddEditPlantActivity : AppCompatActivity() {
             // System OS is < Marshmallow
             openImageGallery()
         }
-    }
-
-    private fun openImageGallery() {
-        val openImageGallery = Intent(Intent.ACTION_GET_CONTENT)
-        openImageGallery.type = "image/*"
-        startActivityForResult(openImageGallery, PICK_IMAGE_CODE)
     }
 
     companion object {
@@ -285,14 +280,20 @@ class AddEditPlantActivity : AppCompatActivity() {
         }
     }
 
-    // Function to set the chosen image as the background of the imageView
-    // TODO: 10-4-2020 Either remove block of code or decide to use an image button
+    private fun openImageGallery() {
+        val openImageGallery = Intent(Intent.ACTION_GET_CONTENT)
+        openImageGallery.type = "image/*"
+        startActivityForResult(openImageGallery, PICK_IMAGE_CODE)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE_CODE) {
+            imageIsChanged = true
+            Log.d("ADD_EDIT", "imageChanged status now is $imageIsChanged")
             image_plant.setImageURI(data?.data)
 
             // Use this when an imageButton is used
-//            new_plant_image_button.setImageURI(data?.data)
+            // new_plant_image_button.setImageURI(data?.data)
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
