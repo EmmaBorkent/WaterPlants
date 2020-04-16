@@ -73,7 +73,7 @@ class AddEditPlantActivity : AppCompatActivity() {
         edit_plant_name.setText(plant.name)
         edit_plant_species.setText(plant.species)
         image_plant.setImageURI(Uri.parse(plant.image))
-        edit_date_plants_needs_water.setText(plant.datePlantNeedsWater.toString())
+        button_date_plants_needs_water.text = plant.datePlantNeedsWater.toString()
         edit_water_every_days.setText(plant.daysToNextWater.toString())
         edit_date_plants_needs_mist.setText(plant.datePlantNeedsMist.toString())
         edit_mist_every_days.setText(plant.daysToNextMist.toString())
@@ -142,7 +142,6 @@ class AddEditPlantActivity : AppCompatActivity() {
         Toast.makeText(this, R.string.new_plant_save_toast, Toast.LENGTH_SHORT).show()
     }
 
-    // TODO: 13-4-2020 improve hasImageSelected() function
     private fun hasImageSelected(): Boolean {
         if (!imageIsChanged) {
             warnToSelectImage()
@@ -158,6 +157,7 @@ class AddEditPlantActivity : AppCompatActivity() {
         ).show()
     }
 
+    // TODO: 14-4-2020 Make only name OR species a required field
     private fun createPlantFromFields() {
         val plantImageUri = saveNewImageToInternalStorage()
         plant.image = plantImageUri.toString()
@@ -178,8 +178,9 @@ class AddEditPlantActivity : AppCompatActivity() {
     }
 
     private fun setOtherPlantFieldsIfTheyExist(plant: Plant) {
-        if (edit_date_plants_needs_water.text.isNotEmpty()) {
-            plant.datePlantNeedsWater = edit_date_plants_needs_water.text.toString().toLong()
+        if (button_date_plants_needs_water.text !== R.string.new_plant_text_water_date.toString()) {
+            // TODO: 16-4-2020 button_date_plants_needs_water.text.toString().toLong() is wrong and needs to be changed to date
+            plant.datePlantNeedsWater = button_date_plants_needs_water.text.toString().toLong()
         }
         if (edit_water_every_days.text.isNotEmpty()) {
             plant.daysToNextWater = edit_water_every_days.text.toString().toLong()
@@ -194,16 +195,10 @@ class AddEditPlantActivity : AppCompatActivity() {
 
     // TODO: 12-4-2020 Improve function, it is too long and has too many comments
     private fun saveNewImageToInternalStorage(): Uri {
-        // Get the image from drawable resource as drawable object
         val drawable = image_plant.drawable as BitmapDrawable
-        // Get the bitmap from drawable object
         val bitmap = drawable.bitmap
-        // Get the context wrapper instance
         val wrapper = ContextWrapper(applicationContext)
-        // Initializing a new file
-        // The below line returns a directory in internal storage
         var file = wrapper.getDir("plant_images", Context.MODE_PRIVATE)
-        // Create a file to save the image
         file = File(file, "${UUID.randomUUID()}.jpg")
 
         try {
@@ -231,6 +226,7 @@ class AddEditPlantActivity : AppCompatActivity() {
     }
 
     // TODO: 13-4-2020 improve pickImage() function
+    // TODO: 16-4-2020 change image to image button and remove pick image button, change image to add picture image
     @Suppress("UNUSED_PARAMETER")
     fun pickImage(view: View) {
         // Check runtime permission
@@ -296,5 +292,12 @@ class AddEditPlantActivity : AppCompatActivity() {
             // new_plant_image_button.setImageURI(data?.data)
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    // TODO: 16-4-2020 change datePicker tag
+    @Suppress("UNUSED_PARAMETER")
+    fun showDatePickerDialog(view: View) {
+        val datePicker = DatePickerFragment()
+        datePicker.show(supportFragmentManager, "datePicker")
     }
 }
