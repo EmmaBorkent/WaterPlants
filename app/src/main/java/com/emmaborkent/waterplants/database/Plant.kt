@@ -7,9 +7,9 @@ class Plant {
     lateinit var species: String
     lateinit var image: String
 
-    var datePlantNeedsWater: Long = 0
-    var daysToNextWater: Long = 0
-    var datePlantNeedsMist: Long = 0
-    var daysToNextMist: Long = 0
+    var datePlantNeedsWater: String = "0"
+    var daysToNextWater: String = "0"
+    var datePlantNeedsMist: String = "0"
+    var daysToNextMist: String = "0"
 
 }

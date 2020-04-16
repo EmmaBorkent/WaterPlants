@@ -1,6 +1,7 @@
 package com.emmaborkent.waterplants.ui
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
@@ -14,6 +15,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.emmaborkent.waterplants.R
@@ -24,13 +27,21 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
+import java.time.LocalDate
 import java.util.*
 
-class AddEditPlantActivity : AppCompatActivity() {
+class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
     private var databaseHandler = PlantDatabaseHandler(this)
     private var plant = Plant()
     private var imageIsChanged: Boolean = false
+
+    private lateinit var clickedButtonView: Button
+
+    companion object {
+        const val PICK_IMAGE_CODE = 1000
+        const val PERMISSION_CODE = 1001
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +49,20 @@ class AddEditPlantActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.new_plant_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupPageContent()
+
+        // TODO: 16-4-2020 Shouldn't I have used onClick method in XML? that way you always need to pass the view
+        button_date_plants_needs_water.setOnClickListener {
+            showDatePickerDialog(
+                button_date_plants_needs_water
+            )
+        }
+
+        button_date_plants_needs_mist.setOnClickListener {
+            showDatePickerDialog(
+                button_date_plants_needs_mist
+            )
+        }
+
     }
 
     private fun setupPageContent() {
@@ -73,10 +98,10 @@ class AddEditPlantActivity : AppCompatActivity() {
         edit_plant_name.setText(plant.name)
         edit_plant_species.setText(plant.species)
         image_plant.setImageURI(Uri.parse(plant.image))
-        button_date_plants_needs_water.text = plant.datePlantNeedsWater.toString()
-        edit_water_every_days.setText(plant.daysToNextWater.toString())
-        edit_date_plants_needs_mist.setText(plant.datePlantNeedsMist.toString())
-        edit_mist_every_days.setText(plant.daysToNextMist.toString())
+        button_date_plants_needs_water.text = plant.datePlantNeedsWater
+        edit_water_every_days.setText(plant.daysToNextWater)
+        button_date_plants_needs_mist.text = plant.datePlantNeedsMist
+        edit_mist_every_days.setText(plant.daysToNextMist)
     }
 
     private fun setupPageToAddPlant() {
@@ -125,6 +150,7 @@ class AddEditPlantActivity : AppCompatActivity() {
         }
     }
 
+    // TODO: 16-4-2020 create warning before removing
     private fun deletePlantFromDatabase() {
         databaseHandler.deletePlant(plantId())
         goBackToHomeScreen()
@@ -172,24 +198,31 @@ class AddEditPlantActivity : AppCompatActivity() {
             val plantImageUri = saveNewImageToInternalStorage()
             plant.image = plantImageUri.toString()
         }
+        // TODO: 16-4-2020 insert apply function to plant
         plant.name = edit_plant_name.text.toString()
         plant.species = edit_plant_species.text.toString()
-        setOtherPlantFieldsIfTheyExist(plant)
+
+        plant.datePlantNeedsWater = button_date_plants_needs_water.text.toString()
+        plant.daysToNextWater = edit_water_every_days.text.toString()
+        plant.datePlantNeedsMist = button_date_plants_needs_mist.text.toString()
+        plant.daysToNextMist = edit_mist_every_days.text.toString()
+
+//        setOtherPlantFieldsIfTheyExist(plant)
     }
 
     private fun setOtherPlantFieldsIfTheyExist(plant: Plant) {
-        if (button_date_plants_needs_water.text !== R.string.new_plant_text_water_date.toString()) {
+        if (button_date_plants_needs_water.text !== "0") {
             // TODO: 16-4-2020 button_date_plants_needs_water.text.toString().toLong() is wrong and needs to be changed to date
-            plant.datePlantNeedsWater = button_date_plants_needs_water.text.toString().toLong()
+            plant.datePlantNeedsWater = button_date_plants_needs_water.text.toString()
         }
         if (edit_water_every_days.text.isNotEmpty()) {
-            plant.daysToNextWater = edit_water_every_days.text.toString().toLong()
+            plant.daysToNextWater = edit_water_every_days.text.toString()
         }
-        if (edit_date_plants_needs_mist.text.isNotEmpty()) {
-            plant.datePlantNeedsMist = edit_date_plants_needs_mist.text.toString().toLong()
+        if (button_date_plants_needs_mist.text.isNotEmpty()) {
+            plant.datePlantNeedsMist = button_date_plants_needs_mist.text.toString()
         }
         if (edit_mist_every_days.text.toString().isNotEmpty()) {
-            plant.daysToNextMist = edit_mist_every_days.text.toString().toLong()
+            plant.daysToNextMist = edit_mist_every_days.text.toString()
         }
     }
 
@@ -251,11 +284,6 @@ class AddEditPlantActivity : AppCompatActivity() {
         }
     }
 
-    companion object {
-        const val PICK_IMAGE_CODE = 1000
-        const val PERMISSION_CODE = 1001
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -296,8 +324,48 @@ class AddEditPlantActivity : AppCompatActivity() {
 
     // TODO: 16-4-2020 change datePicker tag
     @Suppress("UNUSED_PARAMETER")
-    fun showDatePickerDialog(view: View) {
+    fun showDatePickerDialog(clickedButton: Button) {
+        clickedButtonView = clickedButton
         val datePicker = DatePickerFragment()
+
+        if (isEditActivity()) {
+            val args = Bundle()
+            args.putString("DATE", clickedButton.text.toString())
+            datePicker.arguments = args
+        }
+
+//        Log.d("DatePickerDialog", "Send argument is $date")
         datePicker.show(supportFragmentManager, "datePicker")
     }
+
+//    private val dateSetListener =
+//        DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+//            activeDate!![Calendar.YEAR] = year
+//            activeDate!![Calendar.MONTH] = monthOfYear
+//            activeDate!![Calendar.DAY_OF_MONTH] = dayOfMonth
+//            updateDisplay(activeDateDisplay, activeDate)
+//            unregisterDateDisplay()
+//        }
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        // TODO: 16-4-2020 Do something with the date chosen by the user
+        // Two things need to happen, create two functions.
+        // One is that the date needs to be saved to the database
+        // Second is that the date needs to be displayed in the button, but maybe this is done
+        // in the add edit activity.
+
+        val date = LocalDate.of(year, month + 1, dayOfMonth)
+
+        // TODO: 16-4-2020 change depending on which view was clicked
+//        pickedDate = date.toString()
+
+//        updateButton(clickedButtonView, date)
+
+        clickedButtonView.text = date.toString()
+    }
+
+//    private fun updateButton(button: Button, date: LocalDate) {
+//        button.text = date.toString()
+//    }
+
 }

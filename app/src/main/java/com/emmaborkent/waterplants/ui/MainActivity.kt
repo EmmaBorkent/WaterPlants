@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         showAllPlants()
 
 //        PlantDatabaseHandler(this).printAllPlantIds()
+//        PlantDatabaseHandler(this).deleteAllPlants()
 
         // TODO: 10-4-2020 Create function to check amount of plants that need water, can only be done after dates are added to plants
         // TODO: 10-4-2020 Create function that sets the plural of how many plants to water 

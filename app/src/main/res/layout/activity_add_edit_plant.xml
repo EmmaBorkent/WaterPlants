@@ -92,18 +92,27 @@
             app:layout_constraintStart_toStartOf="@id/image_plant"
             app:layout_constraintVertical_bias="0" />
 
+        <TextView
+            android:id="@+id/text_date_plants_needs_water"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_basic"
+            android:layout_marginBottom="@dimen/margin_basic"
+            android:text="@string/new_plant_text_water_date"
+            app:layout_constraintBottom_toTopOf="@id/text_water_every_days"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="10" />
+
         <Button
             android:id="@+id/button_date_plants_needs_water"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_basic"
-            android:drawableStart="@drawable/ic_today_24px"
-            android:text="@string/new_plant_text_water_date"
-            android:textAlignment="textStart"
+            android:layout_marginEnd="@dimen/margin_basic"
+            android:hint="@string/new_plant_edit_hint_mist_date"
             app:layout_constraintBottom_toTopOf="@id/text_water_every_days"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:onClick="showDatePickerDialog"/>
+            app:layout_constraintStart_toStartOf="@+id/edit_water_every_days" />
 
         <TextView
             android:id="@+id/text_water_every_days"
@@ -142,16 +151,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintVertical_bias="10" />
 
-        <EditText
-            android:id="@+id/edit_date_plants_needs_mist"
+        <Button
+            android:id="@+id/button_date_plants_needs_mist"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_basic"
             android:hint="@string/new_plant_edit_hint_mist_date"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/edit_water_every_days"
-            app:layout_constraintTop_toTopOf="@id/text_date_plants_needs_mist"
-            tools:ignore="Autofill" />
+            app:layout_constraintTop_toTopOf="@id/text_date_plants_needs_mist" />
 
         <TextView
             android:id="@+id/text_mist_every_days"

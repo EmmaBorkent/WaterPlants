@@ -16,7 +16,7 @@
     <string name="rv_water_plants_name">Plant Name</string>
     <string name="rv_water_plants_species">Plant Species</string>
 
-    <!-- activity_add_edit_plant.xmlt.xml -->
+    <!-- activity_add_edit_plant.xml -->
     <!-- AddEditPlantActivity.kty.kt -->
     <!-- activity_plant_details.xml -->
     <string name="new_plant_toolbar">Add New Plant</string>
@@ -27,11 +27,10 @@
     <string name="new_plant_species_hint">What is the plant species?</string>
     <string name="new_plant_choose_image">Pick Image</string>
     <string name="new_plant_text_water_date">Water on</string>
-    <string name="new_plant_edit_hint_water_date">20/12/20</string>
     <string name="new_plant_text_water_every">Water again after</string>
     <string name="new_plant_edit_hint_every">Repeat every …</string>
     <string name="new_plant_text_mist_date">Mist on</string>
-    <string name="new_plant_edit_hint_mist_date">20/12/20</string>
+    <string name="new_plant_edit_hint_mist_date">3/2/2020</string>
     <string name="new_plant_text_mist_every">Mist again after</string>
     <string name="new_plant_save_toast">Cannot Save. Please fill in all fields.</string>
 
@@ -57,7 +56,7 @@
         <item quantity="other">every %1$d days</item>
     </plurals>
 
-    <!-- toolbar_menu_add_edit_plant.xmlt.xml -->
+    <!-- toolbar_menu_add_edit_plant.xml -->
     <string name="menu_action_save">Save</string>
     <string name="menu_action_delete">Delete</string>
 
@@ -68,8 +67,5 @@
     <string name="plant_image_description">Plant Image</string>
     <string name="plant_image_water">Water Plant</string>
     <string name="plant_image_drops">Spray Plant</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

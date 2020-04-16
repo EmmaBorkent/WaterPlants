@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import androidx.core.database.getStringOrNull
 
 class PlantDatabaseHandler(context: Context) :
     SQLiteOpenHelper(context,
@@ -19,10 +20,10 @@ class PlantDatabaseHandler(context: Context) :
                 KEY_PLANT_NAME + " TEXT," +
                 KEY_PLANT_SPECIES + " TEXT," +
                 KEY_PLANT_IMAGE + " TEXT," +
-                KEY_PLANT_WATER_DATE + " LONG," +
-                KEY_PLANT_DAYS_NEXT_WATER + " LONG," +
-                KEY_PLANT_MIST_DATE + " LONG," +
-                KEY_PLANT_DAYS_NEXT_MIST + " LONG" + ")"
+                KEY_PLANT_WATER_DATE + " TEXT," +
+                KEY_PLANT_DAYS_NEXT_WATER + " TEXT," +
+                KEY_PLANT_MIST_DATE + " TEXT," +
+                KEY_PLANT_DAYS_NEXT_MIST + " TEXT" + ")"
 
         db?.execSQL(createPlantsTable)
         Log.d("PlantDatabaseHandler", "Database Table Created")
@@ -60,10 +61,10 @@ class PlantDatabaseHandler(context: Context) :
         plant.name = cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))
         plant.species = cursor.getString(cursor.getColumnIndex(KEY_PLANT_SPECIES))
         plant.image = cursor.getString(cursor.getColumnIndex(KEY_PLANT_IMAGE))
-        plant.datePlantNeedsWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
-        plant.daysToNextWater = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_WATER))
-        plant.datePlantNeedsMist = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_MIST_DATE))
-        plant.daysToNextMist = cursor.getLong(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_MIST))
+        plant.datePlantNeedsWater = cursor.getString(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
+        plant.daysToNextWater = cursor.getString(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_WATER))
+        plant.datePlantNeedsMist = cursor.getString(cursor.getColumnIndex(KEY_PLANT_MIST_DATE))
+        plant.daysToNextMist = cursor.getString(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_MIST))
         return plant
     }
 
@@ -134,6 +135,14 @@ class PlantDatabaseHandler(context: Context) :
         db.close()
 
         Log.d("PlantDatabaseHandler", "Plant is Deleted")
+    }
+
+    fun deleteAllPlants() {
+        val db = writableDatabase
+        db.delete(TABLE_NAME, null, null)
+        db.close()
+
+        Log.d("PlantDatabaseHandler", "All plants are deleted")
     }
 
     fun countAllPlants(): Int {

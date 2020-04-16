@@ -8,13 +8,13 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.database.PlantDatabaseHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_plant_details.*
+import java.lang.String.format
 
 
 class PlantDetailsActivity : AppCompatActivity() {
@@ -46,13 +46,13 @@ class PlantDetailsActivity : AppCompatActivity() {
         // TODO: create function to change datePlantNeedsWater to amount of days
         // TODO: 10-4-2020 create function to change plurals text
         text_water_in_days.text = resources
-            .getQuantityString(R.plurals.detail_water_in_days, 1, plant.datePlantNeedsWater)
+            .getQuantityString(R.plurals.detail_water_in_days, 1)
         text_mist_in_days.text = resources
-            .getQuantityString(R.plurals.detail_mist_in_days, 1, plant.datePlantNeedsMist)
+            .getQuantityString(R.plurals.detail_mist_in_days, 2)
         text_water_every_days.text = resources
-            .getQuantityString(R.plurals.detail_water_repeat, 1, plant.daysToNextWater)
+            .getQuantityString(R.plurals.detail_water_repeat, 1)
         text_mist_every_days.text = resources
-            .getQuantityString(R.plurals.detail_mist_repeat, 1, plant.daysToNextMist)
+            .getQuantityString(R.plurals.detail_mist_repeat, 2)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
