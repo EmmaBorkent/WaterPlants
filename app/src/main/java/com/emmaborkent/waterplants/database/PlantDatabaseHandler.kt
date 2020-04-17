@@ -6,13 +6,14 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-import androidx.core.database.getStringOrNull
 
 class PlantDatabaseHandler(context: Context) :
-    SQLiteOpenHelper(context,
+    SQLiteOpenHelper(
+        context,
         DATABASE_NAME, null,
         DATABASE_VERSION
     ) {
+    private val classNameTag: String = PlantDatabaseHandler::class.java.simpleName
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createPlantsTable = "CREATE TABLE " + TABLE_NAME + "(" +
@@ -26,16 +27,14 @@ class PlantDatabaseHandler(context: Context) :
                 KEY_PLANT_DAYS_NEXT_MIST + " TEXT" + ")"
 
         db?.execSQL(createPlantsTable)
-        Log.d("PlantDatabaseHandler", "Database Table Created")
+        Log.d(classNameTag, "Database Table Created")
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
-        Log.d("PlantDatabaseHandler", "Database Upgraded")
+        Log.d(classNameTag, "Database Upgraded")
     }
-
-    // CRUD - Create, Read, Update, Delete
 
     fun savePlantToDatabase(plant: Plant) {
         val db = writableDatabase
@@ -51,7 +50,7 @@ class PlantDatabaseHandler(context: Context) :
         db.insert(TABLE_NAME, null, values)
         db.close()
 
-        Log.d("PlantDatabaseHandler", "New plant is added to database")
+        Log.d(classNameTag, "New plant is added to database")
     }
 
     // TODO: 13-4-2020 improve database functions 
@@ -88,7 +87,7 @@ class PlantDatabaseHandler(context: Context) :
         cursor?.moveToFirst()
         val plant = newPlantInstance(cursor)
         cursor.close()
-        Log.d("PlantDatabaseHandler", "Reading Plant ${plant.id} from Database")
+        Log.d(classNameTag, "Reading Plant ${plant.id} from Database")
         return plant
     }
 
@@ -125,7 +124,7 @@ class PlantDatabaseHandler(context: Context) :
         values.put(KEY_PLANT_MIST_DATE, plant.datePlantNeedsMist)
         values.put(KEY_PLANT_DAYS_NEXT_MIST, plant.daysToNextMist)
 
-        Log.d("PlantDatabaseHandler", "Plant ${plant.id} is Updated")
+        Log.d(classNameTag, "Plant ${plant.id} is Updated")
         return db.update(TABLE_NAME, values, "$KEY_ID=?", arrayOf(plant.id.toString()))
     }
 
@@ -134,7 +133,7 @@ class PlantDatabaseHandler(context: Context) :
         db.delete(TABLE_NAME, "$KEY_ID=?", arrayOf(id.toString()))
         db.close()
 
-        Log.d("PlantDatabaseHandler", "Plant is Deleted")
+        Log.d(classNameTag, "Plant is Deleted")
     }
 
     fun deleteAllPlants() {
@@ -142,7 +141,7 @@ class PlantDatabaseHandler(context: Context) :
         db.delete(TABLE_NAME, null, null)
         db.close()
 
-        Log.d("PlantDatabaseHandler", "All plants are deleted")
+        Log.d(classNameTag, "All plants are deleted")
     }
 
     fun countAllPlants(): Int {
@@ -150,7 +149,7 @@ class PlantDatabaseHandler(context: Context) :
         val countQuery = "SELECT * FROM $TABLE_NAME"
         val cursor = db.rawQuery(countQuery, null)
 
-        Log.d("PlantDatabaseHandler", "There are ${cursor.count} plants in Database")
+        Log.d(classNameTag, "There are ${cursor.count} plants in Database")
         cursor.close()
         return cursor.count
     }
@@ -162,8 +161,7 @@ class PlantDatabaseHandler(context: Context) :
 
         if (cursor.moveToFirst()) {
             do {
-                Log.d("PlantDatabaseHandler",
-                    "Plant ID: ${cursor.getInt(cursor.getColumnIndex(KEY_ID))}")
+                Log.d(classNameTag, "Plant ID: ${cursor.getInt(cursor.getColumnIndex(KEY_ID))}")
             } while (cursor.moveToNext())
         }
 

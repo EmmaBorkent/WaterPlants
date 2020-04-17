@@ -8,8 +8,8 @@ import androidx.fragment.app.DialogFragment
 import java.time.LocalDate
 import java.util.*
 
-
 class DatePickerFragment : DialogFragment() {
+    private val classNameTag: String = DatePickerFragment::class.java.simpleName
 
     // TODO: 16-4-2020 Improve onCreateDialog
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -21,7 +21,7 @@ class DatePickerFragment : DialogFragment() {
 
         if (arguments != null) {
             val getDate = arguments?.getString("DATE")
-            Log.d("DatePickerFragment", "Argument is $getDate")
+            Log.d(classNameTag, "Argument is $getDate")
 
             val date = LocalDate.parse(getDate)
             year = date.year

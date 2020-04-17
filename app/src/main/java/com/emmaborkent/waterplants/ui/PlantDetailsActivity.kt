@@ -14,11 +14,9 @@ import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.database.PlantDatabaseHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_plant_details.*
-import java.lang.String.format
-
 
 class PlantDetailsActivity : AppCompatActivity() {
-
+    private val classNameTag: String = PlantDetailsActivity::class.java.simpleName
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var dbHandler: PlantDatabaseHandler
     private var plantID: Int = 0
@@ -35,7 +33,7 @@ class PlantDetailsActivity : AppCompatActivity() {
 
         // Get data from Intent and use ID to read info from database
         plantID = intent.getIntExtra("PLANT_ID", 0)
-        Log.d("INTENT", "Receiving Intent from MainActivity. Plant ID is: $plantID")
+        Log.d(classNameTag, "Receiving Intent from MainActivity. Plant ID is: $plantID")
 
         // Read plant from database
         dbHandler = PlantDatabaseHandler(this)
@@ -64,7 +62,7 @@ class PlantDetailsActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_edit -> {
                 val editPlantIntent = Intent(this, AddEditPlantActivity::class.java)
-                Log.d("INTENT", "Going to AddEditPlantActivity. Plant ID is: $plantID")
+                Log.d(classNameTag, "Going to AddEditPlantActivity. Plant ID is: $plantID")
                 editPlantIntent.putExtra("PLANT_ID", plantID)
                 startActivity(editPlantIntent)
                 true
@@ -88,15 +86,13 @@ class PlantDetailsActivity : AppCompatActivity() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-
-                // For state logging
                 when (newState) {
-                    BottomSheetBehavior.STATE_EXPANDED -> Log.i("STATE", "Expanded State")
-                    BottomSheetBehavior.STATE_COLLAPSED -> Log.i("STATE", "Collapsed State")
-                    BottomSheetBehavior.STATE_DRAGGING -> Log.i("STATE", "Dragging...")
-                    BottomSheetBehavior.STATE_SETTLING -> Log.i("STATE", "Settling...")
-                    BottomSheetBehavior.STATE_HALF_EXPANDED -> Log.i("STATE", "Half Expended State")
-                    BottomSheetBehavior.STATE_HIDDEN -> Log.i("STATE", "Hidden State")
+                    BottomSheetBehavior.STATE_EXPANDED -> Log.i(classNameTag, "Expanded State")
+                    BottomSheetBehavior.STATE_COLLAPSED -> Log.i(classNameTag, "Collapsed State")
+                    BottomSheetBehavior.STATE_DRAGGING -> Log.i(classNameTag, "Dragging...")
+                    BottomSheetBehavior.STATE_SETTLING -> Log.i(classNameTag, "Settling...")
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> Log.i(classNameTag, "Half Expended State")
+                    BottomSheetBehavior.STATE_HIDDEN -> Log.i(classNameTag, "Hidden State")
                 }
             }
         })

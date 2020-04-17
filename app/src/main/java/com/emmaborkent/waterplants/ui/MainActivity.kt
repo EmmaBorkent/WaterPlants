@@ -16,7 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
+    private val classNameTag: String = MainActivity::class.java.simpleName
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var allPlantsLayoutManager: LinearLayoutManager
     private lateinit var allPlantsAdapter: AllPlantsRecyclerAdapter
@@ -62,12 +62,12 @@ class MainActivity : AppCompatActivity() {
 
                 // For state logging
                 when (newState) {
-                    BottomSheetBehavior.STATE_EXPANDED -> Log.i("STATE", "Expanded State")
-                    BottomSheetBehavior.STATE_COLLAPSED -> Log.i("STATE", "Collapsed State")
-                    BottomSheetBehavior.STATE_DRAGGING -> Log.i("STATE", "Dragging...")
-                    BottomSheetBehavior.STATE_SETTLING -> Log.i("STATE", "Settling...")
-                    BottomSheetBehavior.STATE_HALF_EXPANDED -> Log.i("STATE", "Half Expended State")
-                    BottomSheetBehavior.STATE_HIDDEN -> Log.i("STATE", "Hidden State")
+                    BottomSheetBehavior.STATE_EXPANDED -> Log.i(classNameTag, "Expanded State")
+                    BottomSheetBehavior.STATE_COLLAPSED -> Log.i(classNameTag, "Collapsed State")
+                    BottomSheetBehavior.STATE_DRAGGING -> Log.i(classNameTag, "Dragging...")
+                    BottomSheetBehavior.STATE_SETTLING -> Log.i(classNameTag, "Settling...")
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> Log.i(classNameTag, "Half Expended State")
+                    BottomSheetBehavior.STATE_HIDDEN -> Log.i(classNameTag, "Hidden State")
                 }
             }
         })
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
 
         allPlantsAdapter = AllPlantsRecyclerAdapter(allPlants, this) { plant ->
             val plantDetailsIntent = Intent(this, PlantDetailsActivity::class.java)
-            Log.d("INTENT", "Going to PlantDetailsActivity. Plant ID is: ${plant.id}")
+            Log.d(classNameTag, "Going to PlantDetailsActivity. Plant ID is: ${plant.id}")
             plantDetailsIntent.putExtra("PLANT_ID", plant.id)
             startActivity(plantDetailsIntent)
         }

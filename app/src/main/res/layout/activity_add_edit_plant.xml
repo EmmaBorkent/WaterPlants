@@ -109,7 +109,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_basic"
-            android:hint="@string/new_plant_edit_hint_mist_date"
+            android:hint="@string/new_plant_set_date_hint"
             app:layout_constraintBottom_toTopOf="@id/text_water_every_days"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/edit_water_every_days" />
@@ -156,7 +156,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_basic"
-            android:hint="@string/new_plant_edit_hint_mist_date"
+            android:hint="@string/new_plant_set_date_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/edit_water_every_days"
             app:layout_constraintTop_toTopOf="@id/text_date_plants_needs_mist" />
