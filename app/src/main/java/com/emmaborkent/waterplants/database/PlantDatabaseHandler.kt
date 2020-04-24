@@ -21,8 +21,10 @@ class PlantDatabaseHandler(context: Context) :
                 KEY_PLANT_NAME + " TEXT," +
                 KEY_PLANT_SPECIES + " TEXT," +
                 KEY_PLANT_IMAGE + " TEXT," +
+                KEY_PLANT_NEEDS_WATER + " INTEGER," +
                 KEY_PLANT_WATER_DATE + " TEXT," +
                 KEY_PLANT_DAYS_NEXT_WATER + " TEXT," +
+                KEY_PLANT_NEEDS_MIST + " INTEGER," +
                 KEY_PLANT_MIST_DATE + " TEXT," +
                 KEY_PLANT_DAYS_NEXT_MIST + " TEXT" + ")"
 
