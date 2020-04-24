@@ -6,81 +6,76 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emmaborkent.waterplants.R
+import com.emmaborkent.waterplants.database.ParseFormatDates
 import com.emmaborkent.waterplants.database.Plant
 import com.emmaborkent.waterplants.database.PlantDatabaseHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
+import java.time.LocalDate
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
-    private val classNameTag: String = MainActivity::class.java.simpleName
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+    private val classNameTag: String = MainActivity::class.java.simpleName
+    private lateinit var dbHandler: PlantDatabaseHandler
     private lateinit var allPlantsLayoutManager: LinearLayoutManager
     private lateinit var allPlantsAdapter: AllPlantsRecyclerAdapter
-    private lateinit var dbHandler: PlantDatabaseHandler
+    private lateinit var waterPlantsLayoutManager: LinearLayoutManager
+    private lateinit var waterPlantsAdapter: WaterPlantsRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.main_toolbar))
-
         bottomSheetBehavior = BottomSheetBehavior.from(main_constraint_layout_bottom)
-        bottomSheet()
-
+        setBottomSheet()
         add_new_plant.setOnClickListener {
             val newPlantIntent = Intent(this, AddEditPlantActivity::class.java)
             startActivity(newPlantIntent)
         }
-
-        showAllPlants()
-
-//        PlantDatabaseHandler(this).printAllPlantIds()
-//        PlantDatabaseHandler(this).deleteAllPlants()
-
-        // TODO: 10-4-2020 Create function to check amount of plants that need water, can only be done after dates are added to plants
-        // TODO: 10-4-2020 Create function that sets the plural of how many plants to water 
-
+        Log.d(classNameTag, "Print all plant water dates:")
+        PlantDatabaseHandler(this).printAllPlantWaterDates()
+        showAllPlantsInRecyclerView()
+        // TODO: 10-4-2020 Create function to check amount of plants that need water, can only be
+        //  done after dates are added to plants
+        showPlantsThatNeedWaterToday()
+        // TODO: 10-4-2020 Create function that sets the plural of how many plants to water
     }
 
-    private fun bottomSheet() {
+    private fun setBottomSheet() {
+        calculatePeekHeightForBottomSheet()
+        setBottomSheetCallback()
+    }
 
+    private fun calculatePeekHeightForBottomSheet() {
+        // TODO: 17-4-2020 Check if this goes wrong with screens with different pixel densities
         // Get display height to calculate peekHeight for the Bottom Sheet
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         // This might go wrong with screens with different pixel densities
         val halfScreenHeight = displayMetrics.heightPixels * 0.41
         bottomSheetBehavior.peekHeight = halfScreenHeight.toInt()
+    }
 
+    private fun setBottomSheetCallback() {
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior
         .BottomSheetCallback() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
 
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-
-                // For state logging
-                when (newState) {
-                    BottomSheetBehavior.STATE_EXPANDED -> Log.i(classNameTag, "Expanded State")
-                    BottomSheetBehavior.STATE_COLLAPSED -> Log.i(classNameTag, "Collapsed State")
-                    BottomSheetBehavior.STATE_DRAGGING -> Log.i(classNameTag, "Dragging...")
-                    BottomSheetBehavior.STATE_SETTLING -> Log.i(classNameTag, "Settling...")
-                    BottomSheetBehavior.STATE_HALF_EXPANDED -> Log.i(classNameTag, "Half Expended State")
-                    BottomSheetBehavior.STATE_HIDDEN -> Log.i(classNameTag, "Hidden State")
-                }
-            }
+            override fun onStateChanged(bottomSheet: View, newState: Int) {}
         })
     }
 
-    private fun showAllPlants() {
-        dbHandler = PlantDatabaseHandler(this)
-        val allPlants: ArrayList<Plant> = dbHandler.readAllPlants()
+    private fun showAllPlantsInRecyclerView() {
+        val allPlants = getAllPlantsFromDatabase()
         allPlants.reverse()
-
         allPlantsLayoutManager = GridLayoutManager(this, 2)
         main_recycler_view_all_plants.layoutManager = allPlantsLayoutManager
-
         allPlantsAdapter = AllPlantsRecyclerAdapter(allPlants, this) { plant ->
             val plantDetailsIntent = Intent(this, PlantDetailsActivity::class.java)
             Log.d(classNameTag, "Going to PlantDetailsActivity. Plant ID is: ${plant.id}")
@@ -88,5 +83,54 @@ class MainActivity : AppCompatActivity() {
             startActivity(plantDetailsIntent)
         }
         main_recycler_view_all_plants.adapter = allPlantsAdapter
+    }
+
+    private fun getAllPlantsFromDatabase(): ArrayList<Plant> {
+        dbHandler = PlantDatabaseHandler(this)
+        return dbHandler.readAllPlants()
+    }
+
+    private fun showPlantsThatNeedWaterToday() {
+        val plantsThatNeedWater = getPlantsThatNeedWater()
+        val plantsThatNeedMist = getPlantsThatNeedMist()
+
+        Log.d(classNameTag, "The next plants need water:")
+        for (i in plantsThatNeedWater) {
+            Log.d(classNameTag, "- ${i.name}")
+        }
+        Log.d(classNameTag, "The next plants need mist:")
+        for (i in plantsThatNeedMist) {
+            Log.d(classNameTag, "- ${i.name}")
+        }
+
+        plantsThatNeedWater.addAll(plantsThatNeedMist)
+
+        waterPlantsLayoutManager = LinearLayoutManager(this,
+            LinearLayoutManager.HORIZONTAL, false)
+        main_recycler_view_water_plants.layoutManager = waterPlantsLayoutManager
+        waterPlantsAdapter = WaterPlantsRecyclerAdapter(plantsThatNeedWater, this) { plant ->
+//            val plantDetailsIntent = Intent(this, PlantDetailsActivity::class.java)
+//            Log.d(classNameTag, "Going to PlantDetailsActivity. Plant ID is: ${plant.id}")
+//            plantDetailsIntent.putExtra("PLANT_ID", plant.id)
+//            startActivity(plantDetailsIntent)
+            // TODO: 24-4-2020 Functionality on clicking plant in Plants that Need water Recycler
+            //  view
+            Toast.makeText(this, "Watered ${plant.name} today!", Toast.LENGTH_SHORT).show()
+        }
+        main_recycler_view_water_plants.adapter = waterPlantsAdapter
+    }
+
+    private fun getPlantsThatNeedWater(): ArrayList<Plant> {
+        // TODO: 24-4-2020 make one function of duplicate code
+        val getCurrentDate = LocalDate.now()
+        val dateString = ParseFormatDates().dateToStringDefault(getCurrentDate)
+        Log.d(classNameTag, "The date is: $dateString")
+        return dbHandler.getPlantsThatNeedWaterOnDay(dateString)
+    }
+
+    private fun getPlantsThatNeedMist(): ArrayList<Plant> {
+        val currentDate = LocalDate.now()
+        val dateString = ParseFormatDates().dateToStringDefault(currentDate)
+        return dbHandler.getPlantsThatNeedMistOnDay(dateString)
     }
 }

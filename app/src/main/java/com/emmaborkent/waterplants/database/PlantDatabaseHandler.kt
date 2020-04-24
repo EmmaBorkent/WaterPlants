@@ -50,7 +50,7 @@ class PlantDatabaseHandler(context: Context) :
         db.insert(TABLE_NAME, null, values)
         db.close()
 
-        Log.d(classNameTag, "New plant is added to database")
+        Log.d(classNameTag, "New plant is added to database, date: ${plant.datePlantNeedsWater}")
     }
 
     // TODO: 13-4-2020 improve database functions 
@@ -108,8 +108,8 @@ class PlantDatabaseHandler(context: Context) :
         return allPlants
     }
 
-    fun findPlantsOnDay(startTime: Long, endTime: Long): ArrayList<Plant> {
-        return getPlantsOnDay(startTime, endTime)
+    fun findPlantsOnDay(date: String): ArrayList<Plant> {
+        return getPlantsThatNeedWaterOnDay(date)
     }
 
     // TODO: 13-4-2020 Why has this function a return value? 
@@ -168,24 +168,58 @@ class PlantDatabaseHandler(context: Context) :
         cursor.close()
     }
 
-    fun countPlantsOnDay(startTime: Long, endTime: Long): Int {
-        return getPlantsOnDay(startTime, endTime).count()
+    fun printAllPlantWaterDates() {
+        val db = readableDatabase
+        val queryAllPlants = "SELECT * FROM $TABLE_NAME"
+        val cursor = db.rawQuery(queryAllPlants, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                Log.d(
+                    classNameTag,
+                    "Plant ${cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))}: " +
+                    cursor.getString(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
+                    )
+                    } while (cursor.moveToNext())
+        }
+
+        cursor.close()
     }
 
-    private fun getPlantsOnDay(startTime: Long, endTime: Long): ArrayList<Plant> {
+    fun countPlantsOnDay(date: String): Int {
+        return getPlantsThatNeedWaterOnDay(date).count()
+    }
+
+    fun getPlantsThatNeedWaterOnDay(date: String): ArrayList<Plant> {
+        Log.d(classNameTag, "Received date is: $date")
         val db = readableDatabase
         val allPlantsOnDay: ArrayList<Plant> = ArrayList()
-        val queryPlantsOnDay = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_WATER_DATE >= " +
-                "\"$endTime\" AND $KEY_PLANT_WATER_DATE <= \"$startTime\""
+        val queryPlantsOnDay = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_WATER_DATE <= Date('$date')"
         val cursor = db.rawQuery(queryPlantsOnDay, null)
-
         if (cursor.moveToFirst()) {
             do {
                 val plant = newPlantInstance(cursor)
                 allPlantsOnDay.add(plant)
+                Log.d(classNameTag, "Plant on water date is: ${plant.datePlantNeedsWater}")
             } while (cursor.moveToNext())
         }
+        cursor.close()
+        return allPlantsOnDay
+    }
 
+    fun getPlantsThatNeedMistOnDay(date: String): ArrayList<Plant> {
+        Log.d(classNameTag, "Received date is: $date")
+        val db = readableDatabase
+        val allPlantsOnDay: ArrayList<Plant> = ArrayList()
+        val queryPlantsOnDay = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_MIST_DATE <= Date('$date')"
+        val cursor = db.rawQuery(queryPlantsOnDay, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val plant = newPlantInstance(cursor)
+                allPlantsOnDay.add(plant)
+                Log.d(classNameTag, "Plant on mist date is: ${plant.datePlantNeedsMist}")
+            } while (cursor.moveToNext())
+        }
         cursor.close()
         return allPlantsOnDay
     }

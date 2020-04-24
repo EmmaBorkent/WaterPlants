@@ -14,3 +14,5 @@ const val KEY_PLANT_WATER_DATE: String = "plant_water_date"
 const val KEY_PLANT_DAYS_NEXT_WATER: String = "plant_days_to_next_water"
 const val KEY_PLANT_MIST_DATE: String = "plant_mist_date"
 const val KEY_PLANT_DAYS_NEXT_MIST: String = "plant_days_to_next_mist"
+
+const val DATE_HINT: String = "17-04-20"

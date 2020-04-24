@@ -13,6 +13,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/image_rv_water_plants"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/plant_image_description"
@@ -23,26 +24,33 @@
             tools:srcCompat="@drawable/strelizia" />
 
         <TextView
-            android:id="@+id/rv_text_plant_name"
+            android:id="@+id/text_rv_water_plants_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_basic"
-            app:layout_constraintBottom_toTopOf="@id/rv_text_plant_species"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="576dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/rv_water_plants_name" />
 
         <TextView
-            android:id="@+id/rv_text_plant_species"
+            android:id="@+id/text_rv_water_plants_species"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_basic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_rv_water_plants_name"
             tools:text="@string/rv_water_plants_species" />
 
-
+        <CheckBox
+            android:id="@+id/toggleButton"
+            style="@style/toggleButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/margin_basic"
+            android:button="@drawable/ic_toggle_background"
+            android:checked="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.cardview.widget.CardView>

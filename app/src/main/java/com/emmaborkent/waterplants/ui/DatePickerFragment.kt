@@ -5,35 +5,18 @@ import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.DialogFragment
+import com.emmaborkent.waterplants.database.ParseFormatDates
 import java.time.LocalDate
-import java.util.*
 
 class DatePickerFragment : DialogFragment() {
     private val classNameTag: String = DatePickerFragment::class.java.simpleName
 
-    // TODO: 16-4-2020 Improve onCreateDialog
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
-
-        val year: Int
-        val month: Int
-        val day: Int
-
-        if (arguments != null) {
-            val getDate = arguments?.getString("DATE")
-            Log.d(classNameTag, "Argument is $getDate")
-
-            val date = LocalDate.parse(getDate)
-            year = date.year
-            month = date.monthValue - 1
-            day = date.dayOfMonth
-        } else {
-            val date = Calendar.getInstance()
-            year = date.get(Calendar.YEAR)
-            month = date.get(Calendar.MONTH)
-            day = date.get(Calendar.DAY_OF_MONTH)
-        }
-
+        val date: LocalDate = getDate()
+        val year = date.year
+        val month = date.monthValue - 1
+        val day = date.dayOfMonth
         return DatePickerDialog(
             activity!!,
             activity as AddEditPlantActivity,
@@ -43,4 +26,13 @@ class DatePickerFragment : DialogFragment() {
         )
     }
 
+    private fun getDate(): LocalDate {
+        return if (arguments != null) {
+            val dateFromArguments = arguments?.getString("DATE")
+            Log.d(classNameTag, "Argument is $dateFromArguments")
+            ParseFormatDates().stringToDateLocalized(dateFromArguments!!)
+        } else {
+            LocalDate.now()
+        }
+    }
 }
