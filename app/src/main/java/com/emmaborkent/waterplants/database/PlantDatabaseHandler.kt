@@ -21,12 +21,14 @@ class PlantDatabaseHandler(context: Context) :
                 KEY_PLANT_NAME + " TEXT," +
                 KEY_PLANT_SPECIES + " TEXT," +
                 KEY_PLANT_IMAGE + " TEXT," +
-                KEY_PLANT_NEEDS_WATER + " INTEGER," +
                 KEY_PLANT_WATER_DATE + " TEXT," +
                 KEY_PLANT_DAYS_NEXT_WATER + " TEXT," +
-                KEY_PLANT_NEEDS_MIST + " INTEGER," +
+                KEY_PLANT_NEEDS_WATER + " BOOLEAN NOT NULL CHECK (" +
+                KEY_PLANT_NEEDS_WATER + " IN (0,1))," +
                 KEY_PLANT_MIST_DATE + " TEXT," +
-                KEY_PLANT_DAYS_NEXT_MIST + " TEXT" + ")"
+                KEY_PLANT_DAYS_NEXT_MIST + " TEXT," +
+                KEY_PLANT_NEEDS_MIST + " BOOLEAN NOT NULL CHECK (" +
+                KEY_PLANT_NEEDS_MIST + " IN (0,1)))"
 
         db?.execSQL(createPlantsTable)
         Log.d(classNameTag, "Database Table Created")
@@ -46,8 +48,10 @@ class PlantDatabaseHandler(context: Context) :
         values.put(KEY_PLANT_IMAGE, plant.image)
         values.put(KEY_PLANT_WATER_DATE, plant.datePlantNeedsWater)
         values.put(KEY_PLANT_DAYS_NEXT_WATER, plant.daysToNextWater)
+        values.put(KEY_PLANT_NEEDS_WATER, plant.needsWater)
         values.put(KEY_PLANT_MIST_DATE, plant.datePlantNeedsMist)
         values.put(KEY_PLANT_DAYS_NEXT_MIST, plant.daysToNextMist)
+        values.put(KEY_PLANT_NEEDS_MIST, plant.datePlantNeedsMist)
 
         db.insert(TABLE_NAME, null, values)
         db.close()
@@ -64,9 +68,15 @@ class PlantDatabaseHandler(context: Context) :
         plant.image = cursor.getString(cursor.getColumnIndex(KEY_PLANT_IMAGE))
         plant.datePlantNeedsWater = cursor.getString(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
         plant.daysToNextWater = cursor.getString(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_WATER))
+        plant.needsWater = intToBoolean(cursor.getInt(cursor.getColumnIndex(KEY_PLANT_NEEDS_WATER)))
         plant.datePlantNeedsMist = cursor.getString(cursor.getColumnIndex(KEY_PLANT_MIST_DATE))
         plant.daysToNextMist = cursor.getString(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_MIST))
+        plant.needsMist = intToBoolean(cursor.getInt(cursor.getColumnIndex(KEY_PLANT_NEEDS_MIST)))
         return plant
+    }
+
+    private fun intToBoolean(int: Int): Boolean {
+        return int == 1
     }
 
     fun readPlant(id: Int): Plant {
@@ -80,8 +90,10 @@ class PlantDatabaseHandler(context: Context) :
                 KEY_PLANT_IMAGE,
                 KEY_PLANT_WATER_DATE,
                 KEY_PLANT_DAYS_NEXT_WATER,
+                KEY_PLANT_NEEDS_WATER,
                 KEY_PLANT_MIST_DATE,
-                KEY_PLANT_DAYS_NEXT_MIST
+                KEY_PLANT_DAYS_NEXT_MIST,
+                KEY_PLANT_NEEDS_MIST
             ), "$KEY_ID=?", arrayOf(id.toString()),
             null, null, null, null
         )
@@ -123,8 +135,10 @@ class PlantDatabaseHandler(context: Context) :
         values.put(KEY_PLANT_IMAGE, plant.image)
         values.put(KEY_PLANT_WATER_DATE, plant.datePlantNeedsWater)
         values.put(KEY_PLANT_DAYS_NEXT_WATER, plant.daysToNextWater)
+        values.put(KEY_PLANT_NEEDS_WATER, plant.needsWater)
         values.put(KEY_PLANT_MIST_DATE, plant.datePlantNeedsMist)
         values.put(KEY_PLANT_DAYS_NEXT_MIST, plant.daysToNextMist)
+        values.put(KEY_PLANT_NEEDS_MIST, plant.needsMist)
 
         Log.d(classNameTag, "Plant ${plant.id} is Updated")
         return db.update(TABLE_NAME, values, "$KEY_ID=?", arrayOf(plant.id.toString()))
@@ -174,7 +188,6 @@ class PlantDatabaseHandler(context: Context) :
         val db = readableDatabase
         val queryAllPlants = "SELECT * FROM $TABLE_NAME"
         val cursor = db.rawQuery(queryAllPlants, null)
-
         if (cursor.moveToFirst()) {
             do {
                 Log.d(
@@ -183,6 +196,23 @@ class PlantDatabaseHandler(context: Context) :
                     cursor.getString(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
                     )
                     } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+    }
+
+    fun printAllPlantsThatNeedWater() {
+        val db = readableDatabase
+        val queryAllPlants = "SELECT * FROM $TABLE_NAME"
+        val cursor = db.rawQuery(queryAllPlants, null)
+        if (cursor.moveToFirst()) {
+            do {
+                Log.d(
+                    classNameTag,
+                    "Plant ${cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))}: " +
+                            cursor.getString(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
+                )
+            } while (cursor.moveToNext())
         }
 
         cursor.close()
