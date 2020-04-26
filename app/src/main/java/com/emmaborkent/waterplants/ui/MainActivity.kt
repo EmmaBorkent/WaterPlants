@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(newPlantIntent)
         }
         Log.d(classNameTag, "Print all plant water dates:")
-        PlantDatabaseHandler(this).printAllPlantWaterDates()
+        PlantDatabaseHandler(this).printAllPlantsThatNeedWater()
         showAllPlantsInRecyclerView()
         // TODO: 10-4-2020 Create function to check amount of plants that need water, can only be
         //  done after dates are added to plants

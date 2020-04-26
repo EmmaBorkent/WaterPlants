@@ -34,6 +34,7 @@ class PlantDatabaseHandler(context: Context) :
         Log.d(classNameTag, "Database Table Created")
     }
 
+    // TODO: 26-4-2020 change onUpgrade so that it does not lose all data every time
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
@@ -51,7 +52,7 @@ class PlantDatabaseHandler(context: Context) :
         values.put(KEY_PLANT_NEEDS_WATER, plant.needsWater)
         values.put(KEY_PLANT_MIST_DATE, plant.datePlantNeedsMist)
         values.put(KEY_PLANT_DAYS_NEXT_MIST, plant.daysToNextMist)
-        values.put(KEY_PLANT_NEEDS_MIST, plant.datePlantNeedsMist)
+        values.put(KEY_PLANT_NEEDS_MIST, plant.needsMist)
 
         db.insert(TABLE_NAME, null, values)
         db.close()
@@ -209,12 +210,11 @@ class PlantDatabaseHandler(context: Context) :
             do {
                 Log.d(
                     classNameTag,
-                    "Plant ${cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))}: " +
-                            cursor.getString(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
+                    "Plant ${cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))} needs water? " +
+                            cursor.getInt(cursor.getColumnIndex(KEY_PLANT_NEEDS_WATER))
                 )
             } while (cursor.moveToNext())
         }
-
         cursor.close()
     }
 
