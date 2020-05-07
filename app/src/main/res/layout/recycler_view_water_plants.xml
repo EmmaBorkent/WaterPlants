@@ -8,6 +8,8 @@
     app:cardCornerRadius="@dimen/card_corner"
     app:cardElevation="@dimen/elevation">
 
+    <!-- TODO 07-05-20 improve id's -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -28,7 +30,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_basic"
-            android:layout_marginBottom="576dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/rv_water_plants_name" />
@@ -42,13 +43,23 @@
             app:layout_constraintTop_toBottomOf="@id/text_rv_water_plants_name"
             tools:text="@string/rv_water_plants_species" />
 
+        <!-- TODO 07-05-20 Create style to display date in red -->
+        <TextView
+            android:id="@+id/text_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_basic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/rv_water_plants_date" />
+
         <CheckBox
             android:id="@+id/toggleButton"
             style="@style/toggleButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="@dimen/margin_basic"
-            android:button="@drawable/ic_toggle_background"
+            android:button="@drawable/ic_toggle_water_background"
             android:checked="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
             val newPlantIntent = Intent(this, AddEditPlantActivity::class.java)
             startActivity(newPlantIntent)
         }
-        Log.d(classNameTag, "Print all plant water dates:")
-        PlantDatabaseHandler(this).printAllPlantsThatNeedWater()
+//        Log.d(classNameTag, "Print all plant actions:")
+//        PlantDatabaseHandler(this).printAllPlantsThatNeedWater()
         showAllPlantsInRecyclerView()
         // TODO: 10-4-2020 Create function to check amount of plants that need water, can only be
         //  done after dates are added to plants
@@ -94,21 +94,24 @@ class MainActivity : AppCompatActivity() {
         val plantsThatNeedWater = getPlantsThatNeedWater()
         val plantsThatNeedMist = getPlantsThatNeedMist()
 
-        Log.d(classNameTag, "The next plants need water:")
-        for (i in plantsThatNeedWater) {
-            Log.d(classNameTag, "- ${i.name}")
-        }
-        Log.d(classNameTag, "The next plants need mist:")
-        for (i in plantsThatNeedMist) {
-            Log.d(classNameTag, "- ${i.name}")
+        for (plant in plantsThatNeedWater) {
+            plant.needsWater = true
+            plant.needsMist = false
         }
 
-        plantsThatNeedWater.addAll(plantsThatNeedMist)
+        for (plant in plantsThatNeedMist) {
+            plant.needsWater = false
+            plant.needsMist = true
+        }
+
+        val allPlantsThatNeedWaterOrMist = ArrayList<Plant>()
+        allPlantsThatNeedWaterOrMist.addAll(plantsThatNeedWater)
+        allPlantsThatNeedWaterOrMist.addAll(plantsThatNeedMist)
 
         waterPlantsLayoutManager = LinearLayoutManager(this,
             LinearLayoutManager.HORIZONTAL, false)
         main_recycler_view_water_plants.layoutManager = waterPlantsLayoutManager
-        waterPlantsAdapter = WaterPlantsRecyclerAdapter(plantsThatNeedWater, this) { plant ->
+        waterPlantsAdapter = WaterPlantsRecyclerAdapter(allPlantsThatNeedWaterOrMist, this) { plant ->
 //            val plantDetailsIntent = Intent(this, PlantDetailsActivity::class.java)
 //            Log.d(classNameTag, "Going to PlantDetailsActivity. Plant ID is: ${plant.id}")
 //            plantDetailsIntent.putExtra("PLANT_ID", plant.id)
@@ -124,13 +127,12 @@ class MainActivity : AppCompatActivity() {
         // TODO: 24-4-2020 make one function of duplicate code
         val getCurrentDate = LocalDate.now()
         val dateString = ParseFormatDates().dateToStringDefault(getCurrentDate)
-        Log.d(classNameTag, "The date is: $dateString")
-        return dbHandler.getPlantsThatNeedWaterOnDay(dateString)
+        return dbHandler.getPlantsThatNeedWater(dateString)
     }
 
     private fun getPlantsThatNeedMist(): ArrayList<Plant> {
         val currentDate = LocalDate.now()
         val dateString = ParseFormatDates().dateToStringDefault(currentDate)
-        return dbHandler.getPlantsThatNeedMistOnDay(dateString)
+        return dbHandler.getPlantsThatNeedMist(dateString)
     }
 }

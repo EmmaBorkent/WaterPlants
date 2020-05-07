@@ -2,13 +2,13 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/background"
+        android:id="@+id/background_water"
         android:width="48dp"
         android:height="48dp"
         android:drawable="@android:color/transparent" />
 
     <item
-        android:id="@+id/toggle"
+        android:id="@+id/toggle_water"
         android:width="48dp"
         android:height="48dp"
         android:drawable="@drawable/ic_toggle_water" />

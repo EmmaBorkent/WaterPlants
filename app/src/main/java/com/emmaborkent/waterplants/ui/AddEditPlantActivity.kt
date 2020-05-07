@@ -92,7 +92,6 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         button_date_plants_needs_mist.text = ParseFormatDates()
             .yearMonthDayStringToDayMonthYearString(plant.datePlantNeedsMist)
         edit_mist_every_days.setText(plant.daysToNextMist)
-        Log.d(classNameTag, "Date Plant Needs Water ${plant.datePlantNeedsWater}")
     }
 
     private fun setupPageToAddPlant() {
@@ -104,6 +103,7 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         supportActionBar?.setTitle(R.string.new_plant_toolbar)
     }
 
+    // TODO: 1-5-2020 Might not be necessary  when this is done in Plant Class
     private fun setTodayDateToDateButtons() {
         val localDate = LocalDate.now()
         val dateAsString = ParseFormatDates().dateToStringLocalized(localDate)
@@ -186,6 +186,7 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     private fun createPlantFromViews() {
         val plantImageUri = saveNewImageToInternalStorage()
         // TODO: 24-4-2020 plant.apply is used two times, make a function for it
+        plant = Plant()
         plant.apply {
             name = edit_plant_name.text.toString()
             species = edit_plant_species.text.toString()
@@ -196,6 +197,8 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             datePlantNeedsMist = ParseFormatDates()
                 .dayMonthYearStringToYearMonthDayString(button_date_plants_needs_mist.text.toString())
             daysToNextMist = edit_mist_every_days.text.toString()
+            Log.d(classNameTag, "Plan water date: ${plant.datePlantNeedsWater}, needs water today? ${plant.needsWater}")
+            Log.d(classNameTag, "Plan mist date: ${plant.datePlantNeedsMist}, needs mist today? ${plant.needsMist}")
         }
     }
 
@@ -214,6 +217,8 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             datePlantNeedsMist = ParseFormatDates()
                 .dayMonthYearStringToYearMonthDayString(button_date_plants_needs_mist.text.toString())
             daysToNextMist = edit_mist_every_days.text.toString()
+            Log.d(classNameTag, "Plant water date: ${plant.datePlantNeedsWater}, needs water today? ${plant.needsWater}")
+            Log.d(classNameTag, "Plant mist date: ${plant.datePlantNeedsMist}, needs mist today? ${plant.needsMist}")
         }
     }
 

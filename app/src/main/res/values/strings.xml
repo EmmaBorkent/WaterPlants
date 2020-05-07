@@ -15,6 +15,7 @@
     <!-- recycler_view_all_plants.xml -->
     <string name="rv_water_plants_name">Plant Name</string>
     <string name="rv_water_plants_species">Plant Species</string>
+    <string name="rv_water_plants_date">Date</string>
 
     <!-- activity_add_edit_plant.xml -->
     <!-- AddEditPlantActivity.kty.kt -->

@@ -41,6 +41,8 @@ class PlantDatabaseHandler(context: Context) :
         Log.d(classNameTag, "Database Upgraded")
     }
 
+    // TODO: 13-4-2020 improve database functions
+
     fun savePlantToDatabase(plant: Plant) {
         val db = writableDatabase
         val values = ContentValues()
@@ -58,22 +60,6 @@ class PlantDatabaseHandler(context: Context) :
         db.close()
 
         Log.d(classNameTag, "New plant is added to database, date: ${plant.datePlantNeedsWater}")
-    }
-
-    // TODO: 13-4-2020 improve database functions 
-    private fun newPlantInstance(cursor: Cursor): Plant {
-        val plant = Plant()
-        plant.id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
-        plant.name = cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))
-        plant.species = cursor.getString(cursor.getColumnIndex(KEY_PLANT_SPECIES))
-        plant.image = cursor.getString(cursor.getColumnIndex(KEY_PLANT_IMAGE))
-        plant.datePlantNeedsWater = cursor.getString(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
-        plant.daysToNextWater = cursor.getString(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_WATER))
-        plant.needsWater = intToBoolean(cursor.getInt(cursor.getColumnIndex(KEY_PLANT_NEEDS_WATER)))
-        plant.datePlantNeedsMist = cursor.getString(cursor.getColumnIndex(KEY_PLANT_MIST_DATE))
-        plant.daysToNextMist = cursor.getString(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_MIST))
-        plant.needsMist = intToBoolean(cursor.getInt(cursor.getColumnIndex(KEY_PLANT_NEEDS_MIST)))
-        return plant
     }
 
     private fun intToBoolean(int: Int): Boolean {
@@ -124,7 +110,7 @@ class PlantDatabaseHandler(context: Context) :
     }
 
     fun findPlantsOnDay(date: String): ArrayList<Plant> {
-        return getPlantsThatNeedWaterOnDay(date)
+        return getPlantsThatNeedWater(date)
     }
 
     // TODO: 13-4-2020 Why has this function a return value? 
@@ -210,8 +196,8 @@ class PlantDatabaseHandler(context: Context) :
             do {
                 Log.d(
                     classNameTag,
-                    "Plant ${cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))} needs water? " +
-                            cursor.getInt(cursor.getColumnIndex(KEY_PLANT_NEEDS_WATER))
+                    "${cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))} needs water? " +
+                            intToBoolean(cursor.getInt(cursor.getColumnIndex(KEY_PLANT_NEEDS_WATER)))
                 )
             } while (cursor.moveToNext())
         }
@@ -219,40 +205,51 @@ class PlantDatabaseHandler(context: Context) :
     }
 
     fun countPlantsOnDay(date: String): Int {
-        return getPlantsThatNeedWaterOnDay(date).count()
+        return getPlantsThatNeedWater(date).count()
     }
 
-    fun getPlantsThatNeedWaterOnDay(date: String): ArrayList<Plant> {
-        Log.d(classNameTag, "Received date is: $date")
+    fun getPlantsThatNeedWater(date: String): ArrayList<Plant> {
         val db = readableDatabase
-        val allPlantsOnDay: ArrayList<Plant> = ArrayList()
-        val queryPlantsOnDay = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_WATER_DATE <= Date('$date')"
-        val cursor = db.rawQuery(queryPlantsOnDay, null)
+        val plantsThatNeedWater: ArrayList<Plant> = ArrayList()
+        val queryPlantsThatNeedWater = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_WATER_DATE <= Date('$date')"
+        val cursor = db.rawQuery(queryPlantsThatNeedWater, null)
         if (cursor.moveToFirst()) {
             do {
                 val plant = newPlantInstance(cursor)
-                allPlantsOnDay.add(plant)
-                Log.d(classNameTag, "Plant on water date is: ${plant.datePlantNeedsWater}")
+                plantsThatNeedWater.add(plant)
             } while (cursor.moveToNext())
         }
         cursor.close()
-        return allPlantsOnDay
+        return plantsThatNeedWater
     }
 
-    fun getPlantsThatNeedMistOnDay(date: String): ArrayList<Plant> {
-        Log.d(classNameTag, "Received date is: $date")
+    fun getPlantsThatNeedMist(date: String): ArrayList<Plant> {
         val db = readableDatabase
-        val allPlantsOnDay: ArrayList<Plant> = ArrayList()
-        val queryPlantsOnDay = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_MIST_DATE <= Date('$date')"
-        val cursor = db.rawQuery(queryPlantsOnDay, null)
+        val plantsThatNeedMist: ArrayList<Plant> = ArrayList()
+        val queryPlantsThatNeedMist = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_MIST_DATE <= Date('$date')"
+        val cursor = db.rawQuery(queryPlantsThatNeedMist, null)
         if (cursor.moveToFirst()) {
             do {
                 val plant = newPlantInstance(cursor)
-                allPlantsOnDay.add(plant)
-                Log.d(classNameTag, "Plant on mist date is: ${plant.datePlantNeedsMist}")
+                plantsThatNeedMist.add(plant)
             } while (cursor.moveToNext())
         }
         cursor.close()
-        return allPlantsOnDay
+        return plantsThatNeedMist
+    }
+
+    private fun newPlantInstance(cursor: Cursor): Plant {
+        val plant = Plant()
+        plant.id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
+        plant.name = cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))
+        plant.species = cursor.getString(cursor.getColumnIndex(KEY_PLANT_SPECIES))
+        plant.image = cursor.getString(cursor.getColumnIndex(KEY_PLANT_IMAGE))
+        plant.datePlantNeedsWater = cursor.getString(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
+        plant.daysToNextWater = cursor.getString(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_WATER))
+        plant.needsWater = intToBoolean(cursor.getInt(cursor.getColumnIndex(KEY_PLANT_NEEDS_WATER)))
+        plant.datePlantNeedsMist = cursor.getString(cursor.getColumnIndex(KEY_PLANT_MIST_DATE))
+        plant.daysToNextMist = cursor.getString(cursor.getColumnIndex(KEY_PLANT_DAYS_NEXT_MIST))
+        plant.needsMist = intToBoolean(cursor.getInt(cursor.getColumnIndex(KEY_PLANT_NEEDS_MIST)))
+        return plant
     }
 }
