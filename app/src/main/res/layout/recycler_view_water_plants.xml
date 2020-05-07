@@ -41,18 +41,18 @@
             app:layout_constraintTop_toBottomOf="@id/text_rv_waterplants_name"
             tools:text="@string/rv_water_plants_species" />
 
-        <!-- TODO 07-05-20 Create style to display date in red -->
         <TextView
             android:id="@+id/text_rv_waterplants_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_basic"
+            style="@style/AccentTextColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:text="@string/rv_water_plants_date" />
 
         <CheckBox
-            android:id="@+id/togglebutton_rv_waterplants"
+            android:id="@+id/toggle_rv_waterplants"
             style="@style/toggleButton"
             android:layout_width="48dp"
             android:layout_height="48dp"

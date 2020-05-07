@@ -124,15 +124,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getPlantsThatNeedWater(): ArrayList<Plant> {
-        // TODO: 24-4-2020 make one function of duplicate code
-        val currentDate = LocalDate.now()
-        val dateString = ParseFormatDates().dateToStringDefault(currentDate)
-        return dbHandler.getPlantsThatNeedWater(dateString)
+        return dbHandler.getPlantsThatNeedWater(ParseFormatDates().getDefaultDateString())
     }
 
     private fun getPlantsThatNeedMist(): ArrayList<Plant> {
-        val currentDate = LocalDate.now()
-        val dateString = ParseFormatDates().dateToStringDefault(currentDate)
-        return dbHandler.getPlantsThatNeedMist(dateString)
+        return dbHandler.getPlantsThatNeedMist(ParseFormatDates().getDefaultDateString())
     }
 }

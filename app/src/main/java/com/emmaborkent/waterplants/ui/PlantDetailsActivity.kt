@@ -41,16 +41,18 @@ class PlantDetailsActivity : AppCompatActivity() {
         text_plant_name.text = plant.name
         text_plant_species.text = plant.species
         image_plant.setImageURI(Uri.parse(plant.image))
-        // TODO: create function to change datePlantNeedsWater to amount of days
-        // TODO: 10-4-2020 create function to change plurals text
+        // TODO: create a function to change datePlantNeedsWater to amount of days, don't forget to
+        //  put quantity in twice
         text_water_in_days.text = resources
-            .getQuantityString(R.plurals.detail_water_in_days, 1)
+            .getQuantityString(R.plurals.detail_water_in_days, 1, 1)
         text_mist_in_days.text = resources
-            .getQuantityString(R.plurals.detail_mist_in_days, 2)
+            .getQuantityString(R.plurals.detail_mist_in_days, 2, 2)
+        val waterEveryDays = plant.daysToNextWater.toInt()
+        val mistEveryDays = plant.daysToNextMist.toInt()
         text_water_every_days.text = resources
-            .getQuantityString(R.plurals.detail_water_repeat, 1)
+            .getQuantityString(R.plurals.detail_water_repeat, waterEveryDays, waterEveryDays)
         text_mist_every_days.text = resources
-            .getQuantityString(R.plurals.detail_mist_repeat, 2)
+            .getQuantityString(R.plurals.detail_mist_repeat, mistEveryDays, mistEveryDays)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

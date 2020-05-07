@@ -17,4 +17,8 @@
         <item name="android:buttonStyleToggle">@style/Widget.Button.Toggle</item>
     </style>
 
+    <style name="AccentTextColor" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
 </resources>
