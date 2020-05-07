@@ -8,14 +8,12 @@
     app:cardCornerRadius="@dimen/card_corner"
     app:cardElevation="@dimen/elevation">
 
-    <!-- TODO 07-05-20 improve id's -->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/image_rv_water_plants"
+            android:id="@+id/image_rv_waterplants"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/plant_image_description"
@@ -26,7 +24,7 @@
             tools:srcCompat="@drawable/strelizia" />
 
         <TextView
-            android:id="@+id/text_rv_water_plants_name"
+            android:id="@+id/text_rv_waterplants_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_basic"
@@ -35,17 +33,17 @@
             tools:text="@string/rv_water_plants_name" />
 
         <TextView
-            android:id="@+id/text_rv_water_plants_species"
+            android:id="@+id/text_rv_waterplants_species"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_basic"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_rv_water_plants_name"
+            app:layout_constraintTop_toBottomOf="@id/text_rv_waterplants_name"
             tools:text="@string/rv_water_plants_species" />
 
         <!-- TODO 07-05-20 Create style to display date in red -->
         <TextView
-            android:id="@+id/text_date"
+            android:id="@+id/text_rv_waterplants_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_basic"
@@ -54,7 +52,7 @@
             tools:text="@string/rv_water_plants_date" />
 
         <CheckBox
-            android:id="@+id/toggleButton"
+            android:id="@+id/togglebutton_rv_waterplants"
             style="@style/toggleButton"
             android:layout_width="48dp"
             android:layout_height="48dp"

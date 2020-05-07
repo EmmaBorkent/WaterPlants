@@ -37,15 +37,15 @@ class WaterPlantsRecyclerAdapter(private val plantsList: ArrayList<Plant>,
 
     inner class PlantsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val plantImage =
-            itemView.findViewById<ImageView>(R.id.image_rv_water_plants)
+            itemView.findViewById<ImageView>(R.id.image_rv_waterplants)
         private val plantName =
-            itemView.findViewById<TextView>(R.id.text_rv_water_plants_name)
+            itemView.findViewById<TextView>(R.id.text_rv_waterplants_name)
         private val plantSpecies =
-            itemView.findViewById<TextView>(R.id.text_rv_water_plants_species)
+            itemView.findViewById<TextView>(R.id.text_rv_waterplants_species)
         private val plantIconWaterOrMist =
-            itemView.findViewById<CheckBox>(R.id.toggleButton)
+            itemView.findViewById<CheckBox>(R.id.togglebutton_rv_waterplants)
         private val plantDate =
-            itemView.findViewById<TextView>(R.id.text_date)
+            itemView.findViewById<TextView>(R.id.text_rv_waterplants_date)
 
         fun bindPlants(plant: Plant, clickListener: (Plant) -> Unit) {
             plantImage.setImageURI(Uri.parse(plant.image))
