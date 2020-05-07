@@ -186,7 +186,6 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     private fun createPlantFromViews() {
         val plantImageUri = saveNewImageToInternalStorage()
         // TODO: 24-4-2020 plant.apply is used two times, make a function for it
-        plant = Plant()
         plant.apply {
             name = edit_plant_name.text.toString()
             species = edit_plant_species.text.toString()

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
+// TODO 07-05-20 Can I remove context from constructor?
 class PlantDatabaseHandler(context: Context) :
     SQLiteOpenHelper(
         context,
@@ -23,12 +24,10 @@ class PlantDatabaseHandler(context: Context) :
                 KEY_PLANT_IMAGE + " TEXT," +
                 KEY_PLANT_WATER_DATE + " TEXT," +
                 KEY_PLANT_DAYS_NEXT_WATER + " TEXT," +
-                KEY_PLANT_NEEDS_WATER + " BOOLEAN NOT NULL CHECK (" +
-                KEY_PLANT_NEEDS_WATER + " IN (0,1))," +
+                KEY_PLANT_NEEDS_WATER + " BOOLEAN NOT NULL CHECK (" + KEY_PLANT_NEEDS_WATER + " IN (0,1))," +
                 KEY_PLANT_MIST_DATE + " TEXT," +
                 KEY_PLANT_DAYS_NEXT_MIST + " TEXT," +
-                KEY_PLANT_NEEDS_MIST + " BOOLEAN NOT NULL CHECK (" +
-                KEY_PLANT_NEEDS_MIST + " IN (0,1)))"
+                KEY_PLANT_NEEDS_MIST + " BOOLEAN NOT NULL CHECK (" + KEY_PLANT_NEEDS_MIST + " IN (0,1)))"
 
         db?.execSQL(createPlantsTable)
         Log.d(classNameTag, "Database Table Created")
@@ -204,14 +203,14 @@ class PlantDatabaseHandler(context: Context) :
         cursor.close()
     }
 
-    fun countPlantsOnDay(date: String): Int {
-        return getPlantsThatNeedWater(date).count()
+    fun countPlantsOnDay(dateAsYearMonthDay: String): Int {
+        return getPlantsThatNeedWater(dateAsYearMonthDay).count()
     }
 
-    fun getPlantsThatNeedWater(date: String): ArrayList<Plant> {
+    fun getPlantsThatNeedWater(dateAsYearMonthDay: String): ArrayList<Plant> {
         val db = readableDatabase
         val plantsThatNeedWater: ArrayList<Plant> = ArrayList()
-        val queryPlantsThatNeedWater = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_WATER_DATE <= Date('$date')"
+        val queryPlantsThatNeedWater = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_WATER_DATE <= Date('$dateAsYearMonthDay')"
         val cursor = db.rawQuery(queryPlantsThatNeedWater, null)
         if (cursor.moveToFirst()) {
             do {
@@ -223,10 +222,10 @@ class PlantDatabaseHandler(context: Context) :
         return plantsThatNeedWater
     }
 
-    fun getPlantsThatNeedMist(date: String): ArrayList<Plant> {
+    fun getPlantsThatNeedMist(dateAsYearMonthDate: String): ArrayList<Plant> {
         val db = readableDatabase
         val plantsThatNeedMist: ArrayList<Plant> = ArrayList()
-        val queryPlantsThatNeedMist = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_MIST_DATE <= Date('$date')"
+        val queryPlantsThatNeedMist = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_MIST_DATE <= Date('$dateAsYearMonthDate')"
         val cursor = db.rawQuery(queryPlantsThatNeedMist, null)
         if (cursor.moveToFirst()) {
             do {

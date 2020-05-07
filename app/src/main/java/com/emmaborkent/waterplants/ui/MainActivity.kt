@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         }
 //        Log.d(classNameTag, "Print all plant actions:")
 //        PlantDatabaseHandler(this).printAllPlantsThatNeedWater()
+//        PlantDatabaseHandler(this).deleteAllPlants()
         showAllPlantsInRecyclerView()
         // TODO: 10-4-2020 Create function to check amount of plants that need water, can only be
         //  done after dates are added to plants
@@ -78,7 +79,6 @@ class MainActivity : AppCompatActivity() {
         main_recycler_view_all_plants.layoutManager = allPlantsLayoutManager
         allPlantsAdapter = AllPlantsRecyclerAdapter(allPlants, this) { plant ->
             val plantDetailsIntent = Intent(this, PlantDetailsActivity::class.java)
-            Log.d(classNameTag, "Going to PlantDetailsActivity. Plant ID is: ${plant.id}")
             plantDetailsIntent.putExtra("PLANT_ID", plant.id)
             startActivity(plantDetailsIntent)
         }
@@ -125,8 +125,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun getPlantsThatNeedWater(): ArrayList<Plant> {
         // TODO: 24-4-2020 make one function of duplicate code
-        val getCurrentDate = LocalDate.now()
-        val dateString = ParseFormatDates().dateToStringDefault(getCurrentDate)
+        val currentDate = LocalDate.now()
+        val dateString = ParseFormatDates().dateToStringDefault(currentDate)
         return dbHandler.getPlantsThatNeedWater(dateString)
     }
 

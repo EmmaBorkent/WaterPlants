@@ -13,10 +13,10 @@ class ParseFormatDates {
      * can be used on the saved dates in the database
      */
 
-    private val dayMonthYearFormat: DateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
+    private val formatter: DateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
 
     fun stringToDateLocalized(date: String): LocalDate {
-        return LocalDate.parse(date, dayMonthYearFormat)
+        return LocalDate.parse(date, formatter)
     }
 
     fun yearMonthDayToDate(year: Int, month: Int, day: Int): LocalDate {
@@ -24,7 +24,7 @@ class ParseFormatDates {
     }
 
     fun dateToStringLocalized(date: LocalDate): String {
-        return date.format(dayMonthYearFormat)
+        return date.format(formatter)
     }
 
     private val defaultFormat: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE
@@ -37,11 +37,11 @@ class ParseFormatDates {
         return date.toString()
     }
 
-    fun dayMonthYearStringToYearMonthDayString(date: String): String {
-        return LocalDate.parse(date, dayMonthYearFormat).format(defaultFormat)
+    fun dayMonthYearStringToYearMonthDayString(dateAsDayMonthYear: String): String {
+        return LocalDate.parse(dateAsDayMonthYear, formatter).format(defaultFormat)
     }
 
-    fun yearMonthDayStringToDayMonthYearString(date: String): String {
-        return LocalDate.parse(date, defaultFormat).format(dayMonthYearFormat)
+    fun yearMonthDayStringToDayMonthYearString(dateAsYearMonthDay: String): String {
+        return LocalDate.parse(dateAsYearMonthDay, defaultFormat).format(formatter)
     }
 }

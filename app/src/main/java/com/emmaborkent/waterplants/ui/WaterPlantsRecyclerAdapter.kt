@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.emmaborkent.waterplants.R
+import com.emmaborkent.waterplants.database.ParseFormatDates
 import com.emmaborkent.waterplants.database.Plant
 
 class WaterPlantsRecyclerAdapter(private val plantsList: ArrayList<Plant>,
@@ -54,12 +55,12 @@ class WaterPlantsRecyclerAdapter(private val plantsList: ArrayList<Plant>,
                 plantIconWaterOrMist.buttonDrawable =
                     context.resources.getDrawable(R.drawable.ic_toggle_water_background, null)
                 // TODO 07-05-20 change so that date is only visible if it is not today
-                plantDate.text = plant.datePlantNeedsWater
+                plantDate.text = ParseFormatDates().yearMonthDayStringToDayMonthYearString(plant.datePlantNeedsWater)
             }
             if (plant.needsMist) {
                 plantIconWaterOrMist.buttonDrawable =
                     context.resources.getDrawable(R.drawable.ic_toggle_mist_background, null)
-                plantDate.text = plant.datePlantNeedsMist
+                plantDate.text = ParseFormatDates().yearMonthDayStringToDayMonthYearString(plant.datePlantNeedsMist)
             }
             itemView.setOnClickListener { clickListener(plant) }
         }
