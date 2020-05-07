@@ -52,7 +52,7 @@ class PlantDetailsActivity : AppCompatActivity() {
             .getQuantityString(R.plurals.detail_water_repeat, waterEveryDays, waterEveryDays)
         val mistEveryDays = plant.daysToNextMist.toInt()
         text_mist_every_days.text = resources
-            .getQuantityString(R.plurals.detail_mist_repeat, mistEveryDays)
+            .getQuantityString(R.plurals.detail_mist_repeat, mistEveryDays, mistEveryDays)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

@@ -73,9 +73,7 @@ class MainActivity : AppCompatActivity() {
         allPlantsLayoutManager = GridLayoutManager(this, 2)
         main_recycler_view_all_plants.layoutManager = allPlantsLayoutManager
         allPlantsAdapter = AllPlantsRecyclerAdapter(allPlants, this) { plant ->
-            val plantDetailsIntent = Intent(this, PlantDetailsActivity::class.java)
-            plantDetailsIntent.putExtra("PLANT_ID", plant.id)
-            startActivity(plantDetailsIntent)
+            goToPlantDetailsIntent(plant)
         }
         main_recycler_view_all_plants.adapter = allPlantsAdapter
     }
@@ -110,15 +108,15 @@ class MainActivity : AppCompatActivity() {
         main_recycler_view_water_plants.layoutManager = waterPlantsLayoutManager
         waterPlantsAdapter =
             WaterPlantsRecyclerAdapter(allPlantsThatNeedWaterOrMist, this) { plant ->
-//            val plantDetailsIntent = Intent(this, PlantDetailsActivity::class.java)
-//            Log.d(classNameTag, "Going to PlantDetailsActivity. Plant ID is: ${plant.id}")
-//            plantDetailsIntent.putExtra("PLANT_ID", plant.id)
-//            startActivity(plantDetailsIntent)
-                // TODO: 24-4-2020 Functionality on clicking plant in Plants that Need water Recycler
-                //  view
-                Toast.makeText(this, "Watered ${plant.name} today!", Toast.LENGTH_SHORT).show()
+                goToPlantDetailsIntent(plant)
             }
         main_recycler_view_water_plants.adapter = waterPlantsAdapter
+    }
+
+    private fun goToPlantDetailsIntent(plant: Plant) {
+        val plantDetailsIntent = Intent(this, PlantDetailsActivity::class.java)
+        plantDetailsIntent.putExtra("PLANT_ID", plant.id)
+        startActivity(plantDetailsIntent)
     }
 
     private fun getPlantsThatNeedWater(): ArrayList<Plant> {
