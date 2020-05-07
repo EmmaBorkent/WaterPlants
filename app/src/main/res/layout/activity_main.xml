@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
+    <!-- TODO change ID names -->
+
     <include
         android:id="@+id/main_toolbar"
         layout="@layout/toolbar" />

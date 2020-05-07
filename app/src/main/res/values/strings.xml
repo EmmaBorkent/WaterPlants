@@ -5,10 +5,10 @@
     <string name="main_title">Water Today</string>
     <string name="main_subtitle">You have no plants to water today</string>
     <plurals name="main_subtitle">
-        <item quantity="zero">You have no plants to water today</item>
-        <item quantity="one">You have %s%d plant to water today</item>
-        <item quantity="other">You have %s%d plants to water today</item>
+        <item quantity="one">You have %1$d plant that needs water or mist</item>
+        <item quantity="other">You have %1$d plants that need water or mist</item>
     </plurals>
+    <string name="main_subtitle_zero">You don\'t have to water any plants today</string>
     <string name="main_all_plants">All Plants</string>
 
     <!-- recycler_view_water_plants.xml -->
