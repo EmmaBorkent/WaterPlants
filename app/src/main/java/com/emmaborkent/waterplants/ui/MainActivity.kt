@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,7 +14,6 @@ import com.emmaborkent.waterplants.database.Plant
 import com.emmaborkent.waterplants.database.PlantDatabaseHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_plant_details.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
@@ -120,11 +118,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getPlantsThatNeedWater(): ArrayList<Plant> {
-        return dbHandler.getPlantsThatNeedWater(ParseFormatDates().getDefaultDateString())
+        return dbHandler.getPlantsThatNeedWater(ParseFormatDates().getDefaultDateAsString())
     }
 
     private fun getPlantsThatNeedMist(): ArrayList<Plant> {
-        return dbHandler.getPlantsThatNeedMist(ParseFormatDates().getDefaultDateString())
+        return dbHandler.getPlantsThatNeedMist(ParseFormatDates().getDefaultDateAsString())
     }
 
     private fun setTextHowManyPlantsNeedAction() {

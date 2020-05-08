@@ -45,8 +45,13 @@ class ParseFormatDates {
         return LocalDate.parse(dateAsYearMonthDay, defaultFormat).format(formatter)
     }
 
-    fun getDefaultDateString(): String {
+    fun getDefaultDateAsString(): String {
         val date = LocalDate.now()
         return ParseFormatDates().dateToStringDefault(date)
+    }
+
+    fun getLocalDateAsString(): String {
+        val localDate = LocalDate.now()
+        return ParseFormatDates().dateToStringLocalized(localDate)
     }
 }
