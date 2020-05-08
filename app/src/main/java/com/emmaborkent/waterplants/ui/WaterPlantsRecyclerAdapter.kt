@@ -120,20 +120,15 @@ class WaterPlantsRecyclerAdapter(
             if (checkBoxIcon.isChecked) {
                 val date = ParseFormatDates().stringToDateDefault(plant.datePlantNeedsWater)
                 daysBetweenDateAndToday = Period.between(date, todayDate).days
-                Log.d(classNameTag, "Days between today and date is $daysBetweenDateAndToday")
                 val nextWaterDate = todayDate.plusDays(plant.daysToNextWater.toLong())
                 plant.datePlantNeedsWater = ParseFormatDates().dateToStringDefault(nextWaterDate)
-                Toast.makeText(context, "Checked Water", Toast.LENGTH_SHORT).show()
-                Log.d(classNameTag, "Checked Water. Water Date is ${ParseFormatDates().yearMonthDayStringToDayMonthYearString(plant.datePlantNeedsWater)}")
+                PlantDatabaseHandler(context).updatePlantInDatabase(plant)
             } else {
                 val date = ParseFormatDates().stringToDateDefault(plant.datePlantNeedsWater)
-                // Local date object van yyyy-mm-dd
                 val days = plant.daysToNextWater.toLong() + daysBetweenDateAndToday
-                Log.d(classNameTag, "Days back to old date is $days")
                 val previousWaterDate = date.minusDays(days)
                 plant.datePlantNeedsWater = ParseFormatDates().dateToStringDefault(previousWaterDate)
-                Toast.makeText(context, "Unchecked Water", Toast.LENGTH_SHORT).show()
-                Log.d(classNameTag, "Checked Water. Water Date is ${ParseFormatDates().yearMonthDayStringToDayMonthYearString(plant.datePlantNeedsWater)}")
+                PlantDatabaseHandler(context).updatePlantInDatabase(plant)
             }
         }
 
@@ -141,20 +136,15 @@ class WaterPlantsRecyclerAdapter(
             if (checkBoxIcon.isChecked) {
                 val date = ParseFormatDates().stringToDateDefault(plant.datePlantNeedsMist)
                 daysBetweenDateAndToday = Period.between(date, todayDate).days
-                Log.d(classNameTag, "Days between today and date is $daysBetweenDateAndToday")
                 val nextMistDate = todayDate.plusDays(plant.daysToNextMist.toLong())
                 plant.datePlantNeedsMist = ParseFormatDates().dateToStringDefault(nextMistDate)
-                Toast.makeText(context, "Checked Mist", Toast.LENGTH_SHORT).show()
-                Log.d(classNameTag, "Checked Mist. Mist Date is ${ParseFormatDates().yearMonthDayStringToDayMonthYearString(plant.datePlantNeedsMist)}")
+                PlantDatabaseHandler(context).updatePlantInDatabase(plant)
             } else {
                 val date = ParseFormatDates().stringToDateDefault(plant.datePlantNeedsMist)
-                // Local date object van yyyy-mm-dd
                 val days = plant.daysToNextMist.toLong() + daysBetweenDateAndToday
-                Log.d(classNameTag, "Days back to old date is $days")
                 val previousMistDate = date.minusDays(days)
                 plant.datePlantNeedsMist = ParseFormatDates().dateToStringDefault(previousMistDate)
-                Toast.makeText(context, "Unchecked Mist", Toast.LENGTH_SHORT).show()
-                Log.d(classNameTag, "Checked Mist. Mist Date is ${ParseFormatDates().yearMonthDayStringToDayMonthYearString(plant.datePlantNeedsMist)}")
+                PlantDatabaseHandler(context).updatePlantInDatabase(plant)
             }
         }
     }

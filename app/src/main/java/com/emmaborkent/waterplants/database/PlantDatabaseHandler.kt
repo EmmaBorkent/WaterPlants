@@ -113,7 +113,24 @@ class PlantDatabaseHandler(context: Context) :
     }
 
     // TODO: 13-4-2020 Why has this function a return value? 
-    fun updatePlantInDatabase(plant: Plant): Int {
+//    fun updatePlantInDatabase(plant: Plant): Int {
+//        val db = writableDatabase
+//        val values = ContentValues()
+//        values.put(KEY_PLANT_NAME, plant.name)
+//        values.put(KEY_PLANT_SPECIES, plant.species)
+//        values.put(KEY_PLANT_IMAGE, plant.image)
+//        values.put(KEY_PLANT_WATER_DATE, plant.datePlantNeedsWater)
+//        values.put(KEY_PLANT_DAYS_NEXT_WATER, plant.daysToNextWater)
+//        values.put(KEY_PLANT_NEEDS_WATER, plant.needsWater)
+//        values.put(KEY_PLANT_MIST_DATE, plant.datePlantNeedsMist)
+//        values.put(KEY_PLANT_DAYS_NEXT_MIST, plant.daysToNextMist)
+//        values.put(KEY_PLANT_NEEDS_MIST, plant.needsMist)
+//
+//        Log.d(classNameTag, "Plant ${plant.id} is Updated")
+//        return db.update(TABLE_NAME, values, "$KEY_ID=?", arrayOf(plant.id.toString()))
+//    }
+
+    fun updatePlantInDatabase(plant: Plant) {
         val db = writableDatabase
         val values = ContentValues()
         values.put(KEY_PLANT_NAME, plant.name)
@@ -127,7 +144,7 @@ class PlantDatabaseHandler(context: Context) :
         values.put(KEY_PLANT_NEEDS_MIST, plant.needsMist)
 
         Log.d(classNameTag, "Plant ${plant.id} is Updated")
-        return db.update(TABLE_NAME, values, "$KEY_ID=?", arrayOf(plant.id.toString()))
+        db.update(TABLE_NAME, values, "$KEY_ID=?", arrayOf(plant.id.toString()))
     }
 
     fun deletePlant(id: Int) {
