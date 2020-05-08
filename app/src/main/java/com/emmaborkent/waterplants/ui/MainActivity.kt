@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-    private val classNameTag: String = MainActivity::class.java.simpleName
     private lateinit var dbHandler: PlantDatabaseHandler
     private lateinit var allPlantsLayoutManager: LinearLayoutManager
     private lateinit var allPlantsAdapter: AllPlantsRecyclerAdapter
@@ -32,12 +31,12 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.main_toolbar))
         bottomSheetBehavior = BottomSheetBehavior.from(main_constraint_layout_bottom)
         setBottomSheet()
-        add_new_plant.setOnClickListener {
-            val newPlantIntent = Intent(this, AddEditPlantActivity::class.java)
-            startActivity(newPlantIntent)
-        }
-        showAllPlantsInRecyclerView()
+        add_new_plant.setOnClickListener { goToAddEditPlant() }
+        // TODO: 8-5-2020 showPlantsThatNeedWaterToday depends on setWaterAndMistArray, improve the
+        //  code so that the ArrayLists are always created before the showPlantsThatNeedWaterToday
+        setWaterAndMistArrayLists()
         showPlantsThatNeedWaterToday()
+        showAllPlantsInRecyclerView()
         setTextHowManyPlantsNeedAction()
     }
 
@@ -65,35 +64,28 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun showAllPlantsInRecyclerView() {
-        val allPlants = getAllPlantsFromDatabase()
-        allPlants.reverse()
-        allPlantsLayoutManager = GridLayoutManager(this, 2)
-        main_recycler_view_all_plants.layoutManager = allPlantsLayoutManager
-        allPlantsAdapter = AllPlantsRecyclerAdapter(allPlants, this) { plant ->
-            goToPlantDetailsIntent(plant)
-        }
-        main_recycler_view_all_plants.adapter = allPlantsAdapter
+    private fun goToAddEditPlant() {
+        val newPlantIntent = Intent(this, AddEditPlantActivity::class.java)
+        startActivity(newPlantIntent)
     }
 
-    private fun getAllPlantsFromDatabase(): ArrayList<Plant> {
-        dbHandler = PlantDatabaseHandler(this)
-        return dbHandler.readAllPlants()
-    }
-
-    private fun showPlantsThatNeedWaterToday() {
+    private fun setWaterAndMistArrayLists() {
         plantsThatNeedWater = getPlantsThatNeedWater()
         plantsThatNeedMist = getPlantsThatNeedMist()
+    }
 
-        for (plant in plantsThatNeedWater) {
-            plant.needsWater = true
-            plant.needsMist = false
-        }
+    private fun getPlantsThatNeedWater(): ArrayList<Plant> {
+        return dbHandler.getPlantsThatNeedWater(ParseFormatDates().getDefaultDateAsString())
+    }
 
-        for (plant in plantsThatNeedMist) {
-            plant.needsWater = false
-            plant.needsMist = true
-        }
+    private fun getPlantsThatNeedMist(): ArrayList<Plant> {
+        return dbHandler.getPlantsThatNeedMist(ParseFormatDates().getDefaultDateAsString())
+    }
+
+    // TODO: 8-5-2020 shorten function
+    private fun showPlantsThatNeedWaterToday() {
+        setWaterNeed()
+        setMistNeed()
 
         val allPlantsThatNeedWaterOrMist = ArrayList<Plant>()
         allPlantsThatNeedWaterOrMist.addAll(plantsThatNeedWater)
@@ -106,23 +98,34 @@ class MainActivity : AppCompatActivity() {
         main_recycler_view_water_plants.layoutManager = waterPlantsLayoutManager
         waterPlantsAdapter =
             WaterPlantsRecyclerAdapter(allPlantsThatNeedWaterOrMist, this) { plant ->
-                goToPlantDetailsIntent(plant)
+                goToPlantDetails(plant)
             }
         main_recycler_view_water_plants.adapter = waterPlantsAdapter
     }
 
-    private fun goToPlantDetailsIntent(plant: Plant) {
-        val plantDetailsIntent = Intent(this, PlantDetailsActivity::class.java)
-        plantDetailsIntent.putExtra("PLANT_ID", plant.id)
-        startActivity(plantDetailsIntent)
+    private fun setWaterNeed() {
+        for (plant in plantsThatNeedWater) {
+            plant.needsWater = true
+            plant.needsMist = false
+        }
     }
 
-    private fun getPlantsThatNeedWater(): ArrayList<Plant> {
-        return dbHandler.getPlantsThatNeedWater(ParseFormatDates().getDefaultDateAsString())
+    private fun setMistNeed() {
+        for (plant in plantsThatNeedMist) {
+            plant.needsWater = false
+            plant.needsMist = true
+        }
     }
 
-    private fun getPlantsThatNeedMist(): ArrayList<Plant> {
-        return dbHandler.getPlantsThatNeedMist(ParseFormatDates().getDefaultDateAsString())
+    private fun showAllPlantsInRecyclerView() {
+        val allPlants = getAllPlantsFromDatabase()
+        allPlants.reverse()
+        allPlantsLayoutManager = GridLayoutManager(this, 2)
+        main_recycler_view_all_plants.layoutManager = allPlantsLayoutManager
+        allPlantsAdapter = AllPlantsRecyclerAdapter(allPlants, this) { plant ->
+            goToPlantDetails(plant)
+        }
+        main_recycler_view_all_plants.adapter = allPlantsAdapter
     }
 
     private fun setTextHowManyPlantsNeedAction() {
@@ -133,5 +136,16 @@ class MainActivity : AppCompatActivity() {
         } else {
             main_subtitle.text = resources.getString(R.string.main_subtitle_zero)
         }
+    }
+
+    private fun getAllPlantsFromDatabase(): ArrayList<Plant> {
+        dbHandler = PlantDatabaseHandler(this)
+        return dbHandler.readAllPlants()
+    }
+
+    private fun goToPlantDetails(plant: Plant) {
+        val plantDetailsIntent = Intent(this, PlantDetailsActivity::class.java)
+        plantDetailsIntent.putExtra("PLANT_ID", plant.id)
+        startActivity(plantDetailsIntent)
     }
 }
