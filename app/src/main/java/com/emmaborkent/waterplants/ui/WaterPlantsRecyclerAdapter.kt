@@ -13,8 +13,6 @@ import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.database.ParseFormatDates
 import com.emmaborkent.waterplants.database.Plant
 import com.emmaborkent.waterplants.database.PlantDatabaseHandler
-import java.time.LocalDate
-
 
 class WaterPlantsRecyclerAdapter(
     private val plantsList: ArrayList<Plant>,
@@ -53,9 +51,7 @@ class WaterPlantsRecyclerAdapter(
             itemView.findViewById<CheckBox>(R.id.toggle_rv_waterplants)
         private val plantDate =
             itemView.findViewById<TextView>(R.id.text_rv_waterplants_date)
-        private val todayDate = LocalDate.now()
         private val todayString = ParseFormatDates().getDefaultDateAsString()
-        private var daysBetweenDateAndToday: Int = 0
 
         // TODO: 8-5-2020 Shorten function bindPlants
         fun bindPlants(plant: Plant, clickListener: (Plant) -> Unit) {

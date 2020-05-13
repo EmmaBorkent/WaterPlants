@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.database.ParseFormatDates
+import com.emmaborkent.waterplants.database.Plant
 import com.emmaborkent.waterplants.database.PlantDatabaseHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_plant_details.*
@@ -70,13 +71,24 @@ class PlantDetailsActivity : AppCompatActivity() {
 
         if (todayDate == nextWaterDate) {
             button_give_water.setBackgroundColor(resources.getColor(R.color.colorPrimary, null))
-            button_give_water.setOnClickListener {
-//                button_give_water.buttonDrawable = resources.getDrawable(R.drawable.ic_toggle_water_detail_today, null)
-
+            // TODO: 13-5-2020 Copied the checkbox code from adapter, so it probably needs to be somewhere else
+            if (button_give_water.isChecked) {
+                Plant().giveWater(plant)
+                PlantDatabaseHandler(this).updatePlantInDatabase(plant)
+            } else {
+                Plant().undoWaterGift(plant)
+                PlantDatabaseHandler(this).updatePlantInDatabase(plant)
             }
         }
         if (todayDate == nextMistDate) {
             button_give_mist.setBackgroundColor(resources.getColor(R.color.colorPrimary, null))
+            if (button_give_mist.isChecked) {
+                Plant().giveMist(plant)
+                PlantDatabaseHandler(this).updatePlantInDatabase(plant)
+            } else {
+                Plant().undoGiveMist(plant)
+                PlantDatabaseHandler(this).updatePlantInDatabase(plant)
+            }
         }
     }
 
