@@ -1,24 +1,51 @@
 <resources>
 
+    <!-- TODO
+        - remove material checkbox color
+        - get second green color for top bar
+        - thicken font in recycler views
+        - change color of FAB
+        - change color of buttons / change the weird light green color
+
+    -->
+
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
-<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-<!--        <item name="colorAccent">@color/colorAccent</item>-->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="fontFamily">@font/open_sans_light</item>
+        <item name="android:textSize">16sp</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="plantDetailsBottomSheet" parent="AppTheme">
+        <item name="background">@color/colorGrey</item>
     </style>
 
     <style name="Widget.Button.Toggle" parent="android:Widget">
-        <item name="android:background">@drawable/ic_toggle_water_background</item>
+        <item name="android:background">@drawable/ic_toggle_water_background_icon</item>
         <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
     </style>
 
     <style name="toggleButton"  parent="AppTheme">
         <item name="android:buttonStyleToggle">@style/Widget.Button.Toggle</item>
+        <item name="useMaterialThemeColors">false</item>
     </style>
 
-    <style name="AccentTextColor" parent="TextAppearance.AppCompat">
+    <style name="TextColorAccent" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="TextPlantName" parent="TextAppearance.MaterialComponents.Headline3">
+        <item name="fontFamily">@font/open_sans_extrabold</item>
+    </style>
+
+    <style name="TextPlantSpecies" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="fontFamily">@font/open_sans_light</item>
+    </style>
+
+    <style name="TextOneLine" parent="AppTheme">
+        <item name="android:textSize">20sp</item>
     </style>
 
 </resources>

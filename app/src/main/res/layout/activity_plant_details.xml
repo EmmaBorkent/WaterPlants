@@ -12,26 +12,27 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/image_plant"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/plant_image_description"
+            android:paddingTop="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_plant_species"
             tools:srcCompat="@drawable/strelizia" />
 
         <TextView
             android:id="@+id/text_plant_name"
-            style="@style/TextAppearance.MaterialComponents.Headline3"
+            style="@style/TextPlantName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_basic"
+            android:layout_marginTop="@dimen/margin_basic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,10 +40,9 @@
 
         <TextView
             android:id="@+id/text_plant_species"
-            style="@style/TextAppearance.MaterialComponents.Headline4"
+            style="@style/TextPlantSpecies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_basic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_plant_name"
@@ -59,60 +59,58 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/darker_gray"
                 app:behavior_hideable="false"
-                app:behavior_peekHeight="350dp"
+                app:behavior_peekHeight="250dp"
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
                 <ImageView
-                    android:id="@+id/image_drag_handle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/image_drag_handle_plant_details"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:contentDescription="@string/detail_drag_handle"
+                    android:src="@drawable/ic_drag_handle_black_24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/ic_drag_handle_black_24dp" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/text_give_water"
+                    style="@style/TextOneLine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_basic"
+                    android:layout_margin="@dimen/margin_small"
                     android:text="@string/detail_water_in"
                     app:layout_constraintEnd_toEndOf="@id/button_give_water"
                     app:layout_constraintStart_toStartOf="@id/button_give_water"
-                    app:layout_constraintTop_toBottomOf="@id/image_drag_handle" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/text_give_mist"
+                    style="@style/TextOneLine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_basic"
+                    android:layout_margin="@dimen/margin_small"
                     android:text="@string/detail_pray_in"
                     app:layout_constraintEnd_toEndOf="@id/button_give_mist"
                     app:layout_constraintStart_toStartOf="@id/button_give_mist"
-                    app:layout_constraintTop_toBottomOf="@id/image_drag_handle" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageButton
+                <CheckBox
                     android:id="@+id/button_give_water"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_margin="@dimen/margin_basic"
-                    android:contentDescription="@string/plant_image_water"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_002_drop"
+                    style="@style/toggleButton"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:button="@drawable/ic_toggle_water_background_detail"
                     app:layout_constraintDimensionRatio="1"
                     app:layout_constraintEnd_toStartOf="@id/button_give_mist"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_give_water" />
 
-                <ImageButton
+                <CheckBox
                     android:id="@+id/button_give_mist"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_margin="@dimen/margin_basic"
-                    android:contentDescription="@string/plant_image_drops"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_001_drops"
+                    style="@style/toggleButton"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:button="@drawable/ic_toggle_mist_background_detail"
                     app:layout_constraintDimensionRatio="1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/button_give_water"
@@ -120,9 +118,9 @@
 
                 <TextView
                     android:id="@+id/text_water_in_days"
+                    style="@style/TextOneLine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_basic"
                     app:layout_constraintEnd_toEndOf="@id/button_give_water"
                     app:layout_constraintStart_toStartOf="@id/button_give_water"
                     app:layout_constraintTop_toBottomOf="@id/button_give_water"
@@ -130,9 +128,9 @@
 
                 <TextView
                     android:id="@+id/text_mist_in_days"
+                    style="@style/TextOneLine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_basic"
                     app:layout_constraintEnd_toEndOf="@id/button_give_mist"
                     app:layout_constraintStart_toStartOf="@id/button_give_mist"
                     app:layout_constraintTop_toBottomOf="@id/button_give_mist"
@@ -142,7 +140,6 @@
                     android:id="@+id/text_water_every_days"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
                     app:layout_constraintEnd_toEndOf="@id/text_water_in_days"
                     app:layout_constraintStart_toStartOf="@id/text_water_in_days"
                     app:layout_constraintTop_toBottomOf="@id/text_water_in_days"
@@ -152,7 +149,6 @@
                     android:id="@+id/text_mist_every_days"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
                     app:layout_constraintEnd_toEndOf="@id/text_mist_in_days"
                     app:layout_constraintStart_toStartOf="@id/text_mist_in_days"
                     app:layout_constraintTop_toBottomOf="@id/text_mist_in_days"

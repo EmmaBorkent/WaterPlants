@@ -8,18 +8,27 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.emmaborkent.waterplants.R
+import com.emmaborkent.waterplants.database.ParseFormatDates
 import com.emmaborkent.waterplants.database.PlantDatabaseHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_plant_details.*
+import java.time.LocalDate
+import java.time.LocalDate.now
+import java.time.Period
+import java.util.*
+import kotlin.math.absoluteValue
 
 class PlantDetailsActivity : AppCompatActivity() {
     private val classNameTag: String = PlantDetailsActivity::class.java.simpleName
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var dbHandler: PlantDatabaseHandler
     private var plantID: Int = 0
+    private val todayDate = now()
+    var daysBetweenDateAndToday: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,16 +52,32 @@ class PlantDetailsActivity : AppCompatActivity() {
         image_plant.setImageURI(Uri.parse(plant.image))
         // TODO: create a function to change datePlantNeedsWater to amount of days, don't forget to
         //  put quantity in twice
+        val nextWaterDate = ParseFormatDates().stringToDateDefault(plant.datePlantNeedsWater)
+        val nextMistDate = ParseFormatDates().stringToDateDefault(plant.datePlantNeedsMist)
+        val todayDate = now()
+        val daysToNextWater = Period.between(nextWaterDate, todayDate).days.absoluteValue
+        val daysToNextMist = Period.between(nextMistDate, todayDate).days.absoluteValue
         text_water_in_days.text = resources
-            .getQuantityString(R.plurals.detail_water_in_days, 1, 1)
+            .getQuantityString(R.plurals.detail_water_in_days, daysToNextWater, daysToNextWater)
         text_mist_in_days.text = resources
-            .getQuantityString(R.plurals.detail_mist_in_days, 2, 2)
+            .getQuantityString(R.plurals.detail_mist_in_days, daysToNextMist, daysToNextMist)
         val waterEveryDays = plant.daysToNextWater.toInt()
         text_water_every_days.text = resources
             .getQuantityString(R.plurals.detail_water_repeat, waterEveryDays, waterEveryDays)
         val mistEveryDays = plant.daysToNextMist.toInt()
         text_mist_every_days.text = resources
             .getQuantityString(R.plurals.detail_mist_repeat, mistEveryDays, mistEveryDays)
+
+        if (todayDate == nextWaterDate) {
+            button_give_water.setBackgroundColor(resources.getColor(R.color.colorPrimary, null))
+            button_give_water.setOnClickListener {
+//                button_give_water.buttonDrawable = resources.getDrawable(R.drawable.ic_toggle_water_detail_today, null)
+
+            }
+        }
+        if (todayDate == nextMistDate) {
+            button_give_mist.setBackgroundColor(resources.getColor(R.color.colorPrimary, null))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

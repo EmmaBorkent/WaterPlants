@@ -2,21 +2,18 @@ package com.emmaborkent.waterplants.ui
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.database.ParseFormatDates
 import com.emmaborkent.waterplants.database.Plant
 import com.emmaborkent.waterplants.database.PlantDatabaseHandler
 import java.time.LocalDate
-import java.time.Period
 
 
 class WaterPlantsRecyclerAdapter(
@@ -58,7 +55,7 @@ class WaterPlantsRecyclerAdapter(
             itemView.findViewById<TextView>(R.id.text_rv_waterplants_date)
         private val todayDate = LocalDate.now()
         private val todayString = ParseFormatDates().getDefaultDateAsString()
-        var daysBetweenDateAndToday: Int = 0
+        private var daysBetweenDateAndToday: Int = 0
 
         // TODO: 8-5-2020 Shorten function bindPlants
         fun bindPlants(plant: Plant, clickListener: (Plant) -> Unit) {
@@ -92,12 +89,12 @@ class WaterPlantsRecyclerAdapter(
 
         private fun setWaterIcon() {
             checkBoxIcon.buttonDrawable =
-                context.resources.getDrawable(R.drawable.ic_toggle_water_background, null)
+                context.resources.getDrawable(R.drawable.ic_toggle_water_background_icon, null)
         }
 
         private fun setMistIcon() {
             checkBoxIcon.buttonDrawable =
-                context.resources.getDrawable(R.drawable.ic_toggle_mist_background, null)
+                context.resources.getDrawable(R.drawable.ic_toggle_mist_background_icon, null)
         }
 
         private fun setWaterDate(plant: Plant) {
@@ -118,32 +115,20 @@ class WaterPlantsRecyclerAdapter(
 
         private fun waterCheckBox(plant: Plant) {
             if (checkBoxIcon.isChecked) {
-                val date = ParseFormatDates().stringToDateDefault(plant.datePlantNeedsWater)
-                daysBetweenDateAndToday = Period.between(date, todayDate).days
-                val nextWaterDate = todayDate.plusDays(plant.daysToNextWater.toLong())
-                plant.datePlantNeedsWater = ParseFormatDates().dateToStringDefault(nextWaterDate)
+                Plant().giveWater(plant)
                 PlantDatabaseHandler(context).updatePlantInDatabase(plant)
             } else {
-                val date = ParseFormatDates().stringToDateDefault(plant.datePlantNeedsWater)
-                val days = plant.daysToNextWater.toLong() + daysBetweenDateAndToday
-                val previousWaterDate = date.minusDays(days)
-                plant.datePlantNeedsWater = ParseFormatDates().dateToStringDefault(previousWaterDate)
+                Plant().undoWaterGift(plant)
                 PlantDatabaseHandler(context).updatePlantInDatabase(plant)
             }
         }
 
         private fun mistCheckBox(plant: Plant) {
             if (checkBoxIcon.isChecked) {
-                val date = ParseFormatDates().stringToDateDefault(plant.datePlantNeedsMist)
-                daysBetweenDateAndToday = Period.between(date, todayDate).days
-                val nextMistDate = todayDate.plusDays(plant.daysToNextMist.toLong())
-                plant.datePlantNeedsMist = ParseFormatDates().dateToStringDefault(nextMistDate)
+                Plant().giveMist(plant)
                 PlantDatabaseHandler(context).updatePlantInDatabase(plant)
             } else {
-                val date = ParseFormatDates().stringToDateDefault(plant.datePlantNeedsMist)
-                val days = plant.daysToNextMist.toLong() + daysBetweenDateAndToday
-                val previousMistDate = date.minusDays(days)
-                plant.datePlantNeedsMist = ParseFormatDates().dateToStringDefault(previousMistDate)
+                Plant().undoGiveMist(plant)
                 PlantDatabaseHandler(context).updatePlantInDatabase(plant)
             }
         }
