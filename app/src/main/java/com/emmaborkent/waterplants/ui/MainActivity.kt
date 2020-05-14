@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         // This might go wrong with screens with different pixel densities
-        val halfScreenHeight = displayMetrics.heightPixels * 0.41
+        val halfScreenHeight = displayMetrics.heightPixels * 0.44
         bottomSheetBehavior.peekHeight = halfScreenHeight.toInt()
     }
 

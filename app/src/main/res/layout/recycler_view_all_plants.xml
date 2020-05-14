@@ -27,7 +27,7 @@
                 android:contentDescription="@string/plant_image_description"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toTopOf="@id/rv_all_plants_text"
-                app:layout_constraintDimensionRatio="W,1:1"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

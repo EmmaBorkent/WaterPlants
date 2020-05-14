@@ -26,7 +26,8 @@
             style="@style/TitleMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_basic"
+            android:layout_marginStart="@dimen/margin_basic"
+            android:layout_marginTop="@dimen/margin_small"
             android:text="@string/main_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +36,7 @@
             android:id="@+id/main_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_basic"
+            android:layout_marginStart="@dimen/margin_basic"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_title"
             tools:text="@string/main_subtitle" />
@@ -44,8 +45,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_recycler_view_water_plants"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/margin_small"
+            android:layout_height="wrap_content"
+            app:layout_constraintVertical_bias="0"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/margin_small"
             app:layout_constraintBottom_toTopOf="@id/center_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +82,7 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/white"
                 app:behavior_hideable="false"
-                app:behavior_peekHeight="336dp"
+                app:behavior_peekHeight="366dp"
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
                 <TextView
@@ -87,7 +90,8 @@
                     style="@style/TitleMain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_basic"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/margin_basic"
                     android:text="@string/main_all_plants"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -96,7 +100,8 @@
                     android:id="@+id/main_recycler_view_all_plants"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_margin="@dimen/margin_small"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_small"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
