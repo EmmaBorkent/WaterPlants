@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.emmaborkent.waterplants.R
@@ -17,10 +16,8 @@ import com.emmaborkent.waterplants.database.Plant
 import com.emmaborkent.waterplants.database.PlantDatabaseHandler
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_plant_details.*
-import java.time.LocalDate
 import java.time.LocalDate.now
 import java.time.Period
-import java.util.*
 import kotlin.math.absoluteValue
 
 class PlantDetailsActivity : AppCompatActivity() {
@@ -28,8 +25,6 @@ class PlantDetailsActivity : AppCompatActivity() {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var dbHandler: PlantDatabaseHandler
     private var plantID: Int = 0
-    private val todayDate = now()
-    var daysBetweenDateAndToday: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +67,7 @@ class PlantDetailsActivity : AppCompatActivity() {
 
 
         if (todayDate == nextWaterDate) {
-            button_give_water.setBackgroundColor(resources.getColor(R.color.colorPrimary, null))
+            button_give_water.setBackgroundResource(R.drawable.toggle_water_detail_active)
             button_give_water.setOnClickListener {
                 // TODO: 13-5-2020 Copied the checkbox code from adapter, so it probably needs to be somewhere else
                 if (button_give_water.isChecked) {
@@ -87,7 +82,7 @@ class PlantDetailsActivity : AppCompatActivity() {
             }
         }
         if (todayDate == nextMistDate) {
-            button_give_mist.setBackgroundColor(resources.getColor(R.color.colorPrimary, null))
+            button_give_mist.setBackgroundResource(R.drawable.toggle_mist_detail_active)
             button_give_mist.setOnClickListener {
                 if (button_give_mist.isChecked) {
                     Log.d(classNameTag, "button.give.mist isChecked")
@@ -127,7 +122,7 @@ class PlantDetailsActivity : AppCompatActivity() {
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         // TODO: Setting the screen height this way might go wrong with screens with different pixel densities, think of a fix
-        val halfScreenHeight = displayMetrics.heightPixels * 0.41
+        val halfScreenHeight = displayMetrics.heightPixels * 0.38
         bottomSheetBehavior.peekHeight = halfScreenHeight.toInt()
 
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior

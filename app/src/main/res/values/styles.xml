@@ -16,6 +16,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
     <style name="plantDetailsBottomSheet" parent="AppTheme">
@@ -23,7 +24,7 @@
     </style>
 
     <style name="Widget.Button.Toggle" parent="android:Widget">
-        <item name="android:background">@drawable/ic_toggle_water_background_icon</item>
+        <item name="android:background">@drawable/toggle_water_rv</item>
         <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
     </style>
 
@@ -45,7 +46,7 @@
     </style>
 
     <style name="TextOneLine" parent="AppTheme">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">24sp</item>
     </style>
 
     <style name="TextPlantNameRecyclerView" parent="AppTheme">
@@ -55,5 +56,12 @@
         <item name="fontFamily">@font/open_sans_extrabold</item>
     </style>
 
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/rounded_bottom_sheet</item>
+    </style>
 
 </resources>

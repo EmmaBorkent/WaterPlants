@@ -18,14 +18,14 @@
             android:id="@+id/image_plant"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:adjustViewBounds="true"
             android:contentDescription="@string/plant_image_description"
             android:paddingTop="100dp"
+            android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_plant_species"
-            tools:srcCompat="@drawable/strelizia" />
+            tools:srcCompat="@drawable/plant3" />
 
         <TextView
             android:id="@+id/text_plant_name"
@@ -57,7 +57,7 @@
                 android:id="@+id/constraint_bottom_sheet"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/darker_gray"
+                android:background="@drawable/rounded_bottom_sheet"
                 app:behavior_hideable="false"
                 app:behavior_peekHeight="250dp"
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
@@ -79,8 +79,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small"
                     android:text="@string/detail_water_in"
-                    app:layout_constraintEnd_toEndOf="@id/button_give_water"
-                    app:layout_constraintStart_toStartOf="@id/button_give_water"
+                    app:layout_constraintEnd_toStartOf="@id/image_drag_handle_plant_details"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
@@ -90,8 +90,8 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small"
                     android:text="@string/detail_pray_in"
-                    app:layout_constraintEnd_toEndOf="@id/button_give_mist"
-                    app:layout_constraintStart_toStartOf="@id/button_give_mist"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/image_drag_handle_plant_details"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <CheckBox
@@ -99,10 +99,10 @@
                     style="@style/toggleButton"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:button="@drawable/ic_toggle_water_background_detail"
-                    app:layout_constraintDimensionRatio="1"
-                    app:layout_constraintEnd_toStartOf="@id/button_give_mist"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_margin="@dimen/margin_small"
+                    android:button="@drawable/toggle_water_detail"
+                    app:layout_constraintEnd_toEndOf="@id/text_give_water"
+                    app:layout_constraintStart_toStartOf="@id/text_give_water"
                     app:layout_constraintTop_toBottomOf="@id/text_give_water" />
 
                 <CheckBox
@@ -110,10 +110,11 @@
                     style="@style/toggleButton"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:button="@drawable/ic_toggle_mist_background_detail"
+                    android:layout_margin="@dimen/margin_small"
+                    android:button="@drawable/toggle_mist_detail"
                     app:layout_constraintDimensionRatio="1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/button_give_water"
+                    app:layout_constraintEnd_toEndOf="@id/text_give_mist"
+                    app:layout_constraintStart_toStartOf="@id/text_give_mist"
                     app:layout_constraintTop_toBottomOf="@id/text_give_mist" />
 
                 <TextView

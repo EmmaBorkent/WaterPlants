@@ -59,7 +59,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="@dimen/margin_basic"
-            android:button="@drawable/ic_toggle_water_background_icon"
+            android:button="@drawable/toggle_water_rv"
             android:checked="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

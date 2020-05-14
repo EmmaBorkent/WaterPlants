@@ -3,13 +3,16 @@
 
     <item
         android:width="120dp"
-        android:height="120dp"
-        android:drawable="@color/colorPrimary" />
+        android:height="120dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="60dp" />
+        </shape>
+    </item>
 
     <item
         android:width="80dp"
         android:height="80dp"
-        android:drawable="@drawable/ic_toggle_water"
-        android:gravity="center"/>
+        android:drawable="@drawable/toggle_water"
+        android:gravity="center" />
 
 </layer-list>

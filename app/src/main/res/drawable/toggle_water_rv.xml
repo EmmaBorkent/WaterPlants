@@ -11,6 +11,6 @@
         android:id="@+id/toggle_water"
         android:width="48dp"
         android:height="48dp"
-        android:drawable="@drawable/ic_toggle_water" />
+        android:drawable="@drawable/toggle_water" />
 
 </layer-list>

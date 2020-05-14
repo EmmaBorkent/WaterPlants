@@ -85,7 +85,7 @@ class WaterPlantsRecyclerAdapter(
 
         private fun setWaterIcon() {
             checkBoxIcon.buttonDrawable =
-                context.resources.getDrawable(R.drawable.ic_toggle_water_background_icon, null)
+                context.resources.getDrawable(R.drawable.toggle_water_rv, null)
         }
 
         private fun setMistIcon() {
