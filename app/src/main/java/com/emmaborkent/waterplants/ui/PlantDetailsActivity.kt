@@ -43,8 +43,9 @@ class PlantDetailsActivity : AppCompatActivity() {
 
         // Get data from Intent and use ID to read info from database
         plantID = intent.getIntExtra("PLANT_ID", 0)
-        Log.d(classNameTag, "Receiving Intent from MainActivity. Plant ID is: $plantID")
+        Log.d(classNameTag, "Receiving plantID from Intent: $plantID")
 
+        // TODO: 14-5-2020 Create function to read plant and set it to views, as in EditNewPlantActivity
         // Read plant from database
         dbHandler = PlantDatabaseHandler(this)
         val plant = dbHandler.readPlant(plantID)
@@ -69,25 +70,34 @@ class PlantDetailsActivity : AppCompatActivity() {
         text_mist_every_days.text = resources
             .getQuantityString(R.plurals.detail_mist_repeat, mistEveryDays, mistEveryDays)
 
+
         if (todayDate == nextWaterDate) {
             button_give_water.setBackgroundColor(resources.getColor(R.color.colorPrimary, null))
-            // TODO: 13-5-2020 Copied the checkbox code from adapter, so it probably needs to be somewhere else
-            if (button_give_water.isChecked) {
-                Plant().giveWater(plant)
-                PlantDatabaseHandler(this).updatePlantInDatabase(plant)
-            } else {
-                Plant().undoWaterGift(plant)
-                PlantDatabaseHandler(this).updatePlantInDatabase(plant)
+            button_give_water.setOnClickListener {
+                // TODO: 13-5-2020 Copied the checkbox code from adapter, so it probably needs to be somewhere else
+                if (button_give_water.isChecked) {
+                    Log.d(classNameTag, "button.give.water isChecked")
+                    Plant().giveWater(plant)
+                    PlantDatabaseHandler(this).updatePlantInDatabase(plant)
+                } else {
+                    Log.d(classNameTag, "button.give.water is not checked")
+                    Plant().undoWaterGift(plant)
+                    PlantDatabaseHandler(this).updatePlantInDatabase(plant)
+                }
             }
         }
         if (todayDate == nextMistDate) {
             button_give_mist.setBackgroundColor(resources.getColor(R.color.colorPrimary, null))
-            if (button_give_mist.isChecked) {
-                Plant().giveMist(plant)
-                PlantDatabaseHandler(this).updatePlantInDatabase(plant)
-            } else {
-                Plant().undoGiveMist(plant)
-                PlantDatabaseHandler(this).updatePlantInDatabase(plant)
+            button_give_mist.setOnClickListener {
+                if (button_give_mist.isChecked) {
+                    Log.d(classNameTag, "button.give.mist isChecked")
+                    Plant().giveMist(plant)
+                    PlantDatabaseHandler(this).updatePlantInDatabase(plant)
+                } else {
+                    Log.d(classNameTag, "button.give.mist is not checked")
+                    Plant().undoGiveMist(plant)
+                    PlantDatabaseHandler(this).updatePlantInDatabase(plant)
+                }
             }
         }
     }

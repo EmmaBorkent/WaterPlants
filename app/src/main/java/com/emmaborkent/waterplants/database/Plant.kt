@@ -12,30 +12,33 @@ class Plant {
     lateinit var species: String
     lateinit var image: String
     var needsWater: Boolean = true
-    var datePlantNeedsWater: String by Delegates.observable(ParseFormatDates().getLocalDateAsString()) { property, oldValue, newValue ->
-        Log.d(classNameTag, "The Property $property Old value $oldValue is now New value $newValue")
-        // TODO: 7-5-2020 Create function to calculate if the new date means needsWater is true or false
+
+    // TODO: 14-5-2020 Optimize. This is supposed to be called only on change, but is called every
+    //  single time because the handler is called every time we assign to the property
+    var datePlantNeedsWater: String by Delegates.observable(ParseFormatDates().getLocalDateAsString()) { _, oldValue, newValue ->
+        Log.d(classNameTag, "The datePlantNeedsWater old value is $oldValue and new value is $newValue")
         setNeedsWater(newValue)
     }
     lateinit var daysToNextWater: String
     var needsMist: Boolean = true
-    var datePlantNeedsMist: String by Delegates.observable(ParseFormatDates().getLocalDateAsString()) { property, oldValue, newValue ->
-        Log.d(classNameTag, "The Property $property Old value $oldValue is now New value $newValue")
+    var datePlantNeedsMist: String by Delegates.observable(ParseFormatDates().getLocalDateAsString()) { _, oldValue, newValue ->
+        Log.d(classNameTag, "The datePlantNeedsMist old value is $oldValue and new value is $newValue")
         setNeedsMist(newValue)
     }
     lateinit var daysToNextMist: String
-    var daysBetweenDateAndToday: Int = 0
+    private var daysBetweenDateAndToday: Int = 0
 
     private fun setNeedsWater(date: String) {
         needsWater = checkIfDateIsTodayOrBefore(date)
+        Log.d(classNameTag, "needsWater is $needsWater")
     }
 
     private fun setNeedsMist(date: String) {
         needsMist = checkIfDateIsTodayOrBefore(date)
+        Log.d(classNameTag, "needsMist is $needsMist")
     }
 
     private fun checkIfDateIsTodayOrBefore(date: String): Boolean {
-        Log.d(classNameTag, "checkIfDateIsTodayOrBefore date = $date")
         val dayMonthYear = ParseFormatDates().yearMonthDayStringToDayMonthYearString(date)
         val localDate = ParseFormatDates().stringToDateLocalized(dayMonthYear)
         val currentDate = LocalDate.now()
@@ -43,20 +46,26 @@ class Plant {
     }
 
     fun giveWater(plant: Plant) {
+        Log.d(classNameTag, "giveWater datePlantNeedsWater was ${plant.datePlantNeedsWater}")
         val todayDate = LocalDate.now()
         plant.daysBetweenDateAndToday = Period.between(
             ParseFormatDates().stringToDateDefault(plant.datePlantNeedsWater),
             todayDate
         ).days
+        Log.d(classNameTag, "giveWater daysBetweenDateAndToday is ${plant.daysBetweenDateAndToday}")
         val nextWaterDate = todayDate.plusDays(plant.daysToNextWater.toLong())
         plant.datePlantNeedsWater = ParseFormatDates().dateToStringDefault(nextWaterDate)
+        Log.d(classNameTag, "giveWater datePlantNeedsWater is ${plant.datePlantNeedsWater}")
     }
 
     fun undoWaterGift(plant: Plant) {
+        Log.d(classNameTag, "undoWaterGift datePlantNeedsWater was ${plant.datePlantNeedsWater}")
         val days = plant.daysToNextWater.toLong() + plant.daysBetweenDateAndToday
+        Log.d(classNameTag, "undoWaterGift days is $days")
         val previousWaterDate =
             ParseFormatDates().stringToDateDefault(plant.datePlantNeedsWater).minusDays(days)
         plant.datePlantNeedsWater = ParseFormatDates().dateToStringDefault(previousWaterDate)
+        Log.d(classNameTag, "undoWaterGift datePlantNeedsWater is ${plant.datePlantNeedsWater}")
     }
 
     fun giveMist(plant: Plant) {
