@@ -48,4 +48,12 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="TextPlantNameRecyclerView" parent="AppTheme">
+    </style>
+
+    <style name="TitleMain" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="fontFamily">@font/open_sans_extrabold</item>
+    </style>
+
+
 </resources>
