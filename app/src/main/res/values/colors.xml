@@ -9,6 +9,8 @@
     <color name="colorBackground">#F7F7F7</color>
     <color name="colorOnBackground">#3E3E3E</color>
     <color name="colorTextBody">#828282</color>
+    <color name="colorTextRecyclerView">#FFFFFF</color>
+    <color name="colorTextRecyclerViewDate">@android:color/holo_red_dark</color>
     <color name="colorSurface">#FFFFFF</color>
     <color name="colorOnSurface">#000000</color>
 </resources>

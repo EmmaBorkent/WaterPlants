@@ -45,8 +45,6 @@ class WaterPlantsRecyclerAdapter(
             itemView.findViewById<ImageView>(R.id.image_rv_waterplants)
         private val plantName =
             itemView.findViewById<TextView>(R.id.text_rv_waterplants_name)
-        private val plantSpecies =
-            itemView.findViewById<TextView>(R.id.text_rv_waterplants_species)
         private val checkBoxIcon =
             itemView.findViewById<CheckBox>(R.id.toggle_rv_waterplants)
         private val plantDate =
@@ -57,7 +55,6 @@ class WaterPlantsRecyclerAdapter(
         fun bindPlants(plant: Plant, clickListener: (Plant) -> Unit) {
             plantImage.setImageURI(Uri.parse(plant.image))
             plantName.text = plant.name
-            plantSpecies.text = plant.species
             bindOtherViewsForWaterOrMist(plant)
             itemView.setOnClickListener { clickListener(plant) }
         }
