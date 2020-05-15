@@ -19,7 +19,8 @@ class WaterPlantsRecyclerAdapter(
     private val context: Context,
     private val clickListener: (Plant) -> Unit
 ) : RecyclerView.Adapter<WaterPlantsRecyclerAdapter.PlantsHolder>() {
-    private val classNameTag: String = WaterPlantsRecyclerAdapter::class.java.simpleName
+//    private val classNameTag: String = WaterPlantsRecyclerAdapter::class.java.simpleName
+    val dbHandler = PlantDatabaseHandler.getInstance(context)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -109,20 +110,20 @@ class WaterPlantsRecyclerAdapter(
         private fun waterCheckBox(plant: Plant) {
             if (checkBoxIcon.isChecked) {
                 Plant().giveWater(plant)
-                PlantDatabaseHandler(context).updatePlantInDatabase(plant)
+                dbHandler.updatePlantInDatabase(plant)
             } else {
                 Plant().undoWaterGift(plant)
-                PlantDatabaseHandler(context).updatePlantInDatabase(plant)
+                dbHandler.updatePlantInDatabase(plant)
             }
         }
 
         private fun mistCheckBox(plant: Plant) {
             if (checkBoxIcon.isChecked) {
                 Plant().giveMist(plant)
-                PlantDatabaseHandler(context).updatePlantInDatabase(plant)
+                dbHandler.updatePlantInDatabase(plant)
             } else {
                 Plant().undoGiveMist(plant)
-                PlantDatabaseHandler(context).updatePlantInDatabase(plant)
+                dbHandler.updatePlantInDatabase(plant)
             }
         }
     }

@@ -7,13 +7,12 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
-// TODO 07-05-20 Can I remove context from constructor?
-class PlantDatabaseHandler(context: Context) :
-    SQLiteOpenHelper(
-        context,
-        DATABASE_NAME, null,
-        DATABASE_VERSION
-    ) {
+class PlantDatabaseHandler// ...
+private constructor(context: Context) : SQLiteOpenHelper(
+    context,
+    DATABASE_NAME, null,
+    DATABASE_VERSION
+) {
     private val classNameTag: String = PlantDatabaseHandler::class.java.simpleName
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -38,6 +37,16 @@ class PlantDatabaseHandler(context: Context) :
         db?.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
         Log.d(classNameTag, "Database Upgraded")
+    }
+
+    companion object {
+        private var instance: PlantDatabaseHandler? = null
+        fun getInstance(context: Context): PlantDatabaseHandler {
+            if (instance == null) {
+                instance = PlantDatabaseHandler(context)
+            }
+            return instance!!
+        }
     }
 
     // TODO: 13-4-2020 improve database functions
@@ -143,8 +152,10 @@ class PlantDatabaseHandler(context: Context) :
         values.put(KEY_PLANT_DAYS_NEXT_MIST, plant.daysToNextMist)
         values.put(KEY_PLANT_NEEDS_MIST, plant.needsMist)
 
-        Log.d(classNameTag, "Plant ${plant.id} is Updated")
         db.update(TABLE_NAME, values, "$KEY_ID=?", arrayOf(plant.id.toString()))
+        db.close()
+
+        Log.d(classNameTag, "Plant ${plant.id} is Updated")
     }
 
     fun deletePlant(id: Int) {
@@ -196,9 +207,9 @@ class PlantDatabaseHandler(context: Context) :
                 Log.d(
                     classNameTag,
                     "Plant ${cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))}: " +
-                    cursor.getString(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
-                    )
-                    } while (cursor.moveToNext())
+                            cursor.getString(cursor.getColumnIndex(KEY_PLANT_WATER_DATE))
+                )
+            } while (cursor.moveToNext())
         }
 
         cursor.close()
@@ -227,7 +238,8 @@ class PlantDatabaseHandler(context: Context) :
     fun getPlantsThatNeedWater(dateAsYearMonthDay: String): ArrayList<Plant> {
         val db = readableDatabase
         val plantsThatNeedWater: ArrayList<Plant> = ArrayList()
-        val queryPlantsThatNeedWater = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_WATER_DATE <= Date('$dateAsYearMonthDay')"
+        val queryPlantsThatNeedWater =
+            "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_WATER_DATE <= Date('$dateAsYearMonthDay')"
         val cursor = db.rawQuery(queryPlantsThatNeedWater, null)
         if (cursor.moveToFirst()) {
             do {
@@ -242,7 +254,8 @@ class PlantDatabaseHandler(context: Context) :
     fun getPlantsThatNeedMist(dateAsYearMonthDate: String): ArrayList<Plant> {
         val db = readableDatabase
         val plantsThatNeedMist: ArrayList<Plant> = ArrayList()
-        val queryPlantsThatNeedMist = "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_MIST_DATE <= Date('$dateAsYearMonthDate')"
+        val queryPlantsThatNeedMist =
+            "SELECT * FROM $TABLE_NAME WHERE $KEY_PLANT_MIST_DATE <= Date('$dateAsYearMonthDate')"
         val cursor = db.rawQuery(queryPlantsThatNeedMist, null)
         if (cursor.moveToFirst()) {
             do {

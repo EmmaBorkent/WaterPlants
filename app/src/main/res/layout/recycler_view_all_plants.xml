@@ -35,7 +35,7 @@
 
             <TextView
                 android:id="@+id/rv_all_plants_text"
-                style="@style/TextPlantNameRecyclerView"
+                android:textAppearance="@style/AppTheme.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_small"

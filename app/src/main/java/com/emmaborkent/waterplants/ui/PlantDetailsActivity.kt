@@ -23,7 +23,7 @@ import kotlin.math.absoluteValue
 class PlantDetailsActivity : AppCompatActivity() {
     private val classNameTag: String = PlantDetailsActivity::class.java.simpleName
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-    private lateinit var dbHandler: PlantDatabaseHandler
+    private val dbHandler = PlantDatabaseHandler.getInstance(this)
     private var plantID: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +41,6 @@ class PlantDetailsActivity : AppCompatActivity() {
         Log.d(classNameTag, "Receiving plantID from Intent: $plantID")
 
         // TODO: 14-5-2020 Create function to read plant and set it to views, as in EditNewPlantActivity
-        // Read plant from database
-        dbHandler = PlantDatabaseHandler(this)
         val plant = dbHandler.readPlant(plantID)
         text_plant_name.text = plant.name
         text_plant_species.text = plant.species
@@ -73,11 +71,11 @@ class PlantDetailsActivity : AppCompatActivity() {
                 if (button_give_water.isChecked) {
                     Log.d(classNameTag, "button.give.water isChecked")
                     Plant().giveWater(plant)
-                    PlantDatabaseHandler(this).updatePlantInDatabase(plant)
+                    dbHandler.updatePlantInDatabase(plant)
                 } else {
                     Log.d(classNameTag, "button.give.water is not checked")
                     Plant().undoWaterGift(plant)
-                    PlantDatabaseHandler(this).updatePlantInDatabase(plant)
+                    dbHandler.updatePlantInDatabase(plant)
                 }
             }
         }
@@ -87,11 +85,11 @@ class PlantDetailsActivity : AppCompatActivity() {
                 if (button_give_mist.isChecked) {
                     Log.d(classNameTag, "button.give.mist isChecked")
                     Plant().giveMist(plant)
-                    PlantDatabaseHandler(this).updatePlantInDatabase(plant)
+                    dbHandler.updatePlantInDatabase(plant)
                 } else {
                     Log.d(classNameTag, "button.give.mist is not checked")
                     Plant().undoGiveMist(plant)
-                    PlantDatabaseHandler(this).updatePlantInDatabase(plant)
+                    dbHandler.updatePlantInDatabase(plant)
                 }
             }
         }

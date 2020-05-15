@@ -31,7 +31,7 @@ import java.time.LocalDate
 import java.util.*
 
 class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
-    private var databaseHandler = PlantDatabaseHandler(this)
+    private var dbHandler = PlantDatabaseHandler.getInstance(this)
     private var plant = Plant()
     private var imageIsChanged = false
     private val classNameTag: String = AddEditPlantActivity::class.java.simpleName
@@ -75,7 +75,8 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     }
 
     private fun getPlantFromDatabase() {
-        plant = databaseHandler.readPlant(plantId())
+        plant = dbHandler.readPlant(plantId())
+        dbHandler.close()
     }
 
     private fun plantId(): Int {
@@ -136,7 +137,8 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     private fun createNewPlantAndSaveToDatabase() {
         if (!hasEmptyTextViews() && hasImageSelected()) {
             createPlantFromViews()
-            databaseHandler.savePlantToDatabase(plant)
+            dbHandler.savePlantToDatabase(plant)
+            dbHandler.close()
             goBackToHomeScreen()
         }
     }
@@ -144,14 +146,16 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     private fun updatePlantInDatabase() {
         if (!hasEmptyTextViews()) {
             updatePlantFromViews()
-            databaseHandler.updatePlantInDatabase(plant)
+            dbHandler.updatePlantInDatabase(plant)
+            dbHandler.close()
             goBackToHomeScreen()
         }
     }
 
     // TODO: 16-4-2020 create warning before deleting plant
     private fun deletePlantFromDatabase() {
-        databaseHandler.deletePlant(plantId())
+        dbHandler.deletePlant(plantId())
+        dbHandler.close()
         goBackToHomeScreen()
     }
 
@@ -227,14 +231,18 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         val wrapper = ContextWrapper(applicationContext)
         var file = wrapper.getDir("plant_images", Context.MODE_PRIVATE)
         file = File(file, "${UUID.randomUUID()}.jpg")
+        val stream: OutputStream = FileOutputStream(file)
         try {
-            val stream: OutputStream = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             stream.flush()
-            stream.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
+        } finally {
+            try {
+                stream.close()
+            } catch (e: IOException) {
+                Log.e(classNameTag, "Closing OutputStream Failed")
+            }
         }
+
         Log.d(classNameTag, "New Image saved")
         return Uri.parse(file.absolutePath)
     }

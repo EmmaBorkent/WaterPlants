@@ -16,8 +16,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    private val dbHandler = PlantDatabaseHandler.getInstance(this)
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-    private var dbHandler = PlantDatabaseHandler(this)
     private lateinit var allPlantsLayoutManager: LinearLayoutManager
     private lateinit var allPlantsAdapter: AllPlantsRecyclerAdapter
     private lateinit var waterPlantsLayoutManager: LinearLayoutManager
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         // This might go wrong with screens with different pixel densities
-        val halfScreenHeight = displayMetrics.heightPixels * 0.48
+        val halfScreenHeight = displayMetrics.heightPixels * 0.28
         bottomSheetBehavior.peekHeight = halfScreenHeight.toInt()
     }
 
@@ -139,7 +139,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getAllPlantsFromDatabase(): ArrayList<Plant> {
-        dbHandler = PlantDatabaseHandler(this)
         return dbHandler.readAllPlants()
     }
 
