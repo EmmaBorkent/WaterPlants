@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Water Plants</string>
+    <string name="app_name">Plante Water Plants</string>
 
     <!-- activity_main.xml -->
-    <string name="main_title">Water Today</string>
+    <string name="main_title">Water today</string>
     <string name="main_subtitle">You have no plants to water today</string>
     <plurals name="main_subtitle">
         <item quantity="one">You have %1$d plant that needs water or mist</item>
@@ -65,7 +65,5 @@
 
     <!-- Plant Image Description -->
     <string name="plant_image_description">Plant Image</string>
-    <string name="plant_image_water">Water Plant</string>
-    <string name="plant_image_drops">Spray Plant</string>
 
 </resources>

@@ -13,30 +13,29 @@
         layout="@layout/toolbar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/main_container_top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        android:background="?attr/colorButtonNormal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/main_title"
-            style="@style/TitleMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_basic"
-            android:layout_marginTop="@dimen/margin_small"
+            android:layout_marginTop="@dimen/margin_basic"
             android:text="@string/main_title"
+            android:textAppearance="@style/AppTheme.Headline1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/main_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_basic"
+            android:textAppearance="@style/AppTheme.Body1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_title"
             tools:text="@string/main_subtitle" />
@@ -46,28 +45,20 @@
             android:id="@+id/main_recycler_view_water_plants"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintVertical_bias="0"
             android:layout_marginStart="@dimen/margin_small"
             android:layout_marginEnd="@dimen/margin_small"
-            app:layout_constraintBottom_toTopOf="@id/center_guideline"
+            android:layout_marginTop="@dimen/margin_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_subtitle"
+            app:layout_constraintVertical_bias="0"
             tools:itemCount="3"
             tools:layoutManager="GridLayoutManager"
             tools:listitem="@layout/recycler_view_water_plants"
             tools:orientation="horizontal"
             tools:spanCount="1" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/center_guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5" />
-
         <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -82,7 +73,7 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/white"
                 app:behavior_hideable="false"
-                app:behavior_peekHeight="366dp"
+                app:behavior_peekHeight="420dp"
                 app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
                 <TextView
@@ -90,8 +81,8 @@
                     style="@style/TitleMain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginStart="@dimen/margin_basic"
+                    android:layout_marginTop="@dimen/margin_small"
                     android:text="@string/main_all_plants"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

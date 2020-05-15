@@ -6,21 +6,53 @@
         - thicken font in recycler views
         - change color of FAB
         - change color of buttons / change the weird light green color
-
     -->
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="fontFamily">@font/open_sans_light</item>
-        <item name="android:textSize">16sp</item>
+        <item name="bottomSheetDialogTheme">@style/PlantDetailBottomSheet</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <!--        <item name="colorError">@color/my_app_error_color</item>-->
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorOnPrimary">@color/colorPrimary</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+        <!--        <item name="colorOnError">@color/my_app_color_on_error</item>-->
+        <!--        <item name="scrimBackground">@color/mtrl_scrim_color</item>-->
+        <item name="textAppearanceHeadline1">@style/TextAppearance.MaterialComponents.Headline1
+        </item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.MaterialComponents.Headline2
+        </item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.MaterialComponents.Headline3
+        </item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.MaterialComponents.Headline4
+        </item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.MaterialComponents.Headline5
+        </item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.MaterialComponents.Headline6
+        </item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.MaterialComponents.Subtitle1
+        </item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.MaterialComponents.Subtitle2
+        </item>
+        <item name="textAppearanceBody1">@style/TextAppearance.MaterialComponents.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.MaterialComponents.Body2</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.MaterialComponents.Caption</item>
+        <item name="textAppearanceButton">@style/TextAppearance.MaterialComponents.Button</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.Overline</item>
     </style>
 
-    <style name="plantDetailsBottomSheet" parent="AppTheme">
-        <item name="background">@color/colorGrey</item>
+    <style name="AppTheme.Headline1" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/colorOnBackground</item>
+    </style>
+
+    <style name="AppTheme.Body1" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:textColor">@color/colorTextBody</item>
     </style>
 
     <style name="Widget.Button.Toggle" parent="android:Widget">
@@ -28,13 +60,13 @@
         <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
     </style>
 
-    <style name="toggleButton"  parent="AppTheme">
+    <style name="toggleButton" parent="AppTheme">
         <item name="android:buttonStyleToggle">@style/Widget.Button.Toggle</item>
         <item name="useMaterialThemeColors">false</item>
     </style>
 
     <style name="TextColorAccent" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/colorAccent</item>
+        <!--        <item name="android:textColor">@color/colorAccent</item>-->
     </style>
 
     <style name="TextPlantName" parent="TextAppearance.MaterialComponents.Headline3">
@@ -49,18 +81,17 @@
         <item name="android:textSize">24sp</item>
     </style>
 
-    <style name="TextPlantNameRecyclerView" parent="AppTheme">
-    </style>
+    <style name="TextPlantNameRecyclerView" parent="AppTheme"></style>
 
     <style name="TitleMain" parent="TextAppearance.MaterialComponents.Headline4">
         <item name="fontFamily">@font/open_sans_extrabold</item>
     </style>
 
-    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
-        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    <style name="PlantDetailBottomSheet" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/RoundedBottomSheet</item>
     </style>
 
-    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+    <style name="RoundedBottomSheet" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/rounded_bottom_sheet</item>
     </style>
 

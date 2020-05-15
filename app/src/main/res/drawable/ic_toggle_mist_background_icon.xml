@@ -2,13 +2,11 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/background_mist"
         android:width="48dp"
         android:height="48dp"
         android:drawable="@android:color/transparent" />
 
     <item
-        android:id="@+id/toggle_mist"
         android:width="48dp"
         android:height="48dp"
         android:drawable="@drawable/toggle_mist" />
