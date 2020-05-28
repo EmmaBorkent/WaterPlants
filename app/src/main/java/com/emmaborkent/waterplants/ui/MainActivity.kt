@@ -87,6 +87,9 @@ class MainActivity : AppCompatActivity() {
         setWaterNeed()
         setMistNeed()
 
+        main_recycler_view_water_plants.setHasFixedSize(true)
+        main_recycler_view_water_plants.setItemViewCacheSize(10)
+
         val allPlantsThatNeedWaterOrMist = ArrayList<Plant>()
         allPlantsThatNeedWaterOrMist.addAll(plantsThatNeedWater)
         allPlantsThatNeedWaterOrMist.addAll(plantsThatNeedMist)
@@ -120,6 +123,9 @@ class MainActivity : AppCompatActivity() {
     private fun showAllPlantsInRecyclerView() {
         val allPlants = getAllPlantsFromDatabase()
         allPlants.reverse()
+
+        main_recycler_view_all_plants.setItemViewCacheSize(10)
+
         allPlantsLayoutManager = GridLayoutManager(this, 2)
         main_recycler_view_all_plants.layoutManager = allPlantsLayoutManager
         allPlantsAdapter = AllPlantsRecyclerAdapter(allPlants, this) { plant ->

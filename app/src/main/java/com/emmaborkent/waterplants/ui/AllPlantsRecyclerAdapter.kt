@@ -1,7 +1,8 @@
 package com.emmaborkent.waterplants.ui
 
 import android.content.Context
-import android.net.Uri
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,14 +35,16 @@ class AllPlantsRecyclerAdapter(private val plantsList: ArrayList<Plant>,
     }
 
     inner class PlantsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         private val plantImage = itemView
             .findViewById<ImageView>(R.id.rv_all_plants_image)
         private val plantName = itemView
             .findViewById<TextView>(R.id.rv_all_plants_text)
 
         fun bindPlants(plant: Plant, clickListener: (Plant) -> Unit) {
-            plantImage.setImageURI(Uri.parse(plant.image))
+            val bitmapOptions = BitmapFactory.Options()
+            bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565
+            val plantBitmapImage = BitmapFactory.decodeFile(plant.image, bitmapOptions)
+            plantImage.setImageBitmap(plantBitmapImage)
             plantName.text = plant.name
             itemView.setOnClickListener { clickListener(plant) }
         }
