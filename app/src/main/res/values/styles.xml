@@ -6,6 +6,7 @@
         - thicken font in recycler views
         - change color of FAB
         - change color of buttons / change the weird light green color
+        - implement headlines and text styles
     -->
 
     <style name="AppTheme" parent="Theme.MaterialComponents.Light">
@@ -44,12 +45,38 @@
         <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.Overline</item>
     </style>
 
-    <style name="AppTheme.TextAppearance.Headline1" parent="TextAppearance.MaterialComponents.Headline1"></style>
+    <style name="AppTheme.TextAppearance.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
+        <item name="android:textSize">48sp</item>
+    </style>
     <style name="AppTheme.TextAppearance.Headline2" parent="TextAppearance.MaterialComponents.Headline2"></style>
     <style name="AppTheme.TextAppearance.Headline3" parent="TextAppearance.MaterialComponents.Headline3"></style>
     <style name="AppTheme.TextAppearance.Headline4" parent="TextAppearance.MaterialComponents.Headline4"></style>
     <style name="AppTheme.TextAppearance.Headline5" parent="TextAppearance.MaterialComponents.Headline5"></style>
     <style name="AppTheme.TextAppearance.Headline6" parent="TextAppearance.MaterialComponents.Headline6"></style>
+    <style name="AppTheme.TextAppearance.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">@color/colorOnSecondary</item>
+        <item name="android:fontFamily">@font/open_sans_bold</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:shadowColor">@color/colorOnPrimary</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">0.6</item>
+    </style>
+    <style name="AppTheme.TextAppearance.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/colorOnSecondary</item>
+        <item name="android:shadowColor">@color/colorOnPrimary</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">0.6</item>
+    </style>
+    <style name="AppTheme.TextAppearance.Body1" parent="TextAppearance.MaterialComponents.Body1"></style>
+    <style name="AppTheme.TextAppearance.Body2" parent="TextAppearance.MaterialComponents.Body2"></style>
+    <style name="AppTheme.TextAppearance.Caption" parent="TextAppearance.MaterialComponents.Caption"></style>
+    <style name="AppTheme.TextAppearance.Button" parent="TextAppearance.MaterialComponents.Button"></style>
+    <style name="AppTheme.TextAppearance.Overline" parent="TextAppearance.MaterialComponents.Overline"></style>
+
+
 
 
 
