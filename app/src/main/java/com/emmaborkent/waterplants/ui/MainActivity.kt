@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private val dbHandler = PlantDatabaseHandler.getInstance(this)
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+//    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var allPlantsLayoutManager: LinearLayoutManager
     private lateinit var allPlantsAdapter: AllPlantsRecyclerAdapter
     private lateinit var waterPlantsLayoutManager: LinearLayoutManager
@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.main_toolbar))
-        bottomSheetBehavior = BottomSheetBehavior.from(main_constraint_layout_bottom)
+//        setSupportActionBar(findViewById(R.id.main_toolbar))
+//        bottomSheetBehavior = BottomSheetBehavior.from(main_constraint_layout_bottom)
         setBottomSheet()
         add_new_plant.setOnClickListener { goToAddEditPlant() }
         // TODO: 8-5-2020 showPlantsThatNeedWaterToday depends on setWaterAndMistArray, improve the
@@ -52,16 +52,16 @@ class MainActivity : AppCompatActivity() {
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         // This might go wrong with screens with different pixel densities
         val halfScreenHeight = displayMetrics.heightPixels * 0.28
-        bottomSheetBehavior.peekHeight = halfScreenHeight.toInt()
+//        bottomSheetBehavior.peekHeight = halfScreenHeight.toInt()
     }
 
     private fun setBottomSheetCallback() {
-        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior
-        .BottomSheetCallback() {
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-
-            override fun onStateChanged(bottomSheet: View, newState: Int) {}
-        })
+//        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior
+//        .BottomSheetCallback() {
+//            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+//
+//            override fun onStateChanged(bottomSheet: View, newState: Int) {}
+//        })
     }
 
     private fun goToAddEditPlant() {
@@ -87,8 +87,8 @@ class MainActivity : AppCompatActivity() {
         setWaterNeed()
         setMistNeed()
 
-        main_recycler_view_water_plants.setHasFixedSize(true)
-        main_recycler_view_water_plants.setItemViewCacheSize(10)
+//        main_recycler_view_water_plants.setHasFixedSize(true)
+//        main_recycler_view_water_plants.setItemViewCacheSize(10)
 
         val allPlantsThatNeedWaterOrMist = ArrayList<Plant>()
         allPlantsThatNeedWaterOrMist.addAll(plantsThatNeedWater)
@@ -98,12 +98,12 @@ class MainActivity : AppCompatActivity() {
             this,
             LinearLayoutManager.HORIZONTAL, false
         )
-        main_recycler_view_water_plants.layoutManager = waterPlantsLayoutManager
+//        main_recycler_view_water_plants.layoutManager = waterPlantsLayoutManager
         waterPlantsAdapter =
             WaterPlantsRecyclerAdapter(allPlantsThatNeedWaterOrMist, this) { plant ->
                 goToPlantDetails(plant)
             }
-        main_recycler_view_water_plants.adapter = waterPlantsAdapter
+//        main_recycler_view_water_plants.adapter = waterPlantsAdapter
     }
 
     private fun setWaterNeed() {
@@ -124,23 +124,23 @@ class MainActivity : AppCompatActivity() {
         val allPlants = getAllPlantsFromDatabase()
         allPlants.reverse()
 
-        main_recycler_view_all_plants.setItemViewCacheSize(10)
+//        main_recycler_view_all_plants.setItemViewCacheSize(10)
 
         allPlantsLayoutManager = GridLayoutManager(this, 2)
-        main_recycler_view_all_plants.layoutManager = allPlantsLayoutManager
+//        main_recycler_view_all_plants.layoutManager = allPlantsLayoutManager
         allPlantsAdapter = AllPlantsRecyclerAdapter(allPlants, this) { plant ->
             goToPlantDetails(plant)
         }
-        main_recycler_view_all_plants.adapter = allPlantsAdapter
+//        main_recycler_view_all_plants.adapter = allPlantsAdapter
     }
 
     private fun setTextHowManyPlantsNeedAction() {
         val textHowManyActions = plantsThatNeedMist.size + plantsThatNeedWater.size
         if (textHowManyActions != 0) {
-            main_subtitle.text = resources
-                .getQuantityString(R.plurals.main_subtitle, textHowManyActions, textHowManyActions)
+//            main_subtitle.text = resources
+//                .getQuantityString(R.plurals.main_subtitle, textHowManyActions, textHowManyActions)
         } else {
-            main_subtitle.text = resources.getString(R.string.main_subtitle_zero)
+//            main_subtitle.text = resources.getString(R.string.main_subtitle_zero)
         }
     }
 

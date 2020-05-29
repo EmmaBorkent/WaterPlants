@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- TODO
         - remove material checkbox color
@@ -8,37 +8,35 @@
         - change color of buttons / change the weird light green color
     -->
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="bottomSheetDialogTheme">@style/PlantDetailBottomSheet</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="android:colorBackground">@color/colorBackground</item>
-        <!--        <item name="colorError">@color/my_app_error_color</item>-->
         <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
         <item name="colorSurface">@color/colorSurface</item>
-        <item name="colorOnSurface">@color/colorOnSurface</item>
-        <item name="colorOnPrimary">@color/colorPrimary</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
         <item name="colorOnBackground">@color/colorOnBackground</item>
-        <!--        <item name="colorOnError">@color/my_app_color_on_error</item>-->
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        <item name="colorOnError">@color/colorOnError</item>
+
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+
+
+        <item name="bottomSheetDialogTheme">@style/PlantDetailBottomSheet</item>
         <!--        <item name="scrimBackground">@color/mtrl_scrim_color</item>-->
-        <item name="textAppearanceHeadline1">@style/TextAppearance.MaterialComponents.Headline1
-        </item>
-        <item name="textAppearanceHeadline2">@style/TextAppearance.MaterialComponents.Headline2
-        </item>
-        <item name="textAppearanceHeadline3">@style/TextAppearance.MaterialComponents.Headline3
-        </item>
-        <item name="textAppearanceHeadline4">@style/TextAppearance.MaterialComponents.Headline4
-        </item>
-        <item name="textAppearanceHeadline5">@style/TextAppearance.MaterialComponents.Headline5
-        </item>
-        <item name="textAppearanceHeadline6">@style/TextAppearance.MaterialComponents.Headline6
-        </item>
-        <item name="textAppearanceSubtitle1">@style/TextAppearance.MaterialComponents.Subtitle1
-        </item>
-        <item name="textAppearanceSubtitle2">@style/TextAppearance.MaterialComponents.Subtitle2
-        </item>
+
+        <item name="textAppearanceHeadline1">@style/AppTheme.TextAppearance.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/AppTheme.TextAppearance.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/AppTheme.TextAppearance.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/AppTheme.TextAppearance.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/AppTheme.TextAppearance.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/AppTheme.TextAppearance.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.MaterialComponents.Subtitle2</item>
         <item name="textAppearanceBody1">@style/TextAppearance.MaterialComponents.Body1</item>
         <item name="textAppearanceBody2">@style/TextAppearance.MaterialComponents.Body2</item>
         <item name="textAppearanceCaption">@style/TextAppearance.MaterialComponents.Caption</item>
@@ -46,23 +44,33 @@
         <item name="textAppearanceOverline">@style/TextAppearance.MaterialComponents.Overline</item>
     </style>
 
+    <style name="AppTheme.TextAppearance.Headline1" parent="TextAppearance.MaterialComponents.Headline1"></style>
+    <style name="AppTheme.TextAppearance.Headline2" parent="TextAppearance.MaterialComponents.Headline2"></style>
+    <style name="AppTheme.TextAppearance.Headline3" parent="TextAppearance.MaterialComponents.Headline3"></style>
+    <style name="AppTheme.TextAppearance.Headline4" parent="TextAppearance.MaterialComponents.Headline4"></style>
+    <style name="AppTheme.TextAppearance.Headline5" parent="TextAppearance.MaterialComponents.Headline5"></style>
+    <style name="AppTheme.TextAppearance.Headline6" parent="TextAppearance.MaterialComponents.Headline6"></style>
+
+
+
+
     <style name="AppTheme.Headline1" parent="TextAppearance.MaterialComponents.Headline5">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorOnBackground</item>
     </style>
 
     <style name="AppTheme.Body1" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:textColor">@color/colorTextBody</item>
+        <!--        <item name="android:textColor">@color/colorTextBody</item>-->
     </style>
 
     <style name="AppTheme.TextRecyclerView" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:textColor">@color/colorTextRecyclerView</item>
+        <!--        <item name="android:textColor">@color/colorTextRecyclerView</item>-->
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
     </style>
 
     <style name="AppTheme.DateRecyclerView" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="android:textColor">@color/colorTextRecyclerViewDate</item>
+        <!--        <item name="android:textColor">@color/colorTextRecyclerViewDate</item>-->
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -102,6 +110,10 @@
 
     <style name="RoundedBottomSheet" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/rounded_bottom_sheet</item>
+    </style>
+
+    <style name="TabLayout" parent="Widget.MaterialComponents.TabLayout.Colored">
+
     </style>
 
 </resources>

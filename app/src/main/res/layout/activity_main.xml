@@ -1,112 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MainActivity">
 
-    <!-- TODO change ID names -->
-
-    <include
-        android:id="@+id/main_toolbar"
-        layout="@layout/toolbar" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/main_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_basic"
-            android:layout_marginTop="@dimen/margin_basic"
-            android:text="@string/main_title"
-            android:textAppearance="@style/AppTheme.Headline1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/main_subtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_basic"
-            android:textAppearance="@style/AppTheme.Body1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_title"
-            tools:text="@string/main_subtitle" />
-
-        <!-- Set Horizontal with LayoutManager -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_recycler_view_water_plants"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_small"
-            android:layout_marginEnd="@dimen/margin_small"
-            android:layout_marginTop="@dimen/margin_small"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_subtitle"
-            app:layout_constraintVertical_bias="0"
-            tools:itemCount="3"
-            tools:layoutManager="GridLayoutManager"
-            tools:listitem="@layout/recycler_view_water_plants"
-            tools:orientation="horizontal"
-            tools:spanCount="1" />
-
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
+            style="@style/Widget.MaterialComponents.TabLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent">
+            app:tabMode="fixed">
 
-            <!-- PeekHeight programmatically set in MainActivity -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/main_constraint_layout_bottom"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/rounded_bottom_sheet"
-                app:behavior_hideable="false"
-                app:behavior_peekHeight="274dp"
-                android:elevation="@dimen/elevation"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_tab_water" />
 
-                <TextView
-                    android:id="@+id/main_text_all_plants"
-                    android:textAppearance="@style/AppTheme.Headline1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_basic"
-                    android:layout_marginTop="@dimen/margin_basic"
-                    android:text="@string/main_all_plants"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_tab_plants" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/main_recycler_view_all_plants"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginEnd="@dimen/margin_small"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/main_text_all_plants"
-                    tools:layoutManager="GridLayoutManager"
-                    tools:listitem="@layout/recycler_view_all_plants"
-                    tools:spanCount="2" />
+        </com.google.android.material.tabs.TabLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_new_plant"
