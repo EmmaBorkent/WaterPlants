@@ -1,5 +1,6 @@
 package com.emmaborkent.waterplants.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -40,12 +41,18 @@ class PlantsAllFragment : Fragment() {
         allPlantsLayoutManager = GridLayoutManager(context, 2)
         main_recycler_view_all_plants.layoutManager = allPlantsLayoutManager
         allPlantsAdapter = AllPlantsRecyclerAdapter(allPlants, context!!) { plant ->
-            MainActivity().goToPlantDetails(plant)
+            goToPlantDetails(plant)
         }
         main_recycler_view_all_plants.adapter = allPlantsAdapter
     }
 
     private fun getAllPlantsFromDatabase(): ArrayList<Plant> {
         return dbHandler.readAllPlants()
+    }
+
+    private fun goToPlantDetails(plant: Plant) {
+        val plantDetailsIntent = Intent(activity, PlantDetailsActivity::class.java)
+        plantDetailsIntent.putExtra("PLANT_ID", plant.id)
+        startActivity(plantDetailsIntent)
     }
 }

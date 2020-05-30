@@ -1,6 +1,7 @@
 package com.emmaborkent.waterplants.ui
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -68,9 +69,15 @@ class PlantsTodayFragment : Fragment() {
         main_recycler_view_water_plants.layoutManager = waterPlantsLayoutManager
         waterPlantsAdapter =
             WaterPlantsRecyclerAdapter(allPlantsThatNeedWaterOrMist, context!!.applicationContext) { plant ->
-                MainActivity().goToPlantDetails(plant)
+                goToPlantDetails(plant)
             }
         main_recycler_view_water_plants.adapter = waterPlantsAdapter
+    }
+
+    private fun goToPlantDetails(plant: Plant) {
+        val plantDetailsIntent = Intent(activity, PlantDetailsActivity::class.java)
+        plantDetailsIntent.putExtra("PLANT_ID", plant.id)
+        startActivity(plantDetailsIntent)
     }
 
     private fun setWaterNeed() {

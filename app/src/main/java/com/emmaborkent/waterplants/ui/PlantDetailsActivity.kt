@@ -29,7 +29,7 @@ class PlantDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_details)
-        setSupportActionBar(findViewById(R.id.include_toolbar))
+//        setSupportActionBar(findViewById(R.id.include_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
