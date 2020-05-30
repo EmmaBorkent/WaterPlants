@@ -30,7 +30,7 @@ class PlantDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plant_details)
 //        setSupportActionBar(findViewById(R.id.include_toolbar))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         bottomSheetBehavior = BottomSheetBehavior.from(constraint_bottom_sheet)

@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.PlantDetailsActivity">
-
-    <include
-        android:id="@+id/include_toolbar"
-        layout="@layout/toolbar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,18 +26,17 @@
 
         <TextView
             android:id="@+id/text_plant_name"
-            style="@style/TextPlantName"
+            style="@style/AppTheme.TextAppearance.Headline1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_basic"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/new_plant_name" />
+            tools:text="@string/new_plant_name"/>
 
         <TextView
             android:id="@+id/text_plant_species"
-            style="@style/TextPlantSpecies"
+            style="@style/AppTheme.TextAppearance.Headline2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +70,7 @@
 
                 <TextView
                     android:id="@+id/text_give_water"
-                    style="@style/TextOneLine"
+                    style="@style/AppTheme.TextAppearance.Headline4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small"
@@ -85,7 +81,7 @@
 
                 <TextView
                     android:id="@+id/text_give_mist"
-                    style="@style/TextOneLine"
+                    style="@style/AppTheme.TextAppearance.Headline4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_small"
@@ -119,7 +115,7 @@
 
                 <TextView
                     android:id="@+id/text_water_in_days"
-                    style="@style/TextOneLine"
+                    style="@style/AppTheme.TextAppearance.Headline4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="@id/button_give_water"
@@ -129,7 +125,7 @@
 
                 <TextView
                     android:id="@+id/text_mist_in_days"
-                    style="@style/TextOneLine"
+                    style="@style/AppTheme.TextAppearance.Headline4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="@id/button_give_mist"

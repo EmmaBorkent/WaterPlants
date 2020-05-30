@@ -36,8 +36,10 @@
         <item name="textAppearanceHeadline4">@style/AppTheme.TextAppearance.Headline4</item>
         <item name="textAppearanceHeadline5">@style/AppTheme.TextAppearance.Headline5</item>
         <item name="textAppearanceHeadline6">@style/AppTheme.TextAppearance.Headline6</item>
-        <item name="textAppearanceSubtitle1">@style/TextAppearance.MaterialComponents.Subtitle1</item>
-        <item name="textAppearanceSubtitle2">@style/TextAppearance.MaterialComponents.Subtitle2</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.MaterialComponents.Subtitle1
+        </item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.MaterialComponents.Subtitle2
+        </item>
         <item name="textAppearanceBody1">@style/TextAppearance.MaterialComponents.Body1</item>
         <item name="textAppearanceBody2">@style/TextAppearance.MaterialComponents.Body2</item>
         <item name="textAppearanceCaption">@style/TextAppearance.MaterialComponents.Caption</item>
@@ -46,58 +48,76 @@
     </style>
 
     <style name="AppTheme.TextAppearance.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
-        <item name="android:textSize">48sp</item>
+        <item name="fontFamily">@font/open_sans_bold</item>
+        <item name="android:shadowColor">@color/colorOnPrimary</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">0.6</item>
+        <item name="android:textColor">@color/colorOnSecondary</item>
+        <item name="android:textSize">80sp</item>
     </style>
-    <style name="AppTheme.TextAppearance.Headline2" parent="TextAppearance.MaterialComponents.Headline2"></style>
+
+    <style name="AppTheme.TextAppearance.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">0.6</item>
+        <item name="android:textColor">@color/colorOnSecondary</item>
+        <item name="android:textSize">40sp</item>
+    </style>
+
     <style name="AppTheme.TextAppearance.Headline3" parent="TextAppearance.MaterialComponents.Headline3"></style>
-    <style name="AppTheme.TextAppearance.Headline4" parent="TextAppearance.MaterialComponents.Headline4"></style>
+
+    <style name="AppTheme.TextAppearance.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textSize">24sp</item>
+    </style>
+
     <style name="AppTheme.TextAppearance.Headline5" parent="TextAppearance.MaterialComponents.Headline5"></style>
+
     <style name="AppTheme.TextAppearance.Headline6" parent="TextAppearance.MaterialComponents.Headline6"></style>
+
     <style name="AppTheme.TextAppearance.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
-        <item name="android:textColor">@color/colorOnSecondary</item>
         <item name="android:fontFamily">@font/open_sans_bold</item>
-        <item name="android:textSize">28sp</item>
         <item name="android:shadowColor">@color/colorOnPrimary</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">0.6</item>
-    </style>
-    <style name="AppTheme.TextAppearance.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
-        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/colorOnSecondary</item>
+        <item name="android:textSize">28sp</item>
+    </style>
+
+    <style name="AppTheme.TextAppearance.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
         <item name="android:shadowColor">@color/colorOnPrimary</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">0.6</item>
+        <item name="android:textColor">@color/colorOnSecondary</item>
+        <item name="android:textSize">18sp</item>
     </style>
+
     <style name="AppTheme.TextAppearance.Body1" parent="TextAppearance.MaterialComponents.Body1"></style>
+
     <style name="AppTheme.TextAppearance.Body2" parent="TextAppearance.MaterialComponents.Body2"></style>
+
     <style name="AppTheme.TextAppearance.Caption" parent="TextAppearance.MaterialComponents.Caption"></style>
+
     <style name="AppTheme.TextAppearance.Button" parent="TextAppearance.MaterialComponents.Button"></style>
+
     <style name="AppTheme.TextAppearance.Overline" parent="TextAppearance.MaterialComponents.Overline"></style>
 
 
-
-
-
-
     <style name="AppTheme.Headline1" parent="TextAppearance.MaterialComponents.Headline5">
-        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/colorOnBackground</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="AppTheme.Body1" parent="TextAppearance.MaterialComponents.Body1">
-        <!--        <item name="android:textColor">@color/colorTextBody</item>-->
-    </style>
+    <style name="AppTheme.Body1" parent="TextAppearance.MaterialComponents.Body1"></style>
 
     <style name="AppTheme.TextRecyclerView" parent="TextAppearance.MaterialComponents.Body1">
-        <!--        <item name="android:textColor">@color/colorTextRecyclerView</item>-->
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
     </style>
 
     <style name="AppTheme.DateRecyclerView" parent="TextAppearance.MaterialComponents.Body1">
-        <!--        <item name="android:textColor">@color/colorTextRecyclerViewDate</item>-->
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -111,9 +131,7 @@
         <item name="useMaterialThemeColors">false</item>
     </style>
 
-    <style name="TextColorAccent" parent="TextAppearance.AppCompat">
-        <!--        <item name="android:textColor">@color/colorAccent</item>-->
-    </style>
+    <style name="TextColorAccent" parent="TextAppearance.AppCompat"></style>
 
     <style name="TextPlantName" parent="TextAppearance.MaterialComponents.Headline3">
         <item name="fontFamily">@font/open_sans_extrabold</item>
@@ -121,10 +139,6 @@
 
     <style name="TextPlantSpecies" parent="TextAppearance.MaterialComponents.Headline4">
         <item name="fontFamily">@font/open_sans_light</item>
-    </style>
-
-    <style name="TextOneLine" parent="AppTheme">
-        <item name="android:textSize">24sp</item>
     </style>
 
     <style name="TitleMain" parent="TextAppearance.MaterialComponents.Headline4">
