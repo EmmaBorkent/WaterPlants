@@ -22,7 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_plant_species"
-            tools:srcCompat="@drawable/plant3" />
+            tools:srcCompat="@drawable/ic_image_black_24dp" />
 
         <TextView
             android:id="@+id/text_plant_name"

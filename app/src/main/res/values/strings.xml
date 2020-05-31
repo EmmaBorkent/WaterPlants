@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Plante Water Plants</string>
-    <string name="app_tab_water">Water Today</string>
-    <string name="app_tab_plants">All Plants</string>
 
     <!-- activity_main.xml -->
     <string name="main_title">Water today</string>
@@ -16,7 +14,6 @@
     <!-- recycler_view_water_plants.xml -->
     <!-- recycler_view_all_plants.xml -->
     <string name="rv_water_plants_name">Plant Name</string>
-    <string name="rv_water_plants_species">Plant Species</string>
     <string name="rv_water_plants_date">Date</string>
 
     <!-- activity_add_edit_plant.xml -->
@@ -67,8 +64,5 @@
 
     <!-- Plant Image Description -->
     <string name="plant_image_description">Plant Image</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -160,7 +160,7 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     }
 
     private fun hasEmptyTextViews(): Boolean {
-        if (edit_plant_name.text.isBlank() || edit_plant_species.text.isBlank()) {
+        if (edit_plant_name.text!!.isBlank() || edit_plant_species.text!!.isBlank()) {
             warnForEmptyViews()
             return true
         }

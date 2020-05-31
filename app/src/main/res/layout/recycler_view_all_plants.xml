@@ -31,11 +31,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/plant3" />
+                tools:srcCompat="@drawable/ic_image_black_24dp" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/rv_all_plants_text"
-                android:textAppearance="@style/AppTheme.Body1"
+                android:textAppearance="@style/AppTheme.TextAppearance.Body1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_small"

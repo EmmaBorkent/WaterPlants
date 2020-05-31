@@ -22,7 +22,7 @@ class WaterPlantsRecyclerAdapter(
 ) : RecyclerView.Adapter<WaterPlantsRecyclerAdapter.PlantsHolder>() {
 //    private val classNameTag: String = WaterPlantsRecyclerAdapter::class.java.simpleName
     val dbHandler = PlantDatabaseHandler.getInstance(context)
-    private val classNameTag: String = AddEditPlantActivity::class.java.simpleName
+//    private val classNameTag: String = AddEditPlantActivity::class.java.simpleName
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

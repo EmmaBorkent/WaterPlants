@@ -1,13 +1,11 @@
 package com.emmaborkent.waterplants.ui
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.emmaborkent.waterplants.R
-import com.emmaborkent.waterplants.database.Plant
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.activity_main.*
@@ -44,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         add_new_plant.setOnClickListener { goToAddEditPlant() }
     }
 
-    fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment) {
         val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_container, fragment)
         fragmentTransaction.commit()
@@ -55,9 +53,4 @@ class MainActivity : AppCompatActivity() {
         startActivity(newPlantIntent)
     }
 
-    fun goToPlantDetails(plant: Plant) {
-        val plantDetailsIntent = Intent(this, PlantDetailsActivity::class.java)
-        plantDetailsIntent.putExtra("PLANT_ID", plant.id)
-        startActivity(plantDetailsIntent)
-    }
 }

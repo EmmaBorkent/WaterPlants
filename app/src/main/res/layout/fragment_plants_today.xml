@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_basic"
-            android:textAppearance="@style/AppTheme.Body1"
+            android:textAppearance="@style/AppTheme.TextAppearance.Body1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_title"
             tools:text="@string/main_subtitle" />
