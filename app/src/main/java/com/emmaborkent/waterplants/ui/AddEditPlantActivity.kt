@@ -39,7 +39,7 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_edit_plant)
-        setSupportActionBar(findViewById(R.id.new_plant_toolbar))
+//        setSupportActionBar(findViewById(R.id.new_plant_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupPageContent()
         // TODO: 16-4-2020 Shouldn't I have used onClick method in XML? that way you always need
