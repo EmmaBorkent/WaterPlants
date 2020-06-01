@@ -35,10 +35,8 @@
         <item name="textAppearanceHeadline4">@style/AppTheme.TextAppearance.Headline4</item>
         <item name="textAppearanceHeadline5">@style/AppTheme.TextAppearance.Headline5</item>
         <item name="textAppearanceHeadline6">@style/AppTheme.TextAppearance.Headline6</item>
-        <item name="textAppearanceSubtitle1">@style/AppTheme.TextAppearance.Subtitle1
-        </item>
-        <item name="textAppearanceSubtitle2">@style/AppTheme.TextAppearance.Subtitle2
-        </item>
+        <item name="textAppearanceSubtitle1">@style/AppTheme.TextAppearance.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/AppTheme.TextAppearance.Subtitle2</item>
         <item name="textAppearanceBody1">@style/AppTheme.TextAppearance.Body1</item>
         <item name="textAppearanceBody2">@style/AppTheme.TextAppearance.Body2</item>
         <item name="textAppearanceCaption">@style/AppTheme.TextAppearance.Caption</item>
@@ -53,7 +51,7 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">0.6</item>
         <item name="android:textColor">@color/colorOnSecondary</item>
-        <item name="android:textSize">80sp</item>
+        <item name="android:textSize">72sp</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
@@ -61,7 +59,7 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">0.6</item>
         <item name="android:textColor">@color/colorOnSecondary</item>
-        <item name="android:textSize">40sp</item>
+        <item name="android:textSize">36sp</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Headline3" parent="TextAppearance.MaterialComponents.Headline3"></style>
@@ -85,11 +83,11 @@
     </style>
 
     <style name="AppTheme.TextAppearance.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
-        <item name="android:shadowColor">@color/colorOnPrimary</item>
+        <item name="android:shadowColor">@color/colorOnError</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">0.6</item>
-        <item name="android:textColor">@color/colorOnSecondary</item>
+        <item name="android:textColor">@color/colorError</item>
         <item name="android:textSize">18sp</item>
     </style>
 

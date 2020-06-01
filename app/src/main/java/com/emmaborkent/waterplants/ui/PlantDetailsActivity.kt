@@ -120,7 +120,7 @@ class PlantDetailsActivity : AppCompatActivity() {
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
         // TODO: Setting the screen height this way might go wrong with screens with different pixel densities, think of a fix
-        val halfScreenHeight = displayMetrics.heightPixels * 0.38
+        val halfScreenHeight = displayMetrics.heightPixels * 0.36
         bottomSheetBehavior.peekHeight = halfScreenHeight.toInt()
 
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior

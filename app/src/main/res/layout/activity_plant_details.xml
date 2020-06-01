@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,15 +15,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/plant_image_description"
-            android:paddingTop="100dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_plant_species"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:scaleType="centerCrop"
             tools:srcCompat="@drawable/ic_image_black_24dp" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/text_plant_name"
             style="@style/AppTheme.TextAppearance.Headline1"
             android:layout_width="wrap_content"
@@ -32,7 +29,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/new_plant_name"/>
+            tools:text="@string/new_plant_name" />
 
         <TextView
             android:id="@+id/text_plant_species"

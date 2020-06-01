@@ -54,9 +54,6 @@ class PlantsTodayFragment : Fragment() {
         setWaterNeed()
         setMistNeed()
 
-        main_recycler_view_water_plants.setHasFixedSize(true)
-        main_recycler_view_water_plants.setItemViewCacheSize(10)
-
         val allPlantsThatNeedWaterOrMist = ArrayList<Plant>()
         allPlantsThatNeedWaterOrMist.addAll(plantsThatNeedWater)
         allPlantsThatNeedWaterOrMist.addAll(plantsThatNeedMist)
@@ -71,6 +68,9 @@ class PlantsTodayFragment : Fragment() {
                 goToPlantDetails(plant)
             }
         main_recycler_view_water_plants.adapter = waterPlantsAdapter
+
+        main_recycler_view_water_plants.setHasFixedSize(true)
+        main_recycler_view_water_plants.setItemViewCacheSize(10)
     }
 
     private fun goToPlantDetails(plant: Plant) {

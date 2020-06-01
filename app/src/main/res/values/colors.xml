@@ -5,11 +5,11 @@
     <color name="colorSecondary">#258EA6</color>
     <color name="colorSecondaryVariant">#006077</color>
     <color name="colorBackground">#F7F7F7</color>
-    <color name="colorSurface">#FFF</color>
+    <color name="colorSurface">#FFFFFF</color>
     <color name="colorError">#D64045</color>
-    <color name="colorOnPrimary">#000</color>
-    <color name="colorOnSecondary">#FFF</color>
+    <color name="colorOnPrimary">#000000</color>
+    <color name="colorOnSecondary">#FFFFFF</color>
     <color name="colorOnBackground">#3E3E3E</color>
-    <color name="colorOnSurface">#000</color>
-    <color name="colorOnError">#000</color>
+    <color name="colorOnSurface">#000000</color>
+    <color name="colorOnError">#000000</color>
 </resources>
