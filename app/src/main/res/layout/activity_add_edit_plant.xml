@@ -129,12 +129,25 @@
             android:hint="@string/new_plant_edit_hint_every"
             android:inputType="number"
             app:layout_constraintBottom_toTopOf="@id/button_date_plants_needs_mist"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/text_water_every_days_unit"
             app:layout_constraintStart_toEndOf="@id/text_water_every_days"
-            android:layout_marginEnd="@dimen/margin_basic"
+            android:layout_marginEnd="@dimen/margin_small"
             android:layout_marginStart="@dimen/margin_basic"
             android:layout_marginBottom="@dimen/margin_small"
-            tools:ignore="Autofill" />
+            tools:ignore="Autofill"
+            android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/text_water_every_days_unit"
+            style="@style/AppTheme.TextAppearance.Headline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_plant_days"
+            android:layout_marginEnd="@dimen/margin_basic"
+            app:layout_constraintStart_toEndOf="@id/edit_water_every_days"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/edit_water_every_days"
+            app:layout_constraintTop_toTopOf="@id/edit_water_every_days" />
 
         <TextView
             android:id="@+id/text_date_plants_needs_mist"
@@ -173,13 +186,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_basic"
-            android:layout_marginEnd="@dimen/margin_basic"
+            android:layout_marginEnd="@dimen/margin_small"
             android:hint="@string/new_plant_edit_hint_every"
             android:inputType="number"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/text_mist_every_days_unit"
             app:layout_constraintStart_toStartOf="@id/edit_water_every_days"
-            tools:ignore="Autofill" />
+            tools:ignore="Autofill"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/text_mist_every_days_unit"
+            style="@style/AppTheme.TextAppearance.Headline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_plant_days"
+            android:layout_marginEnd="@dimen/margin_basic"
+            app:layout_constraintStart_toEndOf="@id/edit_mist_every_days"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/edit_mist_every_days"
+            app:layout_constraintTop_toTopOf="@id/edit_mist_every_days" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
