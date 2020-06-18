@@ -1,11 +1,11 @@
-package com.emmaborkent.waterplants.ui
+package com.emmaborkent.waterplants.view
 
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.DialogFragment
-import com.emmaborkent.waterplants.database.ParseFormatDates
+import com.emmaborkent.waterplants.viewmodel.ParseFormatDates
 import java.time.LocalDate
 
 class DatePickerFragment : DialogFragment() {
@@ -18,7 +18,7 @@ class DatePickerFragment : DialogFragment() {
         val month = date.monthValue - 1
         val day = date.dayOfMonth
         return DatePickerDialog(
-            activity!!,
+            requireActivity(),
             activity as AddEditPlantActivity,
             year,
             month,

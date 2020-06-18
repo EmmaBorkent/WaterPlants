@@ -1,4 +1,4 @@
-package com.emmaborkent.waterplants.ui
+package com.emmaborkent.waterplants.view
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -19,9 +19,9 @@ import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.emmaborkent.waterplants.R
-import com.emmaborkent.waterplants.database.ParseFormatDates
-import com.emmaborkent.waterplants.database.Plant
-import com.emmaborkent.waterplants.database.PlantDatabaseHandler
+import com.emmaborkent.waterplants.viewmodel.ParseFormatDates
+import com.emmaborkent.waterplants.model.Plant
+import com.emmaborkent.waterplants.model.PlantDatabaseHandler
 import kotlinx.android.synthetic.main.activity_add_edit_plant.*
 import java.io.File
 import java.io.FileOutputStream
@@ -107,7 +107,8 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     // TODO: 1-5-2020 Might not be necessary  when this is done in Plant Class
     private fun setTodayDateToDateButtons() {
         val localDate = LocalDate.now()
-        val dateAsString = ParseFormatDates().dateToStringLocalized(localDate)
+        val dateAsString = ParseFormatDates()
+            .dateToStringLocalized(localDate)
         button_date_plants_needs_water.text = dateAsString
         button_date_plants_needs_mist.text = dateAsString
     }
@@ -196,10 +197,10 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             image = plantImageUri.toString()
             datePlantNeedsWater = ParseFormatDates()
                 .dayMonthYearStringToYearMonthDayString(button_date_plants_needs_water.text.toString())
-            daysToNextWater = edit_water_every_days.text.toString()
+            daysToNextWater = edit_water_every_days.text.toString().toInt()
             datePlantNeedsMist = ParseFormatDates()
                 .dayMonthYearStringToYearMonthDayString(button_date_plants_needs_mist.text.toString())
-            daysToNextMist = edit_mist_every_days.text.toString()
+            daysToNextMist = edit_mist_every_days.text.toString().toInt()
             Log.d(classNameTag, "Plan water date: ${plant.datePlantNeedsWater}, needs water today? ${plant.needsWater}")
             Log.d(classNameTag, "Plan mist date: ${plant.datePlantNeedsMist}, needs mist today? ${plant.needsMist}")
         }
@@ -216,10 +217,10 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             species = edit_plant_species.text.toString()
             datePlantNeedsWater = ParseFormatDates()
                 .dayMonthYearStringToYearMonthDayString(button_date_plants_needs_water.text.toString())
-            daysToNextWater = edit_water_every_days.text.toString()
+            daysToNextWater = edit_water_every_days.text.toString().toInt()
             datePlantNeedsMist = ParseFormatDates()
                 .dayMonthYearStringToYearMonthDayString(button_date_plants_needs_mist.text.toString())
-            daysToNextMist = edit_mist_every_days.text.toString()
+            daysToNextMist = edit_mist_every_days.text.toString().toInt()
             Log.d(classNameTag, "Plant water date: ${plant.datePlantNeedsWater}, needs water today? ${plant.needsWater}")
             Log.d(classNameTag, "Plant mist date: ${plant.datePlantNeedsMist}, needs mist today? ${plant.needsMist}")
         }
@@ -324,8 +325,10 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-        val date = ParseFormatDates().yearMonthDayToDate(year, month, dayOfMonth)
-        val dateString = ParseFormatDates().dateToStringLocalized(date)
+        val date = ParseFormatDates()
+            .yearMonthDayToDate(year, month, dayOfMonth)
+        val dateString = ParseFormatDates()
+            .dateToStringLocalized(date)
         clickedButtonView.text = dateString
     }
 }

@@ -1,4 +1,4 @@
-package com.emmaborkent.waterplants.ui
+package com.emmaborkent.waterplants.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val mOnTabSelectedListener = object: OnTabSelectedListener {
+    private val mOnTabSelectedListener = object : OnTabSelectedListener {
         override fun onTabReselected(tab: TabLayout.Tab?) {}
 
         override fun onTabUnselected(tab: TabLayout.Tab?) {}
@@ -20,6 +20,15 @@ class MainActivity : AppCompatActivity() {
         override fun onTabSelected(tab: TabLayout.Tab?) {
             setFragmentForTabPosition(tab!!.position)
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        tab_layout.addOnTabSelectedListener(mOnTabSelectedListener)
+        replaceFragment(PlantsTodayFragment())
+        floating_action_button.setOnClickListener { goToAddEditPlant() }
     }
 
     private fun setFragmentForTabPosition(position: Int) {
@@ -33,18 +42,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        tabs.addOnTabSelectedListener(mOnTabSelectedListener)
-        replaceFragment(PlantsTodayFragment())
-        add_new_plant.setOnClickListener { goToAddEditPlant() }
-    }
-
     private fun replaceFragment(fragment: Fragment) {
         val fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_container, fragment)
+        fragmentTransaction.replace(R.id.frame_layout, fragment)
         fragmentTransaction.commit()
     }
 

@@ -1,10 +1,29 @@
-package com.emmaborkent.waterplants.database
+package com.emmaborkent.waterplants.viewmodel
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 
 class ParseFormatDates {
+
+    companion object {
+
+        private var INSTANCE: ParseFormatDates? = null
+
+        fun getParseFormatDatesInstance(): ParseFormatDates {
+            val tempInstance =
+                INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
+            }
+            synchronized(this) {
+                val instance =
+                    ParseFormatDates()
+                INSTANCE = instance
+                return instance
+            }
+        }
+    }
 
     /**
      * The formatted functions are used to display the date as a local date
@@ -45,6 +64,7 @@ class ParseFormatDates {
         return LocalDate.parse(dateAsYearMonthDay, defaultFormat).format(formatter)
     }
 
+    // LocalDate is of form Year Month Day
     fun getDefaultDateAsString(): String {
         val date = LocalDate.now()
         return ParseFormatDates().dateToStringDefault(date)
