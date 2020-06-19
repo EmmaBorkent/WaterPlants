@@ -9,13 +9,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.emmaborkent.waterplants.R
-import com.emmaborkent.waterplants.model.PlantEntity
+import com.emmaborkent.waterplants.model.Plant
 
 class PlantsAllAdapter internal constructor(
-    private val clickListener: (PlantEntity) -> Unit
+    private val clickListener: (Plant) -> Unit
 ) : RecyclerView.Adapter<PlantsAllAdapter.PlantsHolder>() {
 
-    private var plants = emptyList<PlantEntity>()
+    private var plants = emptyList<Plant>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -34,7 +34,7 @@ class PlantsAllAdapter internal constructor(
         holder.bindPlants(plants[position], clickListener)
     }
 
-    internal fun setPlants(plants: List<PlantEntity>) {
+    internal fun setPlants(plants: List<Plant>) {
         this.plants = plants
         notifyDataSetChanged()
     }
@@ -45,7 +45,7 @@ class PlantsAllAdapter internal constructor(
         private val plantName = itemView
             .findViewById<TextView>(R.id.text_rv_all_plants)
 
-        fun bindPlants(plant: PlantEntity, clickListener: (PlantEntity) -> Unit) {
+        fun bindPlants(plant: Plant, clickListener: (Plant) -> Unit) {
             val bitmapOptions = BitmapFactory.Options()
             bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565
             val plantBitmapImage = BitmapFactory.decodeFile(plant.image, bitmapOptions)

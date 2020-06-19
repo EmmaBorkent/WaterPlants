@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.model.PLANT_ID
-import com.emmaborkent.waterplants.model.Plant
+import com.emmaborkent.waterplants.model.XPlant
 import com.emmaborkent.waterplants.viewmodel.PlantsTodayViewModel
 import kotlinx.android.synthetic.main.fragment_plants_today.*
 
@@ -52,7 +52,7 @@ class PlantsTodayFragment : Fragment() {
 //        setTextHowManyPlantsNeedAction()
     }
 
-    private fun goToPlantDetails(plant: Plant) {
+    private fun goToPlantDetails(plant: XPlant) {
         val plantDetailsIntent = Intent(activity, PlantDetailsActivity::class.java)
         plantDetailsIntent.putExtra(PLANT_ID, plant.id)
         startActivity(plantDetailsIntent)

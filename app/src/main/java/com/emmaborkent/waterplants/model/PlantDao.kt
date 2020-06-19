@@ -7,13 +7,13 @@ import androidx.room.*
 interface PlantDao {
 
     @Insert
-    fun insert(vararg plant: PlantEntity)
+    fun insert(vararg plant: Plant)
 
     @Update
-    fun updatePlant(vararg plant: PlantEntity)
+    fun updatePlant(vararg plant: Plant)
 
     @Delete
-    fun deletePlant(vararg plant: PlantEntity)
+    fun deletePlant(vararg plant: Plant)
 
     // TODO: 5-6-2020 Async queries with Kotlin coroutines
     //  https://developer.android.com/training/data-storage/room/accessing-data#kotlin-coroutines
@@ -22,12 +22,12 @@ interface PlantDao {
     fun deleteAllPlants()
 
     @Query("SELECT * FROM PLANT_TABLE ORDER BY id DESC")
-    fun getAllPlants(): LiveData<List<PlantEntity>>
+    fun getAllPlants(): LiveData<List<Plant>>
 
     @Query("SELECT * FROM PLANT_TABLE WHERE waterDate <= Date(:dateAsYearMonthDay)")
-    fun getPlantsThatNeedWater(dateAsYearMonthDay: String): LiveData<List<PlantEntity>>
+    fun getPlantsThatNeedWater(dateAsYearMonthDay: String): LiveData<List<Plant>>
 
     @Query("SELECT * FROM PLANT_TABLE WHERE mistDate <= Date(:dateAsYearMonthDay)")
-    fun getPlantsThatNeedMist(dateAsYearMonthDay: String): LiveData<List<PlantEntity>>
+    fun getPlantsThatNeedMist(dateAsYearMonthDay: String): LiveData<List<Plant>>
 
 }

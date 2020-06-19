@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [PlantEntity::class], version = DATABASE_VERSION)
+@Database(entities = [Plant::class], version = DATABASE_VERSION)
 abstract class PlantDatabase : RoomDatabase() {
 
     abstract fun plantDao(): PlantDao

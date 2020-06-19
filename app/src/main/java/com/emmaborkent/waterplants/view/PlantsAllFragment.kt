@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.model.PLANT_ID
-import com.emmaborkent.waterplants.model.PlantEntity
+import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.viewmodel.PlantsAllViewModel
 import kotlinx.android.synthetic.main.fragment_plants_all.*
 
@@ -49,7 +49,7 @@ class PlantsAllFragment : Fragment() {
         })
     }
 
-    private fun goToPlantDetails(plant: PlantEntity) {
+    private fun goToPlantDetails(plant: Plant) {
         val plantDetailsIntent = Intent(activity, PlantDetailsActivity::class.java)
         plantDetailsIntent.putExtra(PLANT_ID, plant.id)
         startActivity(plantDetailsIntent)

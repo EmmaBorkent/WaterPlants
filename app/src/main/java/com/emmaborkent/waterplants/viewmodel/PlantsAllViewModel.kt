@@ -3,14 +3,14 @@ package com.emmaborkent.waterplants.viewmodel
 import android.app.Application
 import androidx.lifecycle.*
 import com.emmaborkent.waterplants.model.PlantDatabase
-import com.emmaborkent.waterplants.model.PlantEntity
+import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.model.PlantRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class PlantsAllViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: PlantRepository
-    val allPlants: LiveData<List<PlantEntity>>
+    val allPlants: LiveData<List<Plant>>
 
     init {
         val plantDao = PlantDatabase.getDatabaseInstance(application).plantDao()
@@ -18,15 +18,15 @@ class PlantsAllViewModel(application: Application) : AndroidViewModel(applicatio
         allPlants = repository.getAllPlants()
     }
 
-    fun insert(plant: PlantEntity) = viewModelScope.launch(Dispatchers.IO) {
+    fun insert(plant: Plant) = viewModelScope.launch(Dispatchers.IO) {
         repository.insert(plant)
     }
 
-    fun update(plant: PlantEntity) = viewModelScope.launch(Dispatchers.IO) {
+    fun update(plant: Plant) = viewModelScope.launch(Dispatchers.IO) {
         repository.update(plant)
     }
 
-    fun delete(plant: PlantEntity) = viewModelScope.launch(Dispatchers.IO) {
+    fun delete(plant: Plant) = viewModelScope.launch(Dispatchers.IO) {
         repository.delete(plant)
     }
 

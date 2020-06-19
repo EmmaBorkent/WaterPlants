@@ -7,13 +7,13 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
-class PlantDatabaseHandler// ...
+class XPlantDatabaseHandler// ...
 private constructor(context: Context) : SQLiteOpenHelper(
     context,
     DATABASE_NAME, null,
     DATABASE_VERSION
 ) {
-    private val classNameTag: String = PlantDatabaseHandler::class.java.simpleName
+    private val classNameTag: String = XPlantDatabaseHandler::class.java.simpleName
 
     override fun onCreate(db: SQLiteDatabase?) {
         val createPlantsTable = "CREATE TABLE " + DATABASE_TABLE_PLANTS + "(" +
@@ -40,10 +40,10 @@ private constructor(context: Context) : SQLiteOpenHelper(
     }
 
     companion object {
-        private var instance: PlantDatabaseHandler? = null
-        fun getInstance(context: Context): PlantDatabaseHandler {
+        private var instance: XPlantDatabaseHandler? = null
+        fun getInstance(context: Context): XPlantDatabaseHandler {
             if (instance == null) {
-                instance = PlantDatabaseHandler(context)
+                instance = XPlantDatabaseHandler(context)
             }
             return instance!!
         }
@@ -51,7 +51,7 @@ private constructor(context: Context) : SQLiteOpenHelper(
 
     // TODO: 13-4-2020 improve database functions
 
-    fun savePlantToDatabase(plant: Plant) {
+    fun savePlantToDatabase(plant: XPlant) {
         val db = writableDatabase
         val values = ContentValues()
         values.put(KEY_PLANT_NAME, plant.name)
@@ -74,7 +74,7 @@ private constructor(context: Context) : SQLiteOpenHelper(
         return int == 1
     }
 
-    fun readPlant(id: Int): Plant {
+    fun readPlant(id: Int): XPlant {
         val db = readableDatabase
         val cursor = db.query(
             DATABASE_TABLE_PLANTS,
@@ -100,9 +100,9 @@ private constructor(context: Context) : SQLiteOpenHelper(
         return plant
     }
 
-    fun readAllPlants(): ArrayList<Plant> {
+    fun readAllPlants(): ArrayList<XPlant> {
         val db = readableDatabase
-        val allPlants: ArrayList<Plant> = ArrayList()
+        val allPlants: ArrayList<XPlant> = ArrayList()
         val queryAllPlants = "SELECT * FROM $DATABASE_TABLE_PLANTS"
         val cursor = db.rawQuery(queryAllPlants, null)
 
@@ -117,7 +117,7 @@ private constructor(context: Context) : SQLiteOpenHelper(
         return allPlants
     }
 
-    fun findPlantsOnDay(date: String): ArrayList<Plant> {
+    fun findPlantsOnDay(date: String): ArrayList<XPlant> {
         return getPlantsThatNeedWater(date)
     }
 
@@ -139,7 +139,7 @@ private constructor(context: Context) : SQLiteOpenHelper(
 //        return db.update(TABLE_NAME, values, "$KEY_ID=?", arrayOf(plant.id.toString()))
 //    }
 
-    fun updatePlantInDatabase(plant: Plant) {
+    fun updatePlantInDatabase(plant: XPlant) {
         val db = writableDatabase
         val values = ContentValues()
         values.put(KEY_PLANT_NAME, plant.name)
@@ -235,9 +235,9 @@ private constructor(context: Context) : SQLiteOpenHelper(
         return getPlantsThatNeedWater(dateAsYearMonthDay).count()
     }
 
-    fun getPlantsThatNeedWater(dateAsYearMonthDay: String): ArrayList<Plant> {
+    fun getPlantsThatNeedWater(dateAsYearMonthDay: String): ArrayList<XPlant> {
         val db = readableDatabase
-        val plantsThatNeedWater: ArrayList<Plant> = ArrayList()
+        val plantsThatNeedWater: ArrayList<XPlant> = ArrayList()
         val queryPlantsThatNeedWater =
             "SELECT * FROM $DATABASE_TABLE_PLANTS WHERE $KEY_PLANT_WATER_DATE <= Date('$dateAsYearMonthDay')"
         val cursor = db.rawQuery(queryPlantsThatNeedWater, null)
@@ -251,9 +251,9 @@ private constructor(context: Context) : SQLiteOpenHelper(
         return plantsThatNeedWater
     }
 
-    fun getPlantsThatNeedMist(dateAsYearMonthDate: String): ArrayList<Plant> {
+    fun getPlantsThatNeedMist(dateAsYearMonthDate: String): ArrayList<XPlant> {
         val db = readableDatabase
-        val plantsThatNeedMist: ArrayList<Plant> = ArrayList()
+        val plantsThatNeedMist: ArrayList<XPlant> = ArrayList()
         val queryPlantsThatNeedMist =
             "SELECT * FROM $DATABASE_TABLE_PLANTS WHERE $KEY_PLANT_MIST_DATE <= Date('$dateAsYearMonthDate')"
         val cursor = db.rawQuery(queryPlantsThatNeedMist, null)
@@ -267,8 +267,8 @@ private constructor(context: Context) : SQLiteOpenHelper(
         return plantsThatNeedMist
     }
 
-    private fun newPlantInstance(cursor: Cursor): Plant {
-        val plant = Plant()
+    private fun newPlantInstance(cursor: Cursor): XPlant {
+        val plant = XPlant()
         plant.id = cursor.getInt(cursor.getColumnIndex(KEY_ID))
         plant.name = cursor.getString(cursor.getColumnIndex(KEY_PLANT_NAME))
         plant.species = cursor.getString(cursor.getColumnIndex(KEY_PLANT_SPECIES))

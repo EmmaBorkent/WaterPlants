@@ -20,8 +20,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.viewmodel.ParseFormatDates
-import com.emmaborkent.waterplants.model.Plant
-import com.emmaborkent.waterplants.model.PlantDatabaseHandler
+import com.emmaborkent.waterplants.model.XPlant
+import com.emmaborkent.waterplants.model.XPlantDatabaseHandler
 import kotlinx.android.synthetic.main.activity_add_edit_plant.*
 import java.io.File
 import java.io.FileOutputStream
@@ -31,8 +31,8 @@ import java.time.LocalDate
 import java.util.*
 
 class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
-    private var dbHandler = PlantDatabaseHandler.getInstance(this)
-    private var plant = Plant()
+    private var dbHandler = XPlantDatabaseHandler.getInstance(this)
+    private var plant = XPlant()
     private var imageIsChanged = false
     private val classNameTag: String = AddEditPlantActivity::class.java.simpleName
 

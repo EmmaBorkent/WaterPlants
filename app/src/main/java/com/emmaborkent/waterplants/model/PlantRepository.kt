@@ -6,10 +6,10 @@ import com.emmaborkent.waterplants.viewmodel.ParseFormatDates
 class PlantRepository(private val plantDao: PlantDao) {
 
     private var parseFormatDates = ParseFormatDates.getParseFormatDatesInstance()
-    private val allPlants: LiveData<List<PlantEntity>> = plantDao.getAllPlants()
-    private val plantsThatNeedWater: LiveData<List<PlantEntity>> =
+    private val allPlants: LiveData<List<Plant>> = plantDao.getAllPlants()
+    private val plantsThatNeedWater: LiveData<List<Plant>> =
         plantDao.getPlantsThatNeedWater(parseFormatDates.getDefaultDateAsString())
-    private val plantsThatNeedMist: LiveData<List<PlantEntity>> =
+    private val plantsThatNeedMist: LiveData<List<Plant>> =
         plantDao.getPlantsThatNeedMist(parseFormatDates.getDefaultDateAsString())
 
     // The suspend modifiers tell the compiler that they need to be called from a coroutine
@@ -17,15 +17,15 @@ class PlantRepository(private val plantDao: PlantDao) {
     // This is not needed for the functions that return LiveData, because LiveData automatically
     // takes care of this.
 
-    suspend fun insert(plant: PlantEntity) {
+    suspend fun insert(plant: Plant) {
         plantDao.insert(plant)
     }
 
-    suspend fun update(plant: PlantEntity) {
+    suspend fun update(plant: Plant) {
         plantDao.updatePlant(plant)
     }
 
-    suspend fun delete(plant: PlantEntity) {
+    suspend fun delete(plant: Plant) {
         plantDao.deletePlant(plant)
     }
 
@@ -33,19 +33,19 @@ class PlantRepository(private val plantDao: PlantDao) {
         plantDao.deleteAllPlants()
     }
 
-    fun getAllPlants(): LiveData<List<PlantEntity>> {
+    fun getAllPlants(): LiveData<List<Plant>> {
         return allPlants
     }
 
-    fun getPlantsThatNeedWater(): LiveData<List<PlantEntity>> {
+    fun getPlantsThatNeedWater(): LiveData<List<Plant>> {
         return plantsThatNeedWater
     }
 
-    fun getPlantsThatNeedMist(): LiveData<List<PlantEntity>> {
+    fun getPlantsThatNeedMist(): LiveData<List<Plant>> {
         return plantsThatNeedMist
     }
 
-//    private val databaseHandler: PlantDatabaseHandler = PlantDatabaseHandler.getInstance(MainActivity())
+//    private val databaseHandler: XPlantDatabaseHandler = XPlantDatabaseHandler.getInstance(MainActivity())
 //
 //    fun getPlant(plantId: Int): LiveData<Plant> {
 //        val plant = MutableLiveData<Plant>()
