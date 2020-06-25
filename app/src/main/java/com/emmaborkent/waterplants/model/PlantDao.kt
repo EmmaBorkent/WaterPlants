@@ -21,6 +21,9 @@ interface PlantDao {
     @Query("DELETE FROM PLANT_TABLE")
     fun deleteAllPlants()
 
+    @Query("SELECT * FROM PLANT_TABLE WHERE id=:id")
+    fun getPlant(id: Int): LiveData<Plant>
+
     @Query("SELECT * FROM PLANT_TABLE ORDER BY id DESC")
     fun getAllPlants(): LiveData<List<Plant>>
 

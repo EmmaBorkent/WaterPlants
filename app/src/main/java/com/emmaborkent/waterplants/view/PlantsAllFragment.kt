@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.model.PLANT_ID
 import com.emmaborkent.waterplants.model.Plant
-import com.emmaborkent.waterplants.viewmodel.PlantsAllViewModel
+import com.emmaborkent.waterplants.viewmodel.PlantViewModel
 import kotlinx.android.synthetic.main.fragment_plants_all.*
 
 class PlantsAllFragment : Fragment() {
-    private lateinit var plantViewModel: PlantsAllViewModel
+    private lateinit var plantViewModel: PlantViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +28,8 @@ class PlantsAllFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
+
         val adapter =
             PlantsAllAdapter { plant ->
                 goToPlantDetails(plant)
@@ -36,14 +38,13 @@ class PlantsAllFragment : Fragment() {
         recycler_view_all_plants.layoutManager = GridLayoutManager(context, 2)
         recycler_view_all_plants.setHasFixedSize(true)
 
-        plantViewModel = ViewModelProvider(this).get(PlantsAllViewModel::class.java)
-
+        // TODO: 25-6-2020 Remove commented out code
 //        plantViewModel = ViewModelProvider(
 //            requireActivity(),
 //            defaultViewModelProviderFactory
-//        ).get(PlantsAllViewModel::class.java)
+//        ).get(PlantsViewModel::class.java)
 
-//        plantViewModel = ViewModelProvider(requireActivity()).get(PlantsAllViewModel::class.java)
+//        plantViewModel = ViewModelProvider(requireActivity()).get(PlantsViewModel::class.java)
         plantViewModel.allPlants.observe(viewLifecycleOwner, Observer { plants ->
             plants?.let { adapter.setPlants(it) }
         })

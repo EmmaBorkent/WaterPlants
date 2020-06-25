@@ -11,13 +11,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.model.PLANT_ID
-import com.emmaborkent.waterplants.model.XPlant
-import com.emmaborkent.waterplants.viewmodel.PlantsTodayViewModel
+import com.emmaborkent.waterplants.model.Plant
+import com.emmaborkent.waterplants.viewmodel.PlantViewModel
 import kotlinx.android.synthetic.main.fragment_plants_today.*
 
 class PlantsTodayFragment : Fragment() {
-    private lateinit var plantViewModel: PlantsTodayViewModel
-
+    private lateinit var plantViewModel: PlantViewModel
     private lateinit var waterPlantsLayoutManager: LinearLayoutManager
     private lateinit var waterPlantsAdapter: PlantsTodayAdapter
 
@@ -30,34 +29,36 @@ class PlantsTodayFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
 
-        val adapter = PlantsTodayAdapter { plant ->
-            // TODO: 18-6-2020 Insert go to plant details function
+        waterPlantsAdapter = PlantsTodayAdapter(plantViewModel) { plant ->
+            goToPlantDetails(plant)
         }
-        recycler_view_water_plants.adapter = adapter
-        recycler_view_water_plants.layoutManager = LinearLayoutManager(
+        recycler_view_water_plants.adapter = waterPlantsAdapter
+        waterPlantsLayoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.HORIZONTAL, false
         )
         recycler_view_water_plants.setHasFixedSize(true)
+        recycler_view_water_plants.layoutManager = waterPlantsLayoutManager
 
-        plantViewModel = ViewModelProvider(this).get(PlantsTodayViewModel::class.java)
         plantViewModel.plantsThatNeedWater.observe(viewLifecycleOwner, Observer { waterPlants ->
-            waterPlants?.let { adapter.setWaterPlants(it) }
+            waterPlants?.let { waterPlantsAdapter.setWaterPlants(it) }
         })
         plantViewModel.plantsThatNeedMist.observe(viewLifecycleOwner, Observer { mistPlants ->
-            mistPlants?.let { adapter.setMistPlants(it) }
+            mistPlants?.let { waterPlantsAdapter.setMistPlants(it) }
         })
 
 //        setTextHowManyPlantsNeedAction()
     }
 
-    private fun goToPlantDetails(plant: XPlant) {
+    private fun goToPlantDetails(plant: Plant) {
         val plantDetailsIntent = Intent(activity, PlantDetailsActivity::class.java)
         plantDetailsIntent.putExtra(PLANT_ID, plant.id)
         startActivity(plantDetailsIntent)
     }
 
+    // TODO: 25-6-2020 Create function setTextHowManyPlantsNeedAction()
 //    private fun setTextHowManyPlantsNeedAction() {
 //        val textHowManyActions = viewModel.allPlantsThatNeedWaterOrMist.size
 //        if (textHowManyActions != 0) {

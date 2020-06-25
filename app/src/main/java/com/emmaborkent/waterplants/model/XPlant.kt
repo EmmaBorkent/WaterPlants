@@ -40,50 +40,6 @@ class XPlant {
 
     private var daysBetweenDateAndToday: Int = 0
 
-    fun giveWater(plant: XPlant) {
-//        Log.d(classNameTag, "giveWater datePlantNeedsWater was ${plant.datePlantNeedsWater}")
-        val todayDate = now()
-        plant.daysBetweenDateAndToday = Period.between(
-            ParseFormatDates().stringToDateDefault(plant.datePlantNeedsWater),
-            todayDate
-        ).days
-//        Log.d(classNameTag, "giveWater daysBetweenDateAndToday is ${plant.daysBetweenDateAndToday}")
-        val nextWaterDate = todayDate.plusDays(plant.daysToNextWater.toLong())
-        plant.datePlantNeedsWater = ParseFormatDates()
-            .dateToStringDefault(nextWaterDate)
-//        Log.d(classNameTag, "giveWater datePlantNeedsWater is ${plant.datePlantNeedsWater}")
-    }
-
-    fun undoWaterGift(plant: XPlant) {
-//        Log.d(classNameTag, "undoWaterGift datePlantNeedsWater was ${plant.datePlantNeedsWater}")
-        val days = plant.daysToNextWater.toLong() + plant.daysBetweenDateAndToday
-//        Log.d(classNameTag, "undoWaterGift days is $days")
-        val previousWaterDate =
-            ParseFormatDates().stringToDateDefault(plant.datePlantNeedsWater).minusDays(days)
-        plant.datePlantNeedsWater = ParseFormatDates()
-            .dateToStringDefault(previousWaterDate)
-//        Log.d(classNameTag, "undoWaterGift datePlantNeedsWater is ${plant.datePlantNeedsWater}")
-    }
-
-    fun giveMist(plant: XPlant) {
-        val todayDate = now()
-        daysBetweenDateAndToday = Period.between(
-            ParseFormatDates().stringToDateDefault(plant.datePlantNeedsMist),
-            todayDate
-        ).days
-        val nextMistDate = todayDate.plusDays(plant.daysToNextMist.toLong())
-        plant.datePlantNeedsMist = ParseFormatDates()
-            .dateToStringDefault(nextMistDate)
-    }
-
-    fun undoGiveMist(plant: XPlant) {
-        val days = plant.daysToNextMist.toLong() + daysBetweenDateAndToday
-        val previousMistDate =
-            ParseFormatDates().stringToDateDefault(plant.datePlantNeedsMist).minusDays(days)
-        plant.datePlantNeedsMist = ParseFormatDates()
-            .dateToStringDefault(previousMistDate)
-    }
-
     private fun setNeedsWater(date: String) {
         needsWater = checkIfDateIsTodayOrBefore(date)
 //        Log.d(classNameTag, "needsWater is $needsWater")

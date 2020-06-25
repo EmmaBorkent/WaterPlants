@@ -14,14 +14,12 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.DatePicker
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.viewmodel.ParseFormatDates
-import com.emmaborkent.waterplants.model.XPlant
-import com.emmaborkent.waterplants.model.XPlantDatabaseHandler
+import com.emmaborkent.waterplants.viewmodel.PlantViewModel
 import kotlinx.android.synthetic.main.activity_add_edit_plant.*
 import java.io.File
 import java.io.FileOutputStream
@@ -31,16 +29,36 @@ import java.time.LocalDate
 import java.util.*
 
 class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
-    private var dbHandler = XPlantDatabaseHandler.getInstance(this)
-    private var plant = XPlant()
-    private var imageIsChanged = false
     private val classNameTag: String = AddEditPlantActivity::class.java.simpleName
+
+    private lateinit var plantViewModel: PlantViewModel
+
+    private lateinit var editPlantName: EditText
+    private lateinit var editPlantSpecies: EditText
+    private lateinit var imagePlant: ImageView
+    private lateinit var buttonPlantWaterDate: Button
+    private lateinit var editPlantWaterEveryDays: EditText
+    private lateinit var buttonPlantMistDate: Button
+    private lateinit var editPlantMistEveryDays: EditText
+
+    private var imageIsChanged = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_edit_plant)
 //        setSupportActionBar(findViewById(R.id.new_plant_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        editPlantName = findViewById(R.id.edit_plant_name)
+        editPlantSpecies = findViewById(R.id.edit_plant_species)
+        imagePlant = findViewById(R.id.image_plant)
+        buttonPlantWaterDate = findViewById(R.id.button_date_plants_needs_water)
+        editPlantWaterEveryDays = findViewById(R.id.edit_water_every_days)
+        buttonPlantMistDate = findViewById(R.id.button_date_plants_needs_mist)
+        editPlantMistEveryDays = findViewById(R.id.edit_mist_every_days)
+
+        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
+
         setupPageContent()
         // TODO: 16-4-2020 Shouldn't I have used onClick method in XML? that way you always need
         //  to pass the view
@@ -54,7 +72,7 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
     private fun setupPageContent() {
         if (isEditActivity()) {
-            setupPageToEditPlant()
+//            setupPageToEditPlant()
         } else {
             setupPageToAddPlant()
         }
@@ -64,6 +82,7 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         return intent.hasExtra("PLANT_ID")
     }
 
+    // TODO: 25-6-2020 Set function setupPageToEditPlant()
     private fun setupPageToEditPlant() {
         setEditActionBarTitle()
         getPlantFromDatabase()
@@ -75,24 +94,25 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     }
 
     private fun getPlantFromDatabase() {
-        plant = dbHandler.readPlant(plantId())
-        dbHandler.close()
+//        plant = dbHandler.readPlant(plantId())
+//        dbHandler.close()
     }
 
+    // TODO: 25-6-2020 Remove plantId function, plantId should be shared through the PlantViewModel
     private fun plantId(): Int {
         return intent.getIntExtra("PLANT_ID", 0)
     }
 
     private fun setPlantDataToViews() {
-        edit_plant_name.setText(plant.name)
-        edit_plant_species.setText(plant.species)
-        image_plant.setImageURI(Uri.parse(plant.image))
-        button_date_plants_needs_water.text = ParseFormatDates()
-            .yearMonthDayStringToDayMonthYearString(plant.datePlantNeedsWater)
-        edit_water_every_days.setText(plant.daysToNextWater)
-        button_date_plants_needs_mist.text = ParseFormatDates()
-            .yearMonthDayStringToDayMonthYearString(plant.datePlantNeedsMist)
-        edit_mist_every_days.setText(plant.daysToNextMist)
+//        edit_plant_name.setText(plant.name)
+//        edit_plant_species.setText(plant.species)
+//        image_plant.setImageURI(Uri.parse(plant.image))
+//        button_date_plants_needs_water.text = ParseFormatDates()
+//            .yearMonthDayStringToDayMonthYearString(plant.datePlantNeedsWater)
+//        edit_water_every_days.setText(plant.daysToNextWater)
+//        button_date_plants_needs_mist.text = ParseFormatDates()
+//            .yearMonthDayStringToDayMonthYearString(plant.datePlantNeedsMist)
+//        edit_mist_every_days.setText(plant.daysToNextMist)
     }
 
     private fun setupPageToAddPlant() {
@@ -128,40 +148,75 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_save_new -> createNewPlantAndSaveToDatabase()
+            R.id.action_save_new -> savePlant()
             R.id.action_save_update -> updatePlantInDatabase()
             R.id.action_delete -> deletePlantFromDatabase()
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun createNewPlantAndSaveToDatabase() {
-        if (!hasEmptyTextViews() && hasImageSelected()) {
-            createPlantFromViews()
-            dbHandler.savePlantToDatabase(plant)
-            dbHandler.close()
-            goBackToHomeScreen()
+    private fun savePlant() {
+        val plantImageUri = saveNewImageToInternalStorage()
+
+        val name = editPlantName.text.toString()
+        val species = editPlantSpecies.text.toString()
+        val image = plantImageUri.toString()
+        val waterEveryDays = editPlantWaterEveryDays.text.toString().toInt()
+        val waterDate =
+            ParseFormatDates().dayMonthYearStringToYearMonthDayString(buttonPlantWaterDate.text.toString())
+        val mistEveryDays = editPlantMistEveryDays.text.toString().toInt()
+        val mistDate =
+            ParseFormatDates().dayMonthYearStringToYearMonthDayString(buttonPlantMistDate.text.toString())
+
+        val replyIntent = Intent()
+        if (hasEmptyTextViews()) {
+            setResult(Activity.RESULT_CANCELED, replyIntent)
+            return
+        } else {
+            replyIntent.putExtra(EXTRA_REPLY_NAME, name)
+            replyIntent.putExtra(EXTRA_REPLY_SPECIES, species)
+            replyIntent.putExtra(EXTRA_REPLY_IMAGE, image)
+            replyIntent.putExtra(EXTRA_REPLY_WATER_EVERY_DAYS, waterEveryDays)
+            replyIntent.putExtra(EXTRA_REPLY_WATER_DATE, waterDate)
+            replyIntent.putExtra(EXTRA_REPLY_MIST_DATE, mistDate)
+            replyIntent.putExtra(EXTRA_REPLY_MIST_EVERY_DAYS, mistEveryDays)
+            setResult(Activity.RESULT_OK, replyIntent)
         }
+        finish()
+    }
+
+    companion object {
+        const val EXTRA_REPLY_NAME = "com.emmaborkent.waterplants.REPLY_NAME"
+        const val EXTRA_REPLY_SPECIES = "com.emmaborkent.waterplants.REPLY_SPECIES"
+        const val EXTRA_REPLY_IMAGE = "com.emmaborkent.waterplants.REPLY_IMAGE"
+        const val EXTRA_REPLY_WATER_DATE = "com.emmaborkent.waterplants.REPLY_WATER_DATE"
+        const val EXTRA_REPLY_WATER_EVERY_DAYS =
+            "com.emmaborkent.waterplants.REPLY_WATER_EVERY_DAYS"
+        const val EXTRA_REPLY_MIST_DATE = "com.emmaborkent.waterplants.REPLY_MIST_DATE"
+        const val EXTRA_REPLY_MIST_EVERY_DAYS = "com.emmaborkent.waterplants.REPLY_MIST_EVERY_DAYS"
+
+        const val PICK_IMAGE_CODE = 1000
+        const val PERMISSION_CODE = 1001
     }
 
     private fun updatePlantInDatabase() {
-        if (!hasEmptyTextViews()) {
-            updatePlantFromViews()
-            dbHandler.updatePlantInDatabase(plant)
-            dbHandler.close()
-            goBackToHomeScreen()
-        }
+//        if (!hasEmptyTextViews()) {
+        updatePlantFromViews()
+//            dbHandler.updatePlantInDatabase(plant)
+//            dbHandler.close()
+//            goBackToHomeScreen()
+//        }
     }
 
     // TODO: 16-4-2020 create warning before deleting plant
     private fun deletePlantFromDatabase() {
-        dbHandler.deletePlant(plantId())
-        dbHandler.close()
-        goBackToHomeScreen()
+//        dbHandler.deletePlant(plantId())
+//        dbHandler.close()
+//        goBackToHomeScreen()
     }
 
     private fun hasEmptyTextViews(): Boolean {
-        if (edit_plant_name.text!!.isBlank() || edit_plant_species.text!!.isBlank()) {
+        if (editPlantName.text!!.isBlank() || editPlantSpecies.text!!.isBlank()) {
             warnForEmptyViews()
             return true
         }
@@ -189,45 +244,44 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     }
 
     private fun createPlantFromViews() {
-        val plantImageUri = saveNewImageToInternalStorage()
-        // TODO: 24-4-2020 plant.apply is used two times, make a function for it
-        plant.apply {
-            name = edit_plant_name.text.toString()
-            species = edit_plant_species.text.toString()
-            image = plantImageUri.toString()
-            datePlantNeedsWater = ParseFormatDates()
-                .dayMonthYearStringToYearMonthDayString(button_date_plants_needs_water.text.toString())
-            daysToNextWater = edit_water_every_days.text.toString().toInt()
-            datePlantNeedsMist = ParseFormatDates()
-                .dayMonthYearStringToYearMonthDayString(button_date_plants_needs_mist.text.toString())
-            daysToNextMist = edit_mist_every_days.text.toString().toInt()
-            Log.d(classNameTag, "Plan water date: ${plant.datePlantNeedsWater}, needs water today? ${plant.needsWater}")
-            Log.d(classNameTag, "Plan mist date: ${plant.datePlantNeedsMist}, needs mist today? ${plant.needsMist}")
-        }
+//        val plantImageUri = saveNewImageToInternalStorage()
+//        plant.apply {
+//            name = edit_plant_name.text.toString()
+//            species = edit_plant_species.text.toString()
+//            image = plantImageUri.toString()
+//            datePlantNeedsWater = ParseFormatDates()
+//                .dayMonthYearStringToYearMonthDayString(button_date_plants_needs_water.text.toString())
+//            daysToNextWater = edit_water_every_days.text.toString().toInt()
+//            datePlantNeedsMist = ParseFormatDates()
+//                .dayMonthYearStringToYearMonthDayString(button_date_plants_needs_mist.text.toString())
+//            daysToNextMist = edit_mist_every_days.text.toString().toInt()
+//            Log.d(classNameTag, "Plan water date: ${plant.datePlantNeedsWater}, needs water today? ${plant.needsWater}")
+//            Log.d(classNameTag, "Plan mist date: ${plant.datePlantNeedsMist}, needs mist today? ${plant.needsMist}")
+//        }
     }
 
     private fun updatePlantFromViews() {
-        plant.id = plantId()
-        if (imageIsChanged) {
-            val plantImageUri = saveNewImageToInternalStorage()
-            plant.image = plantImageUri.toString()
-        }
-        plant.apply {
-            name = edit_plant_name.text.toString()
-            species = edit_plant_species.text.toString()
-            datePlantNeedsWater = ParseFormatDates()
-                .dayMonthYearStringToYearMonthDayString(button_date_plants_needs_water.text.toString())
-            daysToNextWater = edit_water_every_days.text.toString().toInt()
-            datePlantNeedsMist = ParseFormatDates()
-                .dayMonthYearStringToYearMonthDayString(button_date_plants_needs_mist.text.toString())
-            daysToNextMist = edit_mist_every_days.text.toString().toInt()
-            Log.d(classNameTag, "Plant water date: ${plant.datePlantNeedsWater}, needs water today? ${plant.needsWater}")
-            Log.d(classNameTag, "Plant mist date: ${plant.datePlantNeedsMist}, needs mist today? ${plant.needsMist}")
-        }
+//        plant.id = plantId()
+//        if (imageIsChanged) {
+//            val plantImageUri = saveNewImageToInternalStorage()
+//            plant.image = plantImageUri.toString()
+//        }
+//        plant.apply {
+//            name = edit_plant_name.text.toString()
+//            species = edit_plant_species.text.toString()
+//            datePlantNeedsWater = ParseFormatDates()
+//                .dayMonthYearStringToYearMonthDayString(button_date_plants_needs_water.text.toString())
+//            daysToNextWater = edit_water_every_days.text.toString().toInt()
+//            datePlantNeedsMist = ParseFormatDates()
+//                .dayMonthYearStringToYearMonthDayString(button_date_plants_needs_mist.text.toString())
+//            daysToNextMist = edit_mist_every_days.text.toString().toInt()
+//            Log.d(classNameTag, "Plant water date: ${plant.datePlantNeedsWater}, needs water today? ${plant.needsWater}")
+//            Log.d(classNameTag, "Plant mist date: ${plant.datePlantNeedsMist}, needs mist today? ${plant.needsMist}")
+//        }
     }
 
     private fun saveNewImageToInternalStorage(): Uri {
-        val drawable = image_plant.drawable as BitmapDrawable
+        val drawable = imagePlant.drawable as BitmapDrawable
         val bitmap = drawable.bitmap
         val wrapper = ContextWrapper(applicationContext)
         var file = wrapper.getDir("plant_images", Context.MODE_PRIVATE)
@@ -251,11 +305,6 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     private fun goBackToHomeScreen() {
         val homeIntent = Intent(this, MainActivity::class.java)
         startActivity(homeIntent)
-    }
-
-    companion object {
-        const val PICK_IMAGE_CODE = 1000
-        const val PERMISSION_CODE = 1001
     }
 
     @Suppress("UNUSED_PARAMETER")

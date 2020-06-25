@@ -33,6 +33,10 @@ class PlantRepository(private val plantDao: PlantDao) {
         plantDao.deleteAllPlants()
     }
 
+    fun getPlant(id: Int): LiveData<Plant> {
+        return plantDao.getPlant(id)
+    }
+
     fun getAllPlants(): LiveData<List<Plant>> {
         return allPlants
     }

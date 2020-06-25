@@ -14,13 +14,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.SavedStateViewModelFactory
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.model.PLANT_ID
-import com.emmaborkent.waterplants.viewmodel.PlantDetailsViewModel
+import com.emmaborkent.waterplants.viewmodel.PlantViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_plant_details.*
 
 class PlantDetailsActivity : AppCompatActivity() {
     private val classNameTag: String = PlantDetailsActivity::class.java.simpleName
-    private val viewModel: PlantDetailsViewModel by viewModels(
+    private val viewModel: PlantViewModel by viewModels(
         factoryProducer = { SavedStateViewModelFactory(application, this) }
     )
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>

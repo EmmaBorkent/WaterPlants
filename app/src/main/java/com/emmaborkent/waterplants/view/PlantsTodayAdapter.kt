@@ -6,17 +6,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.emmaborkent.waterplants.R
+import com.emmaborkent.waterplants.databinding.RecyclerViewMistPlantsBinding
+import com.emmaborkent.waterplants.databinding.RecyclerViewWaterPlantsBinding
 import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.viewmodel.ParseFormatDates
+import com.emmaborkent.waterplants.viewmodel.PlantViewModel
 
 class PlantsTodayAdapter(
-    private val viewModel: ViewModel,
+    private val viewModel: PlantViewModel,
     private val clickListener: (Plant) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -25,22 +23,29 @@ class PlantsTodayAdapter(
         const val VIEW_TYPE_MIST = 1
     }
 
+    private val classNameTag: String = AddEditPlantActivity::class.java.simpleName
     private var plantsThatNeedWater = emptyList<Plant>()
     private var plantsThatNeedMist = emptyList<Plant>()
 
+    override fun getItemViewType(position: Int): Int {
+        return if (position <= plantsThatNeedWater.size -1) {
+            VIEW_TYPE_WATER
+        } else {
+            VIEW_TYPE_MIST
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val context = parent.context
-        val itemView: View
+        val layoutInflater = LayoutInflater.from(context)
         return when (viewType) {
             VIEW_TYPE_WATER -> {
-                itemView = LayoutInflater.from(context)
-                    .inflate(R.layout.recycler_view_water_plants, parent, false)
-                WaterPlantsHolder(itemView)
+                val binding = RecyclerViewWaterPlantsBinding.inflate(layoutInflater, parent, false)
+                WaterPlantsViewHolder(binding)
             }
             VIEW_TYPE_MIST -> {
-                itemView = LayoutInflater.from(context)
-                    .inflate(R.layout.recycler_view_mist_plants, parent, false)
-                MistPlantsHolder(itemView)
+                val binding = RecyclerViewMistPlantsBinding.inflate(layoutInflater, parent, false)
+                MistPlantsViewHolder(binding)
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }
@@ -50,14 +55,15 @@ class PlantsTodayAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is WaterPlantsHolder -> holder.bindPlantsWater(plantsThatNeedWater[position], clickListener)
-            is MistPlantsHolder -> holder.bindPlantsMist(plantsThatNeedMist[position - plantsThatNeedWater.size], clickListener)
+            is WaterPlantsViewHolder -> holder.bindPlantsWater(
+                plantsThatNeedWater[position],
+                clickListener
+            )
+            is MistPlantsViewHolder -> holder.bindPlantsMist(
+                plantsThatNeedMist[position - plantsThatNeedWater.size],
+                clickListener
+            )
         }
-    }
-
-    fun onCreateViewModel(..){
-        val binding = ItemRecyclerViewBinding.inflate(LayoutInflater.from(parent.context), parent,false)
-        binding.vm = viewModel
     }
 
     internal fun setWaterPlants(waterPlants: List<Plant>) {
@@ -70,15 +76,8 @@ class PlantsTodayAdapter(
         notifyDataSetChanged()
     }
 
-    inner class WaterPlantsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val plantImage =
-            itemView.findViewById<ImageView>(R.id.image_rv_water_plants)
-        private val plantName =
-            itemView.findViewById<TextView>(R.id.text_rv_water_plants_name)
-        private val checkBoxIcon =
-            itemView.findViewById<CheckBox>(R.id.toggle_rv_water_plants)
-        private val plantDate =
-            itemView.findViewById<TextView>(R.id.text_rv_water_plants_date)
+    inner class WaterPlantsViewHolder(private val binding: RecyclerViewWaterPlantsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         private val todayString = ParseFormatDates()
             .getDefaultDateAsString()
 
@@ -86,73 +85,67 @@ class PlantsTodayAdapter(
             val bitmapOptions = BitmapFactory.Options()
             bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565
             val plantBitmapImage = BitmapFactory.decodeFile(plant.image, bitmapOptions)
-            plantImage.setImageBitmap(plantBitmapImage)
-            plantName.text = plant.name
+            binding.imageRvWaterPlants.setImageBitmap(plantBitmapImage)
+            binding.textRvWaterPlantsName.text = plant.name
 
-            plantDate.text =
+            binding.textRvWaterPlantsDate.text =
                 ParseFormatDates().yearMonthDayStringToDayMonthYearString(plant.waterDate)
             if (todayString == plant.waterDate) {
-                plantDate.visibility = View.INVISIBLE
+                binding.textRvWaterPlantsDate.visibility = View.INVISIBLE
             }
 
-            checkBoxIcon.setOnClickListener { waterCheckBox(plant) }
-            itemView.setOnClickListener { clickListener(plant) }
+            binding.toggleRvWaterPlants.setOnClickListener { waterCheckBox(plant) }
+            itemView.setOnClickListener {
+                clickListener(plant)
+            }
         }
 
         // TODO: 5-6-2020 Check if checked state is correctly recycled or not.
         //  https://blog.oziomaogbe.com/2017/10/18/android-handling-checkbox-state-in-recycler-views.html
         private fun waterCheckBox(plant: Plant) {
-            if (checkBoxIcon.isChecked) {
-                Log.d("PlantsTodayAdapter", "Plant ${plant.name}: Water Is Checked")
-//                Plant().giveWater(plant)
-//                dbHandler.updatePlantInDatabase(plant)
+            if (binding.toggleRvWaterPlants.isChecked) {
+                Log.i(classNameTag, "Plant ${plant.name}: Water Is Checked")
+                viewModel.giveWater(plant)
             } else {
-                Log.d("PlantsTodayAdapter", "Plant ${plant.name}: Water Is NOT Checked")
-//                Plant().undoWaterGift(plant)
-//                dbHandler.updatePlantInDatabase(plant)
+                Log.i(classNameTag, "Plant ${plant.name}: Water Is NOT Checked")
+                viewModel.undoWaterGift(plant)
             }
         }
     }
 
-    inner class MistPlantsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val plantImage =
-            itemView.findViewById<ImageView>(R.id.image_rv_mist_plants)
-        private val plantName =
-            itemView.findViewById<TextView>(R.id.text_rv_mist_plants_name)
-        private val checkBoxIcon =
-            itemView.findViewById<CheckBox>(R.id.toggle_rv_mist_plants)
-        private val plantDate =
-            itemView.findViewById<TextView>(R.id.text_rv_mist_plants_date)
-        private val todayString = ParseFormatDates()
-            .getDefaultDateAsString()
+    inner class MistPlantsViewHolder(private val binding: RecyclerViewMistPlantsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        private val todayString = ParseFormatDates().getDefaultDateAsString()
 
         fun bindPlantsMist(plant: Plant, clickListener: (Plant) -> Unit) {
             val bitmapOptions = BitmapFactory.Options()
             bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565
             val plantBitmapImage = BitmapFactory.decodeFile(plant.image, bitmapOptions)
-            plantImage.setImageBitmap(plantBitmapImage)
-            plantName.text = plant.name
+            binding.imageRvMistPlants.setImageBitmap(plantBitmapImage)
+            binding.textRvMistPlantsName.text = plant.name
 
-            plantDate.text =
+            binding.textRvMistPlantsDate.text =
                 ParseFormatDates().yearMonthDayStringToDayMonthYearString(plant.mistDate)
             if (todayString == plant.mistDate) {
-                plantDate.visibility = View.INVISIBLE
+                binding.textRvMistPlantsDate.visibility = View.INVISIBLE
             }
 
-            checkBoxIcon.setOnClickListener { mistCheckBox(plant) }
+            binding.toggleRvMistPlants.setOnClickListener { mistCheckBox(plant) }
             itemView.setOnClickListener { clickListener(plant) }
         }
 
         private fun mistCheckBox(plant: Plant) {
-            if (checkBoxIcon.isChecked) {
-                Log.d("PlantsTodayAdapter", "Plant ${plant.name}: Mist Is Checked")
-//                Plant().giveMist(plant)
-//                dbHandler.updatePlantInDatabase(plant)
+            if (binding.toggleRvMistPlants.isChecked) {
+                Log.i(classNameTag, "Plant ${plant.name}: Mist Is Checked")
+                viewModel.giveMist(plant)
             } else {
-                Log.d("PlantsTodayAdapter", "Plant ${plant.name}: Mist Is NOT Checked")
-//                Plant().undoGiveMist(plant)
-//                dbHandler.updatePlantInDatabase(plant)
+                Log.i(classNameTag, "Plant ${plant.name}: Mist Is NOT Checked")
+                viewModel.undoMistGift(plant)
             }
         }
+    }
+
+    class PlantsTodayListener(val clickListener: (plantId: Int) -> Unit) {
+        fun onClick(plant: Plant) = clickListener(plant.id)
     }
 }
