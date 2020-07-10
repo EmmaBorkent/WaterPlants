@@ -4,18 +4,21 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.addeditplant.AddEditPlantActivity
+import com.emmaborkent.waterplants.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
     private val addPlantRequestCode = 1
     private lateinit var plantViewModel: PlantViewModel
 
@@ -31,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
         tab_layout.addOnTabSelectedListener(mOnTabSelectedListener)
@@ -49,13 +52,13 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == addPlantRequestCode && resultCode == Activity.RESULT_OK) {
-            val name = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_NAME)
-            val species = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_SPECIES)
-            val image = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_IMAGE)
-            val waterEveryDays = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_WATER_EVERY_DAYS)
-            val waterDate = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_WATER_DATE)
-            val mistEveryDays = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_MIST_EVERY_DAYS)
-            val mistDate = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_MIST_DATE)
+//            val name = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_NAME)
+//            val species = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_SPECIES)
+//            val image = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_IMAGE)
+//            val waterEveryDays = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_WATER_EVERY_DAYS)
+//            val waterDate = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_WATER_DATE)
+//            val mistEveryDays = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_MIST_EVERY_DAYS)
+//            val mistDate = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_MIST_DATE)
 
 //            val plant = Plant(name!!, species!!, image!!, waterEveryDays!!, waterDate!!, mistEveryDays!!, mistDate!!)
             val plant = Plant(
