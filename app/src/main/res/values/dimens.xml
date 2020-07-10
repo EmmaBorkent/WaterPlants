@@ -6,4 +6,12 @@
     <dimen name="bottom_sheet">16dp</dimen>
     <dimen name="card_corner">8dp</dimen>
     <dimen name="elevation">4dp</dimen>
+    
+    <dimen name="text_size_headline1">72sp</dimen>
+    <dimen name="text_size_headline2">36sp</dimen>
+    <dimen name="text_size_headline4">24sp</dimen>
+    <dimen name="text_size_subtitle1">28sp</dimen>
+    <dimen name="text_size_subtitle2">18sp</dimen>
+    
+    
 </resources>

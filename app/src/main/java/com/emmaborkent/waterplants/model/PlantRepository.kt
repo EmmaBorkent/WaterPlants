@@ -1,7 +1,7 @@
 package com.emmaborkent.waterplants.model
 
 import androidx.lifecycle.LiveData
-import com.emmaborkent.waterplants.viewmodel.ParseFormatDates
+import com.emmaborkent.waterplants.util.ParseFormatDates
 
 class PlantRepository(private val plantDao: PlantDao) {
 

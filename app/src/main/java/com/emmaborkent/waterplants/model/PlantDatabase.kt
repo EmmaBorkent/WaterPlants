@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.emmaborkent.waterplants.util.DATABASE_FILE
+import com.emmaborkent.waterplants.util.DATABASE_VERSION
 
 @Database(entities = [Plant::class], version = DATABASE_VERSION)
 abstract class PlantDatabase : RoomDatabase() {

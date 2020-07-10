@@ -1,4 +1,4 @@
-package com.emmaborkent.waterplants.view
+package com.emmaborkent.waterplants.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,17 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.emmaborkent.waterplants.R
-import com.emmaborkent.waterplants.model.PLANT_ID
-import com.emmaborkent.waterplants.model.Plant
-import com.emmaborkent.waterplants.viewmodel.PlantViewModel
+import com.emmaborkent.waterplants.plantdetails.PlantDetailsActivity
 import kotlinx.android.synthetic.main.fragment_plants_all.*
 
 class PlantsAllFragment : Fragment() {
-    private lateinit var plantViewModel: PlantViewModel
+    // Use the 'by activityViewModels()' Kotlin property delegate
+    // from the fragment-ktx artifact
+    private val plantViewModel: PlantViewModel by activityViewModels()
+//    private lateinit var plantViewModel: PlantViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,11 +29,12 @@ class PlantsAllFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
+//        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
 
         val adapter =
             PlantsAllAdapter { plant ->
-                goToPlantDetails(plant)
+                plantViewModel.select(plant)
+                goToPlantDetails()
             }
         recycler_view_all_plants.adapter = adapter
         recycler_view_all_plants.layoutManager = GridLayoutManager(context, 2)
@@ -50,9 +52,8 @@ class PlantsAllFragment : Fragment() {
         })
     }
 
-    private fun goToPlantDetails(plant: Plant) {
+    private fun goToPlantDetails() {
         val plantDetailsIntent = Intent(activity, PlantDetailsActivity::class.java)
-        plantDetailsIntent.putExtra(PLANT_ID, plant.id)
         startActivity(plantDetailsIntent)
     }
 }

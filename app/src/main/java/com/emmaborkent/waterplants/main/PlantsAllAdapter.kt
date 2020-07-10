@@ -1,4 +1,4 @@
-package com.emmaborkent.waterplants.view
+package com.emmaborkent.waterplants.main
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

@@ -31,12 +31,12 @@
     <string name="new_plant_edit_hint_every">Repeat every …</string>
     <string name="new_plant_text_mist_date">Mist on</string>
     <string name="new_plant_text_mist_every">Mist again after</string>
-    <string name="new_plant_save_toast">Cannot Save. Please fill in all fields.</string>
+    <string name="new_plant_save_toast">Cannot Save. Please fill in a plant name and species.</string>
     <string name="new_plant_days">days</string>
 
     <string name="detail_drag_handle">Drag Handle</string>
     <string name="detail_water_in">Water In</string>
-    <string name="detail_pray_in">Spray In</string>
+    <string name="detail_mist_in">Mist In</string>
     <string name="detail_days"># days</string>
     <string name="detail_every_days">every # days</string>
     <plurals name="detail_water_in_days">

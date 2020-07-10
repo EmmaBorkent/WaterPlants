@@ -1,22 +1,28 @@
-package com.emmaborkent.waterplants.view
+package com.emmaborkent.waterplants.main
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emmaborkent.waterplants.R
-import com.emmaborkent.waterplants.model.PLANT_ID
-import com.emmaborkent.waterplants.model.Plant
-import com.emmaborkent.waterplants.viewmodel.PlantViewModel
+import com.emmaborkent.waterplants.databinding.FragmentPlantsTodayBinding
+import com.emmaborkent.waterplants.plantdetails.PlantDetailsActivity
+import com.emmaborkent.waterplants.util.PlantsTodayListener
 import kotlinx.android.synthetic.main.fragment_plants_today.*
 
 class PlantsTodayFragment : Fragment() {
-    private lateinit var plantViewModel: PlantViewModel
+    // Use the 'by activityViewModels()' Kotlin property delegate
+    // from the fragment-ktx artifact
+    private val plantViewModel: PlantViewModel by activityViewModels()
+
+    //    private lateinit var plantViewModel: PlantViewModel
     private lateinit var waterPlantsLayoutManager: LinearLayoutManager
     private lateinit var waterPlantsAdapter: PlantsTodayAdapter
 
@@ -24,16 +30,32 @@ class PlantsTodayFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_plants_today, container, false)
+        val binding = DataBindingUtil.inflate<FragmentPlantsTodayBinding>(
+            inflater,
+            R.layout.fragment_plants_today,
+            container,
+            false
+        )
+
+//        waterPlantsAdapter = PlantsTodayAdapter(plantViewModel, PlantsTodayListener) {
+//            Toast.makeText(context, plant.name, Toast.LENGTH_LONG).show()
+////            plantViewModel.select(plant)
+////            goToPlantDetails()
+//        })
+
+        waterPlantsAdapter = PlantsTodayAdapter(
+            plantViewModel,
+            PlantsTodayListener {
+                Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show()
+            })
+
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
+//        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
 
-        waterPlantsAdapter = PlantsTodayAdapter(plantViewModel) { plant ->
-            goToPlantDetails(plant)
-        }
         recycler_view_water_plants.adapter = waterPlantsAdapter
         waterPlantsLayoutManager = LinearLayoutManager(
             context,
@@ -52,9 +74,8 @@ class PlantsTodayFragment : Fragment() {
 //        setTextHowManyPlantsNeedAction()
     }
 
-    private fun goToPlantDetails(plant: Plant) {
+    private fun goToPlantDetails() {
         val plantDetailsIntent = Intent(activity, PlantDetailsActivity::class.java)
-        plantDetailsIntent.putExtra(PLANT_ID, plant.id)
         startActivity(plantDetailsIntent)
     }
 

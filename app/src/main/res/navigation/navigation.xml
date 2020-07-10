@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/plantsTodayFragment">
+    <fragment
+        android:id="@+id/plantsTodayFragment"
+        android:name="com.emmaborkent.waterplants.main.PlantsTodayFragment"
+        android:label="PlantsTodayFragment"
+        tools:layout="@layout/fragment_plants_today">
+        <action
+            android:id="@+id/action_plantsTodayFragment_to_plantDetailsActivity"
+            app:destination="@id/plantDetailsActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/plantsAllFragment"
+        android:name="com.emmaborkent.waterplants.main.PlantsAllFragment"
+        android:label="fragment_plants_all"
+        tools:layout="@layout/fragment_plants_all">
+        <action
+            android:id="@+id/action_plantsAllFragment_to_plantDetailsActivity"
+            app:destination="@id/plantDetailsActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/plantDetailsActivity"
+        android:name="com.emmaborkent.waterplants.plantdetails.PlantDetailsActivity"
+        android:label="PlantDetailsActivity"
+        tools:layout="@layout/activity_plant_details" />
+    <activity
+        android:id="@+id/addEditPlantActivity"
+        android:name="com.emmaborkent.waterplants.addeditplant.AddEditPlantActivity"
+        android:label="AddEditPlantActivity"
+        tools:layout="@layout/activity_add_edit_plant" />
+</navigation>

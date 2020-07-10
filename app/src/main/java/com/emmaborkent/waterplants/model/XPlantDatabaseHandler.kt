@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import com.emmaborkent.waterplants.util.*
 
 class XPlantDatabaseHandler// ...
 private constructor(context: Context) : SQLiteOpenHelper(
@@ -191,7 +192,9 @@ private constructor(context: Context) : SQLiteOpenHelper(
 
         if (cursor.moveToFirst()) {
             do {
-                Log.d(classNameTag, "Plant ID: ${cursor.getInt(cursor.getColumnIndex(KEY_ID))}")
+                Log.d(classNameTag, "Plant ID: ${cursor.getInt(cursor.getColumnIndex(
+                    KEY_ID
+                ))}")
             } while (cursor.moveToNext())
         }
 

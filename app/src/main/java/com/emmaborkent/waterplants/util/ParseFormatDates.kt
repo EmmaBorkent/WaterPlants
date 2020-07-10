@@ -1,4 +1,4 @@
-package com.emmaborkent.waterplants.viewmodel
+package com.emmaborkent.waterplants.util
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

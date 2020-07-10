@@ -1,4 +1,4 @@
-package com.emmaborkent.waterplants.view
+package com.emmaborkent.waterplants.main
 
 import android.app.Activity
 import android.content.Intent
@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.model.Plant
-import com.emmaborkent.waterplants.viewmodel.PlantViewModel
+import com.emmaborkent.waterplants.addeditplant.AddEditPlantActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.activity_main.*
@@ -52,12 +52,21 @@ class MainActivity : AppCompatActivity() {
             val name = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_NAME)
             val species = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_SPECIES)
             val image = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_IMAGE)
-            val waterEveryDays = data?.getIntExtra(AddEditPlantActivity.EXTRA_REPLY_WATER_EVERY_DAYS, 0)
+            val waterEveryDays = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_WATER_EVERY_DAYS)
             val waterDate = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_WATER_DATE)
-            val mistEveryDays = data?.getIntExtra(AddEditPlantActivity.EXTRA_REPLY_MIST_EVERY_DAYS, 0)
+            val mistEveryDays = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_MIST_EVERY_DAYS)
             val mistDate = data?.getStringExtra(AddEditPlantActivity.EXTRA_REPLY_MIST_DATE)
 
-            val plant = Plant(name!!, species!!, image!!, waterEveryDays!!, waterDate!!, mistEveryDays!!, mistDate!!)
+//            val plant = Plant(name!!, species!!, image!!, waterEveryDays!!, waterDate!!, mistEveryDays!!, mistDate!!)
+            val plant = Plant(
+                "TestPlant",
+                "Test",
+                R.drawable.ic_image_black_24dp.toString(),
+                "2",
+                "2020-07-09",
+                "3",
+                "2020-07-09"
+            )
             plantViewModel.insert(plant)
         }
     }

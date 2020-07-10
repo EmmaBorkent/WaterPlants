@@ -2,6 +2,7 @@ package com.emmaborkent.waterplants.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.emmaborkent.waterplants.util.DATABASE_TABLE_PLANTS
 
 @Entity(tableName = DATABASE_TABLE_PLANTS)
 data class Plant(
@@ -10,15 +11,15 @@ data class Plant(
     var species: String,
     var image: String,
 
-    var waterEveryDays: Int,
+    var waterEveryDays: String,
     var waterDate: String,
 
-    var mistEveryDays: Int,
+    var mistEveryDays: String,
     var mistDate: String
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 
-    var waterInDays: Int = 0
-    var mistInDays: Int = 0
+    var waterInDays = "1"
+    var mistInDays = "1"
 }

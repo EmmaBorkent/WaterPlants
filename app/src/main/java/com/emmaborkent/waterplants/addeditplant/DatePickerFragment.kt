@@ -1,11 +1,11 @@
-package com.emmaborkent.waterplants.view
+package com.emmaborkent.waterplants.addeditplant
 
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.DialogFragment
-import com.emmaborkent.waterplants.viewmodel.ParseFormatDates
+import com.emmaborkent.waterplants.util.ParseFormatDates
 import java.time.LocalDate
 
 class DatePickerFragment : DialogFragment() {

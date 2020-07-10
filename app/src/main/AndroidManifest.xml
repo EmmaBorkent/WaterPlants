@@ -13,24 +13,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".view.MainActivity">
+        <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.PlantDetailsActivity">
+        <activity android:name=".plantdetails.PlantDetailsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.emmaborkent.waterplants.view.MainActivity" />
+                android:value="com.emmaborkent.waterplants.main.MainActivity" />
         </activity>
         <activity
-            android:name=".view.AddEditPlantActivity"
-            android:parentActivityName=".view.MainActivity">
+            android:name=".addeditplant.AddEditPlantActivity"
+            android:parentActivityName=".main.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.emmaborkent.waterplants.view.MainActivity" />
+                android:value="com.emmaborkent.waterplants.main.MainActivity" />
         </activity>
 
         <meta-data

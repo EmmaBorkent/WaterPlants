@@ -1,26 +1,30 @@
-package com.emmaborkent.waterplants.viewmodel
+package com.emmaborkent.waterplants.main
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
-import com.emmaborkent.waterplants.model.PLANT_ID
+import androidx.lifecycle.*
 import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.model.PlantDatabase
 import com.emmaborkent.waterplants.model.PlantRepository
+import com.emmaborkent.waterplants.util.ParseFormatDates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.Period
 
 class PlantViewModel(application: Application) : AndroidViewModel(application) {
+
+    companion object {
+        const val VIEW_TYPE_WATER = 0
+        const val VIEW_TYPE_MIST = 1
+    }
+
     private val repository: PlantRepository
 //    private val plantId: Int
 //    val plant: LiveData<Plant>
     val plantsThatNeedWater: LiveData<List<Plant>>
     val plantsThatNeedMist: LiveData<List<Plant>>
     val allPlants: LiveData<List<Plant>>
+    val selectedPlant = MutableLiveData<Plant>()
 
     init {
         val plantDao = PlantDatabase.getDatabaseInstance(application).plantDao()
@@ -31,6 +35,10 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         plantsThatNeedWater = repository.getPlantsThatNeedWater()
         plantsThatNeedMist = repository.getPlantsThatNeedMist()
         allPlants = repository.getAllPlants()
+    }
+
+    fun select(plant: Plant) {
+        selectedPlant.value = plant
     }
 
     fun insert(plant: Plant) = viewModelScope.launch(Dispatchers.IO) {
@@ -60,7 +68,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         plant.waterInDays = Period.between(
             ParseFormatDates().stringToDateDefault(plant.waterDate),
             todayDate
-        ).days
+        ).days.toString()
 //        Log.d(classNameTag, "giveWater daysBetweenDateAndToday is ${plant.daysBetweenDateAndToday}")
         val nextWaterDate = todayDate.plusDays(plant.waterEveryDays.toLong())
         plant.waterDate = ParseFormatDates()
@@ -72,7 +80,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     fun undoWaterGift(plant: Plant) {
 //        Log.d(classNameTag, "undoWaterGift datePlantNeedsWater was ${plant.datePlantNeedsWater}")
-        val days = plant.waterEveryDays.toLong() + plant.waterInDays
+        val days = plant.waterEveryDays.toLong() + plant.waterInDays.toLong()
 //        Log.d(classNameTag, "undoWaterGift days is $days")
         val previousWaterDate =
             ParseFormatDates().stringToDateDefault(plant.waterDate).minusDays(days)
@@ -86,14 +94,14 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         plant.mistInDays = Period.between(
             ParseFormatDates().stringToDateDefault(plant.mistDate),
             todayDate
-        ).days
+        ).days.toString()
         val nextMistDate = todayDate.plusDays(plant.mistEveryDays.toLong())
         plant.mistDate = ParseFormatDates()
             .dateToStringDefault(nextMistDate)
     }
 
     fun undoMistGift(plant: Plant) {
-        val days = plant.mistEveryDays.toLong() + plant.mistInDays
+        val days = plant.mistEveryDays.toLong() + plant.mistInDays.toLong()
         val previousMistDate =
             ParseFormatDates().stringToDateDefault(plant.mistDate).minusDays(days)
         plant.mistDate = ParseFormatDates()

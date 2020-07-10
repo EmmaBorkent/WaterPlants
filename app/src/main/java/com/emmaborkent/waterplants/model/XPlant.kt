@@ -1,6 +1,6 @@
 package com.emmaborkent.waterplants.model
 
-import com.emmaborkent.waterplants.viewmodel.ParseFormatDates
+import com.emmaborkent.waterplants.util.ParseFormatDates
 import java.time.Period
 import kotlin.math.absoluteValue
 import kotlin.properties.Delegates

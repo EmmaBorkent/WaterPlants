@@ -51,7 +51,7 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">0.6</item>
         <item name="android:textColor">@color/colorOnSecondary</item>
-        <item name="android:textSize">72sp</item>
+        <item name="android:textSize">@dimen/text_size_headline1</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Headline2" parent="TextAppearance.MaterialComponents.Headline2">
@@ -59,13 +59,13 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">0.6</item>
         <item name="android:textColor">@color/colorOnSecondary</item>
-        <item name="android:textSize">36sp</item>
+        <item name="android:textSize">@dimen/text_size_headline2</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Headline3" parent="TextAppearance.MaterialComponents.Headline3"></style>
 
     <style name="AppTheme.TextAppearance.Headline4" parent="TextAppearance.MaterialComponents.Headline4">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">@dimen/text_size_headline4</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Headline5" parent="TextAppearance.MaterialComponents.Headline5"></style>
@@ -79,7 +79,7 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">0.6</item>
         <item name="android:textColor">@color/colorOnSecondary</item>
-        <item name="android:textSize">28sp</item>
+        <item name="android:textSize">@dimen/text_size_subtitle1</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Subtitle2" parent="TextAppearance.MaterialComponents.Subtitle2">
@@ -88,7 +88,7 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">0.6</item>
         <item name="android:textColor">@color/colorError</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/text_size_subtitle2</item>
     </style>
 
     <style name="AppTheme.TextAppearance.Body1" parent="TextAppearance.MaterialComponents.Body1"></style>
