@@ -1,6 +1,5 @@
 package com.emmaborkent.waterplants.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,15 +12,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentPlantsTodayBinding
-import com.emmaborkent.waterplants.plantdetails.PlantDetailsActivity
 import com.emmaborkent.waterplants.util.PlantsTodayListener
-import kotlinx.android.synthetic.main.fragment_plants_today.*
 
 class PlantsTodayFragment : Fragment() {
-    // Use the 'by activityViewModels()' Kotlin property delegate
-    // from the fragment-ktx artifact
-    private val plantViewModel: PlantViewModel by activityViewModels()
 
+    private lateinit var binding: FragmentPlantsTodayBinding
+    private val plantViewModel: PlantViewModel by activityViewModels()
     //    private lateinit var plantViewModel: PlantViewModel
     private lateinit var waterPlantsLayoutManager: LinearLayoutManager
     private lateinit var waterPlantsAdapter: PlantsTodayAdapter
@@ -30,25 +26,12 @@ class PlantsTodayFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentPlantsTodayBinding>(
+        binding = DataBindingUtil.inflate<FragmentPlantsTodayBinding>(
             inflater,
             R.layout.fragment_plants_today,
             container,
             false
         )
-
-//        waterPlantsAdapter = PlantsTodayAdapter(plantViewModel, PlantsTodayListener) {
-//            Toast.makeText(context, plant.name, Toast.LENGTH_LONG).show()
-////            plantViewModel.select(plant)
-////            goToPlantDetails()
-//        })
-
-        waterPlantsAdapter = PlantsTodayAdapter(
-            plantViewModel,
-            PlantsTodayListener {
-                Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show()
-            })
-
         return binding.root
     }
 
@@ -56,13 +39,21 @@ class PlantsTodayFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 //        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
 
-        recycler_view_water_plants.adapter = waterPlantsAdapter
+        waterPlantsAdapter = PlantsTodayAdapter(
+            plantViewModel,
+            PlantsTodayListener {
+                Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show()
+            })
+
         waterPlantsLayoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.HORIZONTAL, false
         )
-        recycler_view_water_plants.setHasFixedSize(true)
-        recycler_view_water_plants.layoutManager = waterPlantsLayoutManager
+
+        binding.apply {
+            recyclerViewWaterPlants.adapter = waterPlantsAdapter
+            recyclerViewWaterPlants.layoutManager = waterPlantsLayoutManager
+        }
 
         plantViewModel.plantsThatNeedWater.observe(viewLifecycleOwner, Observer { waterPlants ->
             waterPlants?.let { waterPlantsAdapter.setWaterPlants(it) }
@@ -74,10 +65,10 @@ class PlantsTodayFragment : Fragment() {
 //        setTextHowManyPlantsNeedAction()
     }
 
-    private fun goToPlantDetails() {
-        val plantDetailsIntent = Intent(activity, PlantDetailsActivity::class.java)
-        startActivity(plantDetailsIntent)
-    }
+//    private fun goToPlantDetails() {
+//        val plantDetailsIntent = Intent(activity, PlantDetailsActivity::class.java)
+//        startActivity(plantDetailsIntent)
+//    }
 
     // TODO: 25-6-2020 Create function setTextHowManyPlantsNeedAction()
 //    private fun setTextHowManyPlantsNeedAction() {

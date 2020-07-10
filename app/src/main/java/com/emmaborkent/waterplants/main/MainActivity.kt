@@ -37,10 +37,12 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
-        tab_layout.addOnTabSelectedListener(mOnTabSelectedListener)
+
+        binding.tabLayout.addOnTabSelectedListener(mOnTabSelectedListener)
+
         replaceFragment(PlantsTodayFragment())
 
-        floating_action_button.setOnClickListener { goToAddEditPlant() }
+        binding.floatingActionButton.setOnClickListener { goToAddEditPlant() }
     }
 
     private fun goToAddEditPlant() {
