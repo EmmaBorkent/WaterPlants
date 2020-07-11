@@ -40,10 +40,9 @@ class PlantsTodayFragment : Fragment() {
 //        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
 
         waterPlantsAdapter = PlantsTodayAdapter(
-            plantViewModel,
-            PlantsTodayListener {
-                Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show()
-            })
+            plantViewModel) {
+            Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show()
+        }
 
         waterPlantsLayoutManager = LinearLayoutManager(
             context,

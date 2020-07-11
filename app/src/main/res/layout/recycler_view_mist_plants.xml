@@ -3,23 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     
-    <data>
-        <variable
-            name="plant"
-            type="com.emmaborkent.waterplants.model.Plant" />
-        <variable
-            name="clickListener"
-            type="com.emmaborkent.waterplants.util.PlantsTodayListener" />
-    </data>
-    
     <androidx.cardview.widget.CardView
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="250dp"
         android:layout_height="375dp"
         android:layout_margin="@dimen/margin_small"
         app:cardCornerRadius="@dimen/card_corner"
-        app:cardElevation="@dimen/elevation"
-        android:onClick="@{() -> clickListener.onClick(plant)}">
+        app:cardElevation="@dimen/elevation">
         
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

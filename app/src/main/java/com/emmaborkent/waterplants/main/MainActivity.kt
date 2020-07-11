@@ -9,12 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.emmaborkent.waterplants.R
-import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.addeditplant.AddEditPlantActivity
 import com.emmaborkent.waterplants.databinding.ActivityMainBinding
+import com.emmaborkent.waterplants.model.Plant
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 

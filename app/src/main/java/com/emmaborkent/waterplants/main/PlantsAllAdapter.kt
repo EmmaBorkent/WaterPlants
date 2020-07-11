@@ -3,29 +3,27 @@ package com.emmaborkent.waterplants.main
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.emmaborkent.waterplants.R
+import com.emmaborkent.waterplants.databinding.RecyclerViewAllPlantsBinding
 import com.emmaborkent.waterplants.model.Plant
 
-class PlantsAllAdapter internal constructor(
-    private val clickListener: (Plant) -> Unit
-) : RecyclerView.Adapter<PlantsAllAdapter.PlantsHolder>() {
+class PlantsAllAdapter(private val clickListener: () -> Unit) :
+    RecyclerView.Adapter<PlantsAllAdapter.PlantsHolder>() {
 
+    private lateinit var binding: RecyclerViewAllPlantsBinding
     private var plants = emptyList<Plant>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): PlantsHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(
-            R.layout.recycler_view_all_plants,
-            parent, false
-        )
-        return PlantsHolder(itemView)
+        val inflater = LayoutInflater.from(parent.context)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.recycler_view_all_plants, parent, false)
+        return PlantsHolder(binding)
     }
 
     override fun getItemCount() = plants.size
@@ -39,19 +37,21 @@ class PlantsAllAdapter internal constructor(
         notifyDataSetChanged()
     }
 
-    inner class PlantsHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val plantImage = itemView
-            .findViewById<ImageView>(R.id.image_rv_all_plants)
-        private val plantName = itemView
-            .findViewById<TextView>(R.id.text_rv_all_plants)
+    inner class PlantsHolder(binding: RecyclerViewAllPlantsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bindPlants(plant: Plant, clickListener: (Plant) -> Unit) {
+        fun bindPlants(plant: Plant, clickListener: () -> Unit) {
             val bitmapOptions = BitmapFactory.Options()
             bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565
             val plantBitmapImage = BitmapFactory.decodeFile(plant.image, bitmapOptions)
-            plantImage.setImageBitmap(plantBitmapImage)
-            plantName.text = plant.name
-            itemView.setOnClickListener { clickListener(plant) }
+
+            binding.apply {
+                imageRvAllPlants.setImageBitmap(plantBitmapImage)
+                textRvAllPlants.text = plant.name
+            }
+
+            // TODO: 11-7-2020 Change itemView to binding with Click Listener
+            itemView.setOnClickListener { clickListener() }
         }
     }
 }
