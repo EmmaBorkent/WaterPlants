@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    
+    <!-- todo add data binding to date buttons, doesn't work yet? -->
+    
+    <data>
+        
+        <variable
+            name="plant"
+            type="com.emmaborkent.waterplants.model.Plant" />
+    
+    </data>
+    
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".addeditplant.AddEditPlantActivity">
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
+            <TextView
+                android:id="@+id/text_plant_name"
+                style="@style/AppTheme.TextAppearance.Headline6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_basic"
+                android:text="@string/new_plant_name"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_plant_name"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_plant_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edit_plant_name" />
+            
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_plant_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_basic"
+                android:layout_marginEnd="@dimen/margin_basic"
+                android:hint="@string/new_plant_name_hint"
+                android:inputType="text"
+                android:text="@={plant.name}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/edit_plant_species"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="Autofill" />
+            
+            <TextView
+                android:id="@+id/text_plant_species"
+                style="@style/AppTheme.TextAppearance.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_small"
+                android:text="@string/new_plant_species"
+                app:layout_constraintBaseline_toBaselineOf="@+id/edit_plant_species"
+                app:layout_constraintBottom_toBottomOf="@id/edit_plant_species"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edit_plant_species" />
+            
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_plant_species"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_basic"
+                android:hint="@string/new_plant_species_hint"
+                android:inputType="text"
+                android:text="@={plant.species}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_plant_species"
+                app:layout_constraintTop_toBottomOf="@id/edit_plant_name"
+                tools:ignore="Autofill" />
+            
+            <ImageView
+                android:id="@+id/image_plant"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_basic"
+                android:layout_marginRight="@dimen/margin_basic"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:contentDescription="@string/plant_image_description"
+                app:layout_constraintBottom_toTopOf="@id/button_pick_image"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_plant_species"
+                app:srcCompat="@drawable/ic_image_black_24dp" />
+            
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_pick_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_basic"
+                android:onClick="pickImage"
+                android:text="@string/new_plant_choose_image"
+                app:layout_constraintBottom_toTopOf="@id/button_date_plants_needs_water"
+                app:layout_constraintEnd_toEndOf="@id/image_plant"
+                app:layout_constraintStart_toStartOf="@id/image_plant" />
+            
+            <TextView
+                android:id="@+id/text_date_plant_needs_water"
+                style="@style/AppTheme.TextAppearance.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_basic"
+                android:text="@string/new_plant_text_water_date"
+                app:layout_constraintBottom_toBottomOf="@id/button_date_plants_needs_water"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/button_date_plants_needs_water" />
+            
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_date_plants_needs_water"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_basic"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:text="@={plant.waterDate}"
+                app:layout_constraintBottom_toTopOf="@id/edit_water_every_days"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/edit_water_every_days" />
+            
+            <TextView
+                android:id="@+id/text_water_every_days"
+                style="@style/AppTheme.TextAppearance.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_basic"
+                android:text="@string/new_plant_text_water_every"
+                app:layout_constraintBottom_toBottomOf="@id/edit_water_every_days"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edit_water_every_days" />
+            
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_water_every_days"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_basic"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:hint="@string/new_plant_edit_hint_every"
+                android:inputType="number"
+                android:text="@={plant.waterEveryDays}"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@id/button_date_plants_needs_mist"
+                app:layout_constraintEnd_toStartOf="@id/text_water_every_days_unit"
+                app:layout_constraintStart_toEndOf="@id/text_water_every_days"
+                tools:ignore="Autofill" />
+            
+            <TextView
+                android:id="@+id/text_water_every_days_unit"
+                style="@style/AppTheme.TextAppearance.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_basic"
+                android:text="@string/new_plant_days"
+                app:layout_constraintBottom_toBottomOf="@id/edit_water_every_days"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/edit_water_every_days"
+                app:layout_constraintTop_toTopOf="@id/edit_water_every_days" />
+            
+            <TextView
+                android:id="@+id/text_date_plants_needs_mist"
+                style="@style/AppTheme.TextAppearance.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_basic"
+                android:text="@string/new_plant_text_mist_date"
+                app:layout_constraintBottom_toBottomOf="@id/button_date_plants_needs_mist"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/button_date_plants_needs_mist" />
+            
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_date_plants_needs_mist"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_basic"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:text="@={plant.mistDate}"
+                app:layout_constraintBottom_toTopOf="@id/edit_mist_every_days"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/edit_water_every_days" />
+            
+            <TextView
+                android:id="@+id/text_mist_every_days"
+                style="@style/AppTheme.TextAppearance.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_basic"
+                android:text="@string/new_plant_text_mist_every"
+                app:layout_constraintBottom_toBottomOf="@id/edit_mist_every_days"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/edit_mist_every_days" />
+            
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_mist_every_days"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_marginBottom="@dimen/margin_basic"
+                android:hint="@string/new_plant_edit_hint_every"
+                android:inputType="number"
+                android:text="@={plant.mistEveryDays}"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/text_mist_every_days_unit"
+                app:layout_constraintStart_toStartOf="@id/edit_water_every_days"
+                tools:ignore="Autofill" />
+            
+            <TextView
+                android:id="@+id/text_mist_every_days_unit"
+                style="@style/AppTheme.TextAppearance.Headline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_basic"
+                android:text="@string/new_plant_days"
+                app:layout_constraintBottom_toBottomOf="@id/edit_mist_every_days"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/edit_mist_every_days"
+                app:layout_constraintTop_toTopOf="@id/edit_mist_every_days" />
+        
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
