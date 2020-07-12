@@ -1,5 +1,6 @@
 package com.emmaborkent.waterplants.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentPlantsTodayBinding
+import com.emmaborkent.waterplants.plantdetails.PlantDetailsActivity
 import com.emmaborkent.waterplants.util.PlantsTodayListener
 
 class PlantsTodayFragment : Fragment() {
@@ -41,7 +43,8 @@ class PlantsTodayFragment : Fragment() {
 
         waterPlantsAdapter = PlantsTodayAdapter(
             plantViewModel) {
-            Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show()
+            goToPlantDetails()
         }
 
         waterPlantsLayoutManager = LinearLayoutManager(
@@ -64,12 +67,12 @@ class PlantsTodayFragment : Fragment() {
 //        setTextHowManyPlantsNeedAction()
     }
 
-//    private fun goToPlantDetails() {
-//        val plantDetailsIntent = Intent(activity, PlantDetailsActivity::class.java)
-//        startActivity(plantDetailsIntent)
-//    }
+    private fun goToPlantDetails() {
+        val plantDetailsIntent = Intent(activity, PlantDetailsActivity::class.java)
+        startActivity(plantDetailsIntent)
+    }
 
-    // TODO: 25-6-2020 Create function setTextHowManyPlantsNeedAction()
+    // TODO: 25-6-2020 Create function setTextHowManyPlantsNeedAction() After the viewmodel works
 //    private fun setTextHowManyPlantsNeedAction() {
 //        val textHowManyActions = viewModel.allPlantsThatNeedWaterOrMist.size
 //        if (textHowManyActions != 0) {
@@ -79,5 +82,4 @@ class PlantsTodayFragment : Fragment() {
 //            text_subtitle.text = resources.getString(R.string.main_subtitle_zero)
 //        }
 //    }
-
 }

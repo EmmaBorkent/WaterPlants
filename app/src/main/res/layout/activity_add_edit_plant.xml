@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    
+    <!-- todo add data binding to date buttons, doesn't work yet? -->
     
     <data>
+        
         <variable
             name="plant"
             type="com.emmaborkent.waterplants.model.Plant" />
+    
     </data>
     
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".addeditplant.AddEditPlantActivity">
@@ -140,8 +145,8 @@
                 android:layout_marginBottom="@dimen/margin_small"
                 android:hint="@string/new_plant_edit_hint_every"
                 android:inputType="number"
-                android:textAlignment="center"
                 android:text="@={plant.waterEveryDays}"
+                android:textAlignment="center"
                 app:layout_constraintBottom_toTopOf="@id/button_date_plants_needs_mist"
                 app:layout_constraintEnd_toStartOf="@id/text_water_every_days_unit"
                 app:layout_constraintStart_toEndOf="@id/text_water_every_days"
@@ -200,8 +205,8 @@
                 android:layout_marginBottom="@dimen/margin_basic"
                 android:hint="@string/new_plant_edit_hint_every"
                 android:inputType="number"
-                android:textAlignment="center"
                 android:text="@={plant.mistEveryDays}"
+                android:textAlignment="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/text_mist_every_days_unit"
                 app:layout_constraintStart_toStartOf="@id/edit_water_every_days"

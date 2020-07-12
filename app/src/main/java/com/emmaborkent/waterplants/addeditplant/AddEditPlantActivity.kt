@@ -33,6 +33,7 @@ import java.time.LocalDate
 import java.util.*
 
 class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
+
     private val classNameTag: String = AddEditPlantActivity::class.java.simpleName
     private lateinit var binding: ActivityAddEditPlantBinding
     private val plant: Plant = Plant(
@@ -128,21 +129,28 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     }
 
     private fun setupPageToAddPlant() {
-        setAddActionBarTitle()
+        supportActionBar?.setTitle(R.string.new_plant_toolbar)
         setTodayDateToDateButtons()
     }
 
-    private fun setAddActionBarTitle() {
-        supportActionBar?.setTitle(R.string.new_plant_toolbar)
-    }
-
-    // TODO: 1-5-2020 Might not be necessary  when this is done in Plant Class
+    // TODO: 1-5-2020 Might not be necessary to set today date here when this is done in Plant Class
     private fun setTodayDateToDateButtons() {
         val localDate = LocalDate.now()
         val dateAsString = ParseFormatDates()
             .dateToStringLocalized(localDate)
-        binding.buttonDatePlantsNeedsWater.text = dateAsString
-        binding.buttonDatePlantsNeedsMist.text = dateAsString
+
+        // When using data binging with plant it is not possible anymore to set button text with
+        // binding.button.text like this: binding.buttonDatePlantsNeedsMist.text = dateAsString
+        val addNewPlant: Plant = Plant(
+            "",
+            "",
+            R.drawable.ic_image_black_24dp.toString(),
+            "",
+            dateAsString,
+            "",
+            dateAsString
+        )
+        binding.plant = addNewPlant
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -190,10 +198,23 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
                 replyIntent.putExtra(EXTRA_REPLY_NAME, editPlantName.text.toString())
                 replyIntent.putExtra(EXTRA_REPLY_SPECIES, editPlantSpecies.text.toString())
                 replyIntent.putExtra(EXTRA_REPLY_IMAGE, plantImageUri.toString())
-                replyIntent.putExtra(EXTRA_REPLY_WATER_EVERY_DAYS, editWaterEveryDays.text.toString())
-                replyIntent.putExtra(EXTRA_REPLY_WATER_DATE, ParseFormatDates().dayMonthYearStringToYearMonthDayString(buttonDatePlantsNeedsWater.text.toString()))
+                replyIntent.putExtra(
+                    EXTRA_REPLY_WATER_EVERY_DAYS,
+                    editWaterEveryDays.text.toString()
+                )
+                replyIntent.putExtra(
+                    EXTRA_REPLY_WATER_DATE,
+                    ParseFormatDates().dayMonthYearStringToYearMonthDayString(
+                        buttonDatePlantsNeedsWater.text.toString()
+                    )
+                )
                 replyIntent.putExtra(EXTRA_REPLY_MIST_DATE, editMistEveryDays.text.toString())
-                replyIntent.putExtra(EXTRA_REPLY_MIST_EVERY_DAYS, ParseFormatDates().dayMonthYearStringToYearMonthDayString(buttonDatePlantsNeedsMist.text.toString()))
+                replyIntent.putExtra(
+                    EXTRA_REPLY_MIST_EVERY_DAYS,
+                    ParseFormatDates().dayMonthYearStringToYearMonthDayString(
+                        buttonDatePlantsNeedsMist.text.toString()
+                    )
+                )
                 setResult(Activity.RESULT_OK, replyIntent)
             }
 
@@ -327,7 +348,8 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
                 android.Manifest.permission
                     .READ_EXTERNAL_STORAGE
             )
-            requestPermissions(permissions,
+            requestPermissions(
+                permissions,
                 PERMISSION_CODE
             )
         } else {
@@ -358,7 +380,8 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     private fun openImageGallery() {
         val openImageGallery = Intent(Intent.ACTION_GET_CONTENT)
         openImageGallery.type = "image/*"
-        startActivityForResult(openImageGallery,
+        startActivityForResult(
+            openImageGallery,
             PICK_IMAGE_CODE
         )
     }

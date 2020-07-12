@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentPlantsAllBinding
+import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.plantdetails.PlantDetailsActivity
 
 class PlantsAllFragment : Fragment() {
@@ -34,9 +35,9 @@ class PlantsAllFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         adapter = PlantsAllAdapter {
-            Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show()
 //            plantViewModel.select(plant)
-//            goToPlantDetails()
+            goToPlantDetails()
         }
 
         layoutManager = GridLayoutManager(context, 2)
