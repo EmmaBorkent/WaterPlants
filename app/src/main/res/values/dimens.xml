@@ -2,7 +2,10 @@
 <resources>
     <dimen name="margin_basic">16dp</dimen>
     <dimen name="margin_small">8dp</dimen>
-
+    
+    <dimen name="toolbar_height">384dp</dimen>
+    <dimen name="toolbar_collapsed">192dp</dimen>
+    
     <dimen name="bottom_sheet">16dp</dimen>
     <dimen name="card_corner">8dp</dimen>
     <dimen name="elevation">4dp</dimen>
@@ -12,6 +15,7 @@
     <dimen name="text_size_headline4">24sp</dimen>
     <dimen name="text_size_subtitle1">28sp</dimen>
     <dimen name="text_size_subtitle2">18sp</dimen>
-    
-    
+    <dimen name="text_margin">16dp</dimen>
+
+
 </resources>

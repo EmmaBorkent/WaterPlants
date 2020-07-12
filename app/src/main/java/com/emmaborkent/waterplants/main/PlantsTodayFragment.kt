@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentPlantsTodayBinding
@@ -44,7 +45,8 @@ class PlantsTodayFragment : Fragment() {
         waterPlantsAdapter = PlantsTodayAdapter(
             plantViewModel) {
 //            Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show()
-            goToPlantDetails()
+            view?.findNavController()?.navigate(R.id.action_tabbedFragment_to_detailsFragment)
+//            goToPlantDetails()
         }
 
         waterPlantsLayoutManager = LinearLayoutManager(
@@ -67,10 +69,10 @@ class PlantsTodayFragment : Fragment() {
 //        setTextHowManyPlantsNeedAction()
     }
 
-    private fun goToPlantDetails() {
-        val plantDetailsIntent = Intent(activity, PlantDetailsActivity::class.java)
-        startActivity(plantDetailsIntent)
-    }
+//    private fun goToPlantDetails() {
+//        val plantDetailsIntent = Intent(activity, PlantDetailsActivity::class.java)
+//        startActivity(plantDetailsIntent)
+//    }
 
     // TODO: 25-6-2020 Create function setTextHowManyPlantsNeedAction() After the viewmodel works
 //    private fun setTextHowManyPlantsNeedAction() {

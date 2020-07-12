@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentPlantsAllBinding
@@ -37,7 +38,8 @@ class PlantsAllFragment : Fragment() {
         adapter = PlantsAllAdapter {
 //            Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show()
 //            plantViewModel.select(plant)
-            goToPlantDetails()
+//            goToPlantDetails()
+            view?.findNavController()?.navigate(R.id.action_tabbedFragment_to_detailsFragment)
         }
 
         layoutManager = GridLayoutManager(context, 2)
