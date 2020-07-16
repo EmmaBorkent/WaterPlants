@@ -25,6 +25,9 @@
             android:name="plantId"
             android:defaultValue="0"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_addEditPlantFragment_to_tabbedFragment"
+            app:destination="@id/tabbedFragment" />
     </fragment>
     
     <fragment

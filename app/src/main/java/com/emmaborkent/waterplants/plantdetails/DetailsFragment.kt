@@ -19,7 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class DetailsFragment : Fragment() {
 
-    private val classNameTag: String = PlantDetailsActivity::class.java.simpleName
+//    private val classNameTag: String = PlantDetailsActivity::class.java.simpleName
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var plantViewModel: PlantViewModel
 
@@ -46,9 +46,9 @@ class DetailsFragment : Fragment() {
         activity?.title = plant.name
         // TODO: 16-7-2020 Change plantId to real plant ID
         binding.buttonFabEdit.setOnClickListener {
-            view?.findNavController()?.navigate(DetailsFragmentDirections.actionDetailsFragmentToAddEditPlantFragment())
+            view?.findNavController()?.navigate(DetailsFragmentDirections.actionDetailsFragmentToAddEditPlantFragment(1))
         }
-        val args = DetailsFragmentArgs.fromBundle(arguments!!)
+        val args = DetailsFragmentArgs.fromBundle(requireArguments())
         Toast.makeText(context, "PlantID: ${args.plantId}", Toast.LENGTH_SHORT).show()
         return binding.root
     }

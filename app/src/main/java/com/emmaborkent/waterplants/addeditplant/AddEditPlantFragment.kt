@@ -91,8 +91,8 @@ class AddEditPlantFragment : Fragment() {
     // TODO: 12-7-2020 Change get intent to Define Destination Arguments
     // https://developer.android.com/guide/navigation/navigation-pass-data
     private fun isEditActivity(): Boolean {
-//        return intent.hasExtra("PLANT_ID")
-        return false
+        val args = AddEditPlantFragmentArgs.fromBundle(requireArguments())
+        return args.plantId != 0
     }
 
     // TODO: 25-6-2020 Set function setupPageToEditPlant()
