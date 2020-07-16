@@ -16,7 +16,7 @@ import java.time.LocalDate
 
 class AddEditPlantFragment : Fragment() {
 
-    private val classNameTag: String = AddEditPlantActivity::class.java.simpleName
+//    private val classNameTag: String = AddEditPlantActivity::class.java.simpleName
     private lateinit var binding: FragmentAddEditPlantBinding
     private val plant: Plant = Plant(
         "TestPlant",

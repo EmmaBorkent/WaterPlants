@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.emmaborkent.waterplants.NavigationDirections
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentPlantsAllBinding
 import com.emmaborkent.waterplants.model.Plant
@@ -39,7 +40,9 @@ class PlantsAllFragment : Fragment() {
 //            Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show()
 //            plantViewModel.select(plant)
 //            goToPlantDetails()
-            view?.findNavController()?.navigate(R.id.action_tabbedFragment_to_detailsFragment)
+            // TODO: 15-7-2020 Change Plant ID to real Plant ID
+            view?.findNavController()
+                ?.navigate(NavigationDirections.actionGlobalDetailsFragment(2))
         }
 
         layoutManager = GridLayoutManager(context, 2)

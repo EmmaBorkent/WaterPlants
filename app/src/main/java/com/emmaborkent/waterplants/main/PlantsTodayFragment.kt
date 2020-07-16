@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.emmaborkent.waterplants.NavigationDirections
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentPlantsTodayBinding
 import com.emmaborkent.waterplants.plantdetails.PlantDetailsActivity
@@ -45,7 +46,9 @@ class PlantsTodayFragment : Fragment() {
         waterPlantsAdapter = PlantsTodayAdapter(
             plantViewModel) {
 //            Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show()
-            view?.findNavController()?.navigate(R.id.action_tabbedFragment_to_detailsFragment)
+            // TODO: 15-7-2020 Change Plant ID to real plant ID
+            view?.findNavController()
+                ?.navigate(NavigationDirections.actionGlobalDetailsFragment(1))
 //            goToPlantDetails()
         }
 

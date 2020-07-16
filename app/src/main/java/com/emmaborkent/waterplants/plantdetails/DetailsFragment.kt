@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -43,9 +44,12 @@ class DetailsFragment : Fragment() {
         binding.plant = plant
         binding.collapsingToolbar.title = plant.species
         activity?.title = plant.name
+        // TODO: 16-7-2020 Change plantId to real plant ID
         binding.buttonFabEdit.setOnClickListener {
-            view?.findNavController()?.navigate(R.id.action_detailsFragment_to_addEditPlantFragment)
+            view?.findNavController()?.navigate(DetailsFragmentDirections.actionDetailsFragmentToAddEditPlantFragment())
         }
+        val args = DetailsFragmentArgs.fromBundle(arguments!!)
+        Toast.makeText(context, "PlantID: ${args.plantId}", Toast.LENGTH_SHORT).show()
         return binding.root
     }
 }

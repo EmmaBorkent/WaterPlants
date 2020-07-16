@@ -12,6 +12,8 @@ class DatePickerFragment : DialogFragment() {
     private val classNameTag: String = DatePickerFragment::class.java.simpleName
     // TODO: 25-6-2020 Create a ViewModel for DatePickerDialog
 
+    // TODO: 16-7-2020 Create a destination from a DialogFragment in Navigation Graph
+    // https://developer.android.com/guide/navigation/navigation-create-destinations
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
         val date: LocalDate = getDate()

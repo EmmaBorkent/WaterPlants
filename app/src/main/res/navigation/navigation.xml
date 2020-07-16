@@ -14,44 +14,34 @@
         <action
             android:id="@+id/action_tabbedFragment_to_addEditPlantFragment"
             app:destination="@id/addEditPlantFragment" />
-        <action
-            android:id="@+id/action_tabbedFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
     </fragment>
-    
-    <fragment
-        android:id="@+id/plantsTodayFragment"
-        android:name="com.emmaborkent.waterplants.main.PlantsTodayFragment"
-        android:label="PlantsTodayFragment"
-        tools:layout="@layout/fragment_plants_today"/>
-    
-    <fragment
-        android:id="@+id/plantsAllFragment"
-        android:name="com.emmaborkent.waterplants.main.PlantsAllFragment"
-        android:label="PlantsAllFragment"
-        tools:layout="@layout/fragment_plants_all"/>
     
     <fragment
         android:id="@+id/addEditPlantFragment"
         android:name="com.emmaborkent.waterplants.addeditplant.AddEditPlantFragment"
         android:label="AddEditPlantFragment"
         tools:layout="@layout/fragment_add_edit_plant">
-        
         <argument
             android:name="plantId"
-            app:argType="string"
-            app:nullable="true" />
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
     
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.emmaborkent.waterplants.plantdetails.DetailsFragment"
         android:label="DetailsFragment"
-        tools:layout="@layout/fragment_details" >
+        tools:layout="@layout/fragment_details">
         <action
             android:id="@+id/action_detailsFragment_to_addEditPlantFragment"
             app:destination="@id/addEditPlantFragment" />
+        <argument
+            android:name="plantId"
+            app:argType="integer" />
     </fragment>
-
+    
+    <action
+        android:id="@+id/action_global_detailsFragment"
+        app:destination="@id/detailsFragment" />
 
 </navigation>
