@@ -22,7 +22,7 @@ import com.emmaborkent.waterplants.main.MainActivity
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.util.ParseFormatDates
 import com.emmaborkent.waterplants.databinding.ActivityAddEditPlantBinding
-import com.emmaborkent.waterplants.main.PlantViewModel
+import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.model.Plant
 import kotlinx.android.synthetic.main.activity_add_edit_plant.*
 import java.io.File
@@ -32,9 +32,9 @@ import java.io.OutputStream
 import java.time.LocalDate
 import java.util.*
 
-class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
+class XAddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
-    private val classNameTag: String = AddEditPlantActivity::class.java.simpleName
+    private val classNameTag: String = XAddEditPlantActivity::class.java.simpleName
     private lateinit var binding: ActivityAddEditPlantBinding
     private val plant: Plant = Plant(
         "TestPlant",
@@ -401,7 +401,7 @@ class AddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     fun showDatePickerDialog(clickedButton: Button) {
         clickedButtonView = clickedButton
         val datePicker =
-            DatePickerFragment()
+            DatePickerDialogFragment()
         if (isEditActivity()) {
             val args = Bundle()
             // TODO: 23-4-2020 Create key value pairs for Bundles and Intents

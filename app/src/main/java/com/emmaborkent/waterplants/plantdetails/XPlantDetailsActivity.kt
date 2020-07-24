@@ -12,15 +12,15 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.emmaborkent.waterplants.R
-import com.emmaborkent.waterplants.addeditplant.AddEditPlantActivity
+import com.emmaborkent.waterplants.addeditplant.XAddEditPlantActivity
 import com.emmaborkent.waterplants.databinding.ActivityPlantDetailsBinding
-import com.emmaborkent.waterplants.main.PlantViewModel
+import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.model.Plant
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_plant_details.*
 
-class PlantDetailsActivity : AppCompatActivity() {
-    private val classNameTag: String = PlantDetailsActivity::class.java.simpleName
+class XPlantDetailsActivity : AppCompatActivity() {
+    private val classNameTag: String = XPlantDetailsActivity::class.java.simpleName
 
     // Use the 'by activityViewModels()' Kotlin property delegate
     // from the fragment-ktx artifact
@@ -183,8 +183,8 @@ class PlantDetailsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_edit -> {
-                val editPlantIntent = Intent(this, AddEditPlantActivity::class.java)
-                Log.d(classNameTag, "Going to AddEditPlantActivity. Plant ID is: ${plant.id}")
+                val editPlantIntent = Intent(this, XAddEditPlantActivity::class.java)
+                Log.d(classNameTag, "Going to XAddEditPlantActivity. Plant ID is: ${plant.id}")
                 editPlantIntent.putExtra("PLANT_ID", plant.id)
                 startActivity(editPlantIntent)
                 true

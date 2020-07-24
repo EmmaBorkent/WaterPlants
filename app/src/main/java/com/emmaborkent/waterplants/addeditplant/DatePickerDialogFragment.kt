@@ -3,15 +3,14 @@ package com.emmaborkent.waterplants.addeditplant
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.DialogFragment
 import com.emmaborkent.waterplants.util.ParseFormatDates
+import timber.log.Timber
 import java.time.LocalDate
 
-class DatePickerFragment : DialogFragment() {
-    private val classNameTag: String = DatePickerFragment::class.java.simpleName
-    // TODO: 25-6-2020 Create a ViewModel for DatePickerDialog
+class DatePickerDialogFragment : DialogFragment() {
 
+    // TODO: 25-6-2020 Create a ViewModel for DatePickerDialog
     // TODO: 16-7-2020 Create a destination from a DialogFragment in Navigation Graph
     // https://developer.android.com/guide/navigation/navigation-create-destinations
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -22,7 +21,7 @@ class DatePickerFragment : DialogFragment() {
         val day = date.dayOfMonth
         return DatePickerDialog(
             requireActivity(),
-            activity as AddEditPlantActivity,
+            activity as XAddEditPlantActivity,
             year,
             month,
             day
@@ -32,7 +31,7 @@ class DatePickerFragment : DialogFragment() {
     private fun getDate(): LocalDate {
         return if (arguments != null) {
             val dateFromArguments = arguments?.getString("DATE")
-            Log.d(classNameTag, "Argument is $dateFromArguments")
+            Timber.d("Argument is $dateFromArguments")
             ParseFormatDates().stringToDateLocalized(dateFromArguments!!)
         } else {
             LocalDate.now()

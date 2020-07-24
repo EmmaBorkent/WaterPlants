@@ -1,8 +1,7 @@
-package com.emmaborkent.waterplants.main
+package com.emmaborkent.waterplants.plantstoday
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +12,12 @@ import com.emmaborkent.waterplants.databinding.RecyclerViewMistPlantsBinding
 import com.emmaborkent.waterplants.databinding.RecyclerViewWaterPlantsBinding
 import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.util.ParseFormatDates
+import timber.log.Timber
 
 class PlantsTodayAdapter(
-    private val viewModel: PlantViewModel,
+    private val viewModel: PlantsTodayViewModel,
     private val clickListener: () -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private val classNameTag: String = PlantsTodayAdapter::class.java.simpleName
 
     // TODO: 11-7-2020 Test if removing emptyList helps in getting a plant in clickListener
     private var plantsThatNeedWater = emptyList<Plant>()
@@ -120,10 +118,10 @@ class PlantsTodayAdapter(
         //  https://blog.oziomaogbe.com/2017/10/18/android-handling-checkbox-state-in-recycler-views.html
         private fun waterCheckBox(plant: Plant) {
             if (binding.toggleRvWaterPlants.isChecked) {
-                Log.i(classNameTag, "Plant ${plant.name}: Water Is Checked")
+                Timber.i("Plant ${plant.name}: Water Is Checked")
                 viewModel.giveWater(plant)
             } else {
-                Log.i(classNameTag, "Plant ${plant.name}: Water Is NOT Checked")
+                Timber.i("Plant ${plant.name}: Water Is NOT Checked")
                 viewModel.undoWaterGift(plant)
             }
         }
@@ -158,10 +156,10 @@ class PlantsTodayAdapter(
 
         private fun mistCheckBox(plant: Plant) {
             if (binding.toggleRvMistPlants.isChecked) {
-                Log.i(classNameTag, "Plant ${plant.name}: Mist Is Checked")
+                Timber.i("Plant ${plant.name}: Mist Is Checked")
                 viewModel.giveMist(plant)
             } else {
-                Log.i(classNameTag, "Plant ${plant.name}: Mist Is NOT Checked")
+                Timber.i("Plant ${plant.name}: Mist Is NOT Checked")
                 viewModel.undoMistGift(plant)
             }
         }

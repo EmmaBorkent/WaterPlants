@@ -1,5 +1,6 @@
 package com.emmaborkent.waterplants.main
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
 import com.emmaborkent.waterplants.R
+import com.emmaborkent.waterplants.allplants.PlantsAllFragment
 import com.emmaborkent.waterplants.databinding.FragmentTabbedBinding
+import com.emmaborkent.waterplants.plantstoday.PlantsTodayFragment
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.fragment_tabbed.*
+import timber.log.Timber
 
 class TabbedFragment : Fragment() {
 
@@ -40,13 +41,17 @@ class TabbedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tabbed, container, false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_tabbed, container, false)
+
+        Timber.i("onCreate Called")
         binding.tabLayout.addOnTabSelectedListener(tabListener)
         replaceFragment(PlantsTodayFragment())
 //        nav_host_container_tabbed?.findNavController()?.navigate(TabbedFragmentDirections.actionTabbedFragmentToPlantsTodayFragment())
         binding.floatingActionButton.setOnClickListener {
             view?.findNavController()?.navigate(TabbedFragmentDirections.actionTabbedFragmentToAddEditPlantFragment())
         }
+        Timber.i("onCreateView called")
         return binding.root
     }
 
@@ -67,5 +72,42 @@ class TabbedFragment : Fragment() {
         val fragmentTransaction: FragmentTransaction = childFragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.nav_host_container_tabbed, fragment)
         fragmentTransaction.commit()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Timber.i("onAttach called")
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Timber.i("onCreate called")
+    }
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        Timber.i("onActivityCreated called")
+    }
+    override fun onStart() {
+        super.onStart()
+        Timber.i("onStart called")
+    }
+    override fun onResume() {
+        super.onResume()
+        Timber.i("onResume called")
+    }
+    override fun onPause() {
+        super.onPause()
+        Timber.i("onPause called")
+    }
+    override fun onStop() {
+        super.onStop()
+        Timber.i("onStop called")
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Timber.i("onDestroyView called")
+    }
+    override fun onDetach() {
+        super.onDetach()
+        Timber.i("onDetach called")
     }
 }

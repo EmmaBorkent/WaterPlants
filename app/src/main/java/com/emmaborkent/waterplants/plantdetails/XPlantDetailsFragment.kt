@@ -7,20 +7,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentPlantDetailsBinding
-import com.emmaborkent.waterplants.main.PlantViewModel
+import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.model.Plant
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_plant_details.*
 
-class PlantDetailsFragment : Fragment() {
+class XPlantDetailsFragment : Fragment() {
 
-    private val classNameTag: String = PlantDetailsActivity::class.java.simpleName
+    private val classNameTag: String = XPlantDetailsActivity::class.java.simpleName
     private lateinit var binding: FragmentPlantDetailsBinding
     private lateinit var plantViewModel: PlantViewModel
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>

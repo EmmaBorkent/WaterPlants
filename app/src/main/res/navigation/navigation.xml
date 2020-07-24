@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_addEditPlantFragment_to_tabbedFragment"
             app:destination="@id/tabbedFragment" />
+        <action
+            android:id="@+id/action_addEditPlantFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
     </fragment>
     
     <fragment

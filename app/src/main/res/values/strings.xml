@@ -17,7 +17,7 @@
     <string name="rv_water_plants_date">Date</string>
     
     <!-- activity_add_edit_plant.xml -->
-    <!-- AddEditPlantActivity.kty.kt -->
+    <!-- XAddEditPlantActivity.kty.kt -->
     <!-- activity_plant_details.xml -->
     <string name="new_plant_toolbar">Add New Plant</string>
     <string name="edit_plant_toolbar">Edit Plant</string>

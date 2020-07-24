@@ -34,6 +34,12 @@ class ParseFormatDates {
 
     private val formatter: DateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
 
+    fun getTodayDateAsString(): String {
+        val localDate = LocalDate.now()
+        return ParseFormatDates()
+            .dateToStringLocalized(localDate)
+    }
+
     fun stringToDateLocalized(date: String): LocalDate {
         return LocalDate.parse(date, formatter)
     }
