@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.emmaborkent.waterplants.NavigationDirections
+import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentPlantsAllBinding
 import timber.log.Timber
@@ -19,7 +22,7 @@ import timber.log.Timber
 class PlantsAllFragment : Fragment() {
 
     private lateinit var binding: FragmentPlantsAllBinding
-    private lateinit var plantViewModel: PlantsAllViewModel
+    private val viewModel by activityViewModels<PlantViewModel>()
     lateinit var adapter: PlantsAllAdapter
     lateinit var layoutManager: GridLayoutManager
 
@@ -29,8 +32,8 @@ class PlantsAllFragment : Fragment() {
     ): View? {
         Timber.i("onCreateView called")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_plants_all, container, false)
-        plantViewModel = ViewModelProvider(this).get(PlantsAllViewModel::class.java)
-        Timber.i("ViewModelProviders called")
+//        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
+//        Timber.i("ViewModelProviders called")
         return binding.root
     }
 
@@ -51,7 +54,7 @@ class PlantsAllFragment : Fragment() {
             recyclerViewAllPlants.layoutManager = layoutManager
         }
 
-        plantViewModel.allPlants.observe(viewLifecycleOwner, Observer { plants ->
+        viewModel.allPlants.observe(viewLifecycleOwner, Observer { plants ->
             plants?.let { adapter.setPlants(it) }
         })
     }

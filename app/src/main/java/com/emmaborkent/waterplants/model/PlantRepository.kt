@@ -6,11 +6,16 @@ import com.emmaborkent.waterplants.util.ParseFormatDates
 class PlantRepository(private val plantDao: PlantDao) {
 
     private var parseFormatDates = ParseFormatDates.getParseFormatDatesInstance()
+    private val defaultDateAsString = parseFormatDates.getDefaultDateAsString()
     private val allPlants: LiveData<List<Plant>> = plantDao.getAllPlants()
     private val plantsThatNeedWater: LiveData<List<Plant>> =
-        plantDao.getPlantsThatNeedWater(parseFormatDates.getDefaultDateAsString())
+        plantDao.getPlantsThatNeedWater(defaultDateAsString)
     private val plantsThatNeedMist: LiveData<List<Plant>> =
-        plantDao.getPlantsThatNeedMist(parseFormatDates.getDefaultDateAsString())
+        plantDao.getPlantsThatNeedMist(defaultDateAsString)
+    private val countPlantsThatNeedWater: LiveData<Int> =
+        plantDao.countPlantsThatNeedWater(defaultDateAsString)
+    private val countPlantsThatNeedMist: LiveData<Int> =
+        plantDao.countPlantsThatNeedMist(defaultDateAsString)
 
     // The suspend modifiers tell the compiler that they need to be called from a coroutine
     // or another suspending function.
@@ -33,7 +38,7 @@ class PlantRepository(private val plantDao: PlantDao) {
         plantDao.deleteAllPlants()
     }
 
-    fun getPlant(id: Int): LiveData<Plant> {
+    fun getPlant(id: Int): Plant {
         return plantDao.getPlant(id)
     }
 
@@ -47,6 +52,14 @@ class PlantRepository(private val plantDao: PlantDao) {
 
     fun getPlantsThatNeedMist(): LiveData<List<Plant>> {
         return plantsThatNeedMist
+    }
+
+    fun countPlantsThatNeedWater(): LiveData<Int> {
+        return countPlantsThatNeedWater
+    }
+
+    fun countPlantsThatNeedMist(): LiveData<Int> {
+        return countPlantsThatNeedMist
     }
 
 //    private val databaseHandler: XPlantDatabaseHandler = XPlantDatabaseHandler.getInstance(MainActivity())

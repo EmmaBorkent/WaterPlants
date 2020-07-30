@@ -22,7 +22,7 @@ interface PlantDao {
     fun deleteAllPlants()
 
     @Query("SELECT * FROM PLANT_TABLE WHERE id=:id")
-    fun getPlant(id: Int): LiveData<Plant>
+    fun getPlant(id: Int): Plant
 
     @Query("SELECT * FROM PLANT_TABLE ORDER BY id DESC")
     fun getAllPlants(): LiveData<List<Plant>>
@@ -32,5 +32,11 @@ interface PlantDao {
 
     @Query("SELECT * FROM PLANT_TABLE WHERE mistDate <= Date(:dateAsYearMonthDay)")
     fun getPlantsThatNeedMist(dateAsYearMonthDay: String): LiveData<List<Plant>>
+
+    @Query("SELECT COUNT(*) FROM PLANT_TABLE WHERE waterDate <= Date(:dateAsYearMonthDay)")
+    fun countPlantsThatNeedWater(dateAsYearMonthDay: String): LiveData<Int>
+
+    @Query("SELECT COUNT(*) FROM PLANT_TABLE WHERE mistDate <= Date(:dateAsYearMonthDay)")
+    fun countPlantsThatNeedMist(dateAsYearMonthDay: String): LiveData<Int>
 
 }

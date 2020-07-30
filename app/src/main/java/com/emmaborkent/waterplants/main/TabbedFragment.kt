@@ -16,9 +16,11 @@ import com.emmaborkent.waterplants.plantstoday.PlantsTodayFragment
 import com.google.android.material.tabs.TabLayout
 import timber.log.Timber
 
+
 class TabbedFragment : Fragment() {
 
     private lateinit var binding: FragmentTabbedBinding
+    private var selectedTab: Int = 0
 
     //    private val addPlantRequestCode = 1
     private val tabListener = object : TabLayout.OnTabSelectedListener {
@@ -32,9 +34,17 @@ class TabbedFragment : Fragment() {
         }
 
         override fun onTabSelected(tab: TabLayout.Tab?) {
-            setFragmentForTabPosition(tab!!.position)
+            selectedTab = tab!!.position
+            Timber.i("SelectedTab = $selectedTab")
+            setFragmentForTabPosition(tab.position)
         }
 
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+//        replaceFragment(PlantsTodayFragment())
+        Timber.i("onCreate called")
     }
 
     override fun onCreateView(
@@ -44,10 +54,16 @@ class TabbedFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_tabbed, container, false)
 
-        Timber.i("onCreate Called")
         binding.tabLayout.addOnTabSelectedListener(tabListener)
-        replaceFragment(PlantsTodayFragment())
 //        nav_host_container_tabbed?.findNavController()?.navigate(TabbedFragmentDirections.actionTabbedFragmentToPlantsTodayFragment())
+
+        Timber.i("Creating View; selectedTab = $selectedTab")
+//        replaceFragment(PlantsTodayFragment())
+//        setFragmentForTabPosition(selectedTab)
+        binding.tabLayout.getTabAt(selectedTab)?.select()
+//        binding.tabLayout.setScrollPosition(selectedTab, 0f, true)
+
+
         binding.floatingActionButton.setOnClickListener {
             view?.findNavController()?.navigate(TabbedFragmentDirections.actionTabbedFragmentToAddEditPlantFragment())
         }
@@ -59,11 +75,9 @@ class TabbedFragment : Fragment() {
         when (position) {
             0 -> {
                 replaceFragment(PlantsTodayFragment())
-//                view?.findNavController()?.navigate(TabbedFragmentDirections.actionTabbedFragmentToPlantsTodayFragment())
             }
             1 -> {
                 replaceFragment(PlantsAllFragment())
-//                view?.findNavController()?.navigate(TabbedFragmentDirections.actionTabbedFragmentToPlantsAllFragment())
             }
         }
     }
@@ -74,13 +88,15 @@ class TabbedFragment : Fragment() {
         fragmentTransaction.commit()
     }
 
+
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Timber.i("onAttach called")
     }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Timber.i("onCreate called")
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Timber.i("onSaveInstanceState called")
     }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

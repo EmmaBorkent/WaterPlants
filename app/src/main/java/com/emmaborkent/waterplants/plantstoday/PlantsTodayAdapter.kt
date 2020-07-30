@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.RecyclerViewMistPlantsBinding
 import com.emmaborkent.waterplants.databinding.RecyclerViewWaterPlantsBinding
@@ -15,7 +16,7 @@ import com.emmaborkent.waterplants.util.ParseFormatDates
 import timber.log.Timber
 
 class PlantsTodayAdapter(
-    private val viewModel: PlantsTodayViewModel,
+    private val viewModel: PlantViewModel,
     private val clickListener: () -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

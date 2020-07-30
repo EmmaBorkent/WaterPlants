@@ -21,3 +21,6 @@ const val KEY_PLANT_NEEDS_MIST: String = "plant_needs_mist"
 
 // Other Plant Constants
 const val PLANT_ID = "userId"
+
+// Tabs
+const val KEY_SELECTED_TAB = "selected_tab"

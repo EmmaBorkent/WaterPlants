@@ -22,8 +22,13 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: PlantRepository
 //    private val plantId: Int
 //    val plant: LiveData<Plant>
-    val selectedPlant = MutableLiveData<Plant>()
-    private lateinit var parseFormatDates: ParseFormatDates
+    private var _selectedPlant = MutableLiveData<Plant>()
+    val selectedPlant: LiveData<Plant>
+        get() = _selectedPlant
+    val plantsThatNeedWater: LiveData<List<Plant>>
+    val plantsThatNeedMist: LiveData<List<Plant>>
+    val allPlants: LiveData<List<Plant>>
+    private var parseFormatDates: ParseFormatDates
 
     init {
         val plantDao = PlantDatabase.getDatabaseInstance(application).plantDao()
@@ -32,6 +37,9 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 //                throw kotlin.IllegalArgumentException("Missing Plant ID")
 //        plant = repository.getPlant(plantId)
         parseFormatDates = ParseFormatDates.getParseFormatDatesInstance()
+        plantsThatNeedWater = repository.getPlantsThatNeedWater()
+        plantsThatNeedMist = repository.getPlantsThatNeedMist()
+        allPlants = repository.getAllPlants()
 
         Timber.i("PlantViewModel created")
     }
@@ -57,7 +65,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     )
 
     fun select(plant: Plant) {
-        selectedPlant.value = plant
+        _selectedPlant.value = plant
     }
 
     fun insert(plant: Plant) = viewModelScope.launch(Dispatchers.IO) {
@@ -78,6 +86,58 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getPlant(id: Int) {
         repository.getPlant(id)
+    }
+
+    fun countAllPlantsThatNeedWaterOrMist(): Int {
+        return 0
+    }
+
+    // TODO: 26-7-2020 Apply DataBinding with ViewModel and DataBinding to all functions and views
+    // TODO: 19-6-2020 check correctness of function
+    fun giveWater(plant: Plant) {
+//        Timber.i("giveWater datePlantNeedsWater was ${plant.datePlantNeedsWater}")
+        val todayDate = LocalDate.now()
+        plant.waterInDays = Period.between(
+            ParseFormatDates().stringToDateDefault(plant.waterDate),
+            todayDate
+        ).days.toString()
+//        Timber.i("giveWater daysBetweenDateAndToday is ${plant.daysBetweenDateAndToday}")
+        val nextWaterDate = todayDate.plusDays(plant.waterEveryDays.toLong())
+        plant.waterDate = ParseFormatDates()
+            .dateToStringDefault(nextWaterDate)
+//        Timber.i("giveWater datePlantNeedsWater is ${plant.datePlantNeedsWater}")
+
+//                dbHandler.updatePlantInDatabase(plant)
+    }
+
+    fun undoWaterGift(plant: Plant) {
+//        Timber.i("undoWaterGift datePlantNeedsWater was ${plant.datePlantNeedsWater}")
+        val days = plant.waterEveryDays.toLong() + plant.waterInDays.toLong()
+//        Timber.i("undoWaterGift days is $days")
+        val previousWaterDate =
+            ParseFormatDates().stringToDateDefault(plant.waterDate).minusDays(days)
+        plant.waterDate = ParseFormatDates()
+            .dateToStringDefault(previousWaterDate)
+//        Timber.i("undoWaterGift datePlantNeedsWater is ${plant.datePlantNeedsWater}")
+    }
+
+    fun giveMist(plant: Plant) {
+        val todayDate = LocalDate.now()
+        plant.mistInDays = Period.between(
+            ParseFormatDates().stringToDateDefault(plant.mistDate),
+            todayDate
+        ).days.toString()
+        val nextMistDate = todayDate.plusDays(plant.mistEveryDays.toLong())
+        plant.mistDate = ParseFormatDates()
+            .dateToStringDefault(nextMistDate)
+    }
+
+    fun undoMistGift(plant: Plant) {
+        val days = plant.mistEveryDays.toLong() + plant.mistInDays.toLong()
+        val previousMistDate =
+            ParseFormatDates().stringToDateDefault(plant.mistDate).minusDays(days)
+        plant.mistDate = ParseFormatDates()
+            .dateToStringDefault(previousMistDate)
     }
 
     override fun onCleared() {

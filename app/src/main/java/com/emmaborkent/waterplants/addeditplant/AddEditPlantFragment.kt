@@ -5,6 +5,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Button
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.emmaborkent.waterplants.R
@@ -16,7 +17,8 @@ import timber.log.Timber
 class AddEditPlantFragment : Fragment() {
 
     private lateinit var binding: FragmentAddEditPlantBinding
-    private lateinit var plantViewModel: PlantViewModel
+//    private lateinit var plantViewModel: PlantViewModel
+    private val viewModel by activityViewModels<PlantViewModel>()
     private lateinit var clickedButtonView: Button
 
 //    private var imageIsChanged = false
@@ -42,8 +44,6 @@ class AddEditPlantFragment : Fragment() {
         Timber.i("onCreateView called")
         binding = DataBindingUtil
             .inflate(inflater, R.layout.fragment_add_edit_plant, container, false)
-        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
-        Timber.i("ViewModelProviders called")
 
         setupPageContent()
         // TODO: 16-4-2020 Shouldn't I have used onClick method in XML? that way you always need
@@ -126,11 +126,11 @@ class AddEditPlantFragment : Fragment() {
 
     private fun setupPageToEditPlant() {
         activity?.title = getString(R.string.edit_plant_toolbar)
-        binding.plant = plantViewModel.testPlant
+        binding.plant = viewModel.testPlant
     }
 
     private fun setupPageToAddPlant() {
         activity?.title = getString(R.string.new_plant_toolbar)
-        binding.plant = plantViewModel.newPlant
+        binding.plant = viewModel.newPlant
     }
 }

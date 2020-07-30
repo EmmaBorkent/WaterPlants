@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.emmaborkent.waterplants.PlantViewModel
@@ -17,7 +18,7 @@ import timber.log.Timber
 class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
-    private lateinit var plantViewModel: PlantViewModel
+    private val viewModel by activityViewModels<PlantViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,23 +28,22 @@ class DetailsFragment : Fragment() {
         Timber.i("onCreateView called")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container,
             false)
-        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
         Timber.i("ViewModelProviders called")
 
-        binding.plant = plantViewModel.testPlant
-        binding.collapsingToolbar.title = plantViewModel.testPlant.species
+//        binding.plant = plantViewModel.testPlant
+        binding.collapsingToolbar.title = viewModel.testPlant.species
         // TODO: 24-7-2020 change activity title, this does not work, also in addEditPlantFragment
-        activity?.title = plantViewModel.testPlant.name
+        activity?.title = viewModel.testPlant.name
         // TODO: 16-7-2020 Change plantId to real plant ID
         binding.buttonFabEdit.setOnClickListener {
             view?.findNavController()?.navigate(DetailsFragmentDirections
                 .actionDetailsFragmentToAddEditPlantFragment(1))
         }
         val args = DetailsFragmentArgs.fromBundle(requireArguments())
+
         Timber.i("Plant ID: ${args.plantId}")
         return binding.root
     }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
