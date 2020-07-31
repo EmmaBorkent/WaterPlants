@@ -76,6 +76,7 @@ class AddEditPlantFragment : Fragment() {
             // TODO: 9-7-2020 There should be only one savePlant function used from the view model
             R.id.action_save_new -> {
                 // save plant
+                viewModel.insert(viewModel.testPlant)
                 view?.findNavController()?.navigate(AddEditPlantFragmentDirections.actionAddEditPlantFragmentToTabbedFragment())
             }
             R.id.action_save_update -> {

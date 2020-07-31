@@ -30,6 +30,12 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     val allPlants: LiveData<List<Plant>>
     private var parseFormatDates: ParseFormatDates
 
+    private val _title = MutableLiveData<String>()
+    val title: LiveData<String>
+        get() = _title
+
+    fun updateActionBarTitle(title: String) = _title.postValue(title)
+
     init {
         val plantDao = PlantDatabase.getDatabaseInstance(application).plantDao()
         repository = PlantRepository(plantDao)
@@ -48,9 +54,9 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         "TestPlant",
         "Test",
         R.drawable.ic_image_black_24dp.toString(),
-        "2",
+        1,
         "2020-07-09",
-        "3",
+        3,
         "2020-07-09"
     )
 
@@ -58,9 +64,9 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         "",
         "",
         R.drawable.ic_image_black_24dp.toString(),
-        "",
+        1,
         parseFormatDates.getTodayDateAsString(),
-        "",
+        1,
         parseFormatDates.getTodayDateAsString()
     )
 
@@ -100,7 +106,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         plant.waterInDays = Period.between(
             ParseFormatDates().stringToDateDefault(plant.waterDate),
             todayDate
-        ).days.toString()
+        ).days
 //        Timber.i("giveWater daysBetweenDateAndToday is ${plant.daysBetweenDateAndToday}")
         val nextWaterDate = todayDate.plusDays(plant.waterEveryDays.toLong())
         plant.waterDate = ParseFormatDates()
@@ -126,7 +132,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         plant.mistInDays = Period.between(
             ParseFormatDates().stringToDateDefault(plant.mistDate),
             todayDate
-        ).days.toString()
+        ).days
         val nextMistDate = todayDate.plusDays(plant.mistEveryDays.toLong())
         plant.mistDate = ParseFormatDates()
             .dateToStringDefault(nextMistDate)

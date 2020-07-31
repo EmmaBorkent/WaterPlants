@@ -35,9 +35,9 @@ class XPlantDetailsActivity : AppCompatActivity() {
         "TestPlant",
         "Test",
         R.drawable.ic_image_black_24dp.toString(),
-        "2",
+        1,
         "2020-07-09",
-        "3",
+        3,
         "2020-07-09"
     )
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>

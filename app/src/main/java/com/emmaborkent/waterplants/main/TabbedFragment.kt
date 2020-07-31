@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.allplants.PlantsAllFragment
 import com.emmaborkent.waterplants.databinding.FragmentTabbedBinding
@@ -20,6 +22,7 @@ import timber.log.Timber
 class TabbedFragment : Fragment() {
 
     private lateinit var binding: FragmentTabbedBinding
+    private val viewModel by activityViewModels<PlantViewModel>()
     private var selectedTab: Int = 0
 
     //    private val addPlantRequestCode = 1
@@ -43,7 +46,7 @@ class TabbedFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        replaceFragment(PlantsTodayFragment())
+        replaceFragment(PlantsTodayFragment())
         Timber.i("onCreate called")
     }
 
@@ -53,6 +56,7 @@ class TabbedFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.fragment_tabbed, container, false)
+        viewModel.updateActionBarTitle(activity?.title.toString())
 
         binding.tabLayout.addOnTabSelectedListener(tabListener)
 //        nav_host_container_tabbed?.findNavController()?.navigate(TabbedFragmentDirections.actionTabbedFragmentToPlantsTodayFragment())

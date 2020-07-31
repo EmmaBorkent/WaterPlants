@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.R
@@ -28,12 +27,13 @@ class DetailsFragment : Fragment() {
         Timber.i("onCreateView called")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container,
             false)
-        Timber.i("ViewModelProviders called")
 
-//        binding.plant = plantViewModel.testPlant
+        // TODO: 30-7-2020 Change test plant to plant from ID
+        viewModel.updateActionBarTitle(viewModel.testPlant.name)
         binding.collapsingToolbar.title = viewModel.testPlant.species
-        // TODO: 24-7-2020 change activity title, this does not work, also in addEditPlantFragment
-        activity?.title = viewModel.testPlant.name
+//        binding.plant = viewModel.testPlant
+        binding.plantViewModel = viewModel
+
         // TODO: 16-7-2020 Change plantId to real plant ID
         binding.buttonFabEdit.setOnClickListener {
             view?.findNavController()?.navigate(DetailsFragmentDirections

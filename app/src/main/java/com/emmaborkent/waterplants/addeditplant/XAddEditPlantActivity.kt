@@ -40,9 +40,9 @@ class XAddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
         "TestPlant",
         "Test",
         R.drawable.ic_image_black_24dp.toString(),
-        "2",
+        1,
         "2020-07-09",
-        "3",
+        3,
         "2020-07-09"
     )
     private lateinit var plantViewModel: PlantViewModel
@@ -145,9 +145,9 @@ class XAddEditPlantActivity : AppCompatActivity(), DatePickerDialog.OnDateSetLis
             "",
             "",
             R.drawable.ic_image_black_24dp.toString(),
-            "",
+            1,
             dateAsString,
-            "",
+            1,
             dateAsString
         )
         binding.plant = addNewPlant

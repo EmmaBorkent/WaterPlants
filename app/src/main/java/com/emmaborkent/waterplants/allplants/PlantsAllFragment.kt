@@ -43,6 +43,7 @@ class PlantsAllFragment : Fragment() {
 
         adapter = PlantsAllAdapter {
             // TODO: 15-7-2020 Change Plant ID to real Plant ID
+            Timber.i("PlantID = ${viewModel.testPlant.id}")
             view?.findNavController()
                 ?.navigate(NavigationDirections.actionGlobalDetailsFragment(2))
         }

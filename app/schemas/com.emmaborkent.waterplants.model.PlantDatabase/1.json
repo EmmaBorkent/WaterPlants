@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "55e298064eea2ac5ff66875c3379e6c5",
+    "identityHash": "b77b6fbb3a28378891d852edaba3db0d",
     "entities": [
       {
         "tableName": "plant_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `waterInDays` TEXT NOT NULL, `mistInDays` TEXT NOT NULL, `name` TEXT NOT NULL, `species` TEXT NOT NULL, `image` TEXT NOT NULL, `waterEveryDays` TEXT NOT NULL, `waterDate` TEXT NOT NULL, `mistEveryDays` TEXT NOT NULL, `mistDate` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `waterInDays` INTEGER NOT NULL, `mistInDays` INTEGER NOT NULL, `name` TEXT NOT NULL, `species` TEXT NOT NULL, `image` TEXT NOT NULL, `waterEveryDays` INTEGER NOT NULL, `waterDate` TEXT NOT NULL, `mistEveryDays` INTEGER NOT NULL, `mistDate` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -17,13 +17,13 @@
           {
             "fieldPath": "waterInDays",
             "columnName": "waterInDays",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "mistInDays",
             "columnName": "mistInDays",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -47,7 +47,7 @@
           {
             "fieldPath": "waterEveryDays",
             "columnName": "waterEveryDays",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -59,7 +59,7 @@
           {
             "fieldPath": "mistEveryDays",
             "columnName": "mistEveryDays",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -82,7 +82,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '55e298064eea2ac5ff66875c3379e6c5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b77b6fbb3a28378891d852edaba3db0d')"
     ]
   }
 }

@@ -32,7 +32,7 @@ class PlantsTodayViewModel(application: Application) : AndroidViewModel(applicat
         plant.waterInDays = Period.between(
             ParseFormatDates().stringToDateDefault(plant.waterDate),
             todayDate
-        ).days.toString()
+        ).days
 //        Timber.i("giveWater daysBetweenDateAndToday is ${plant.daysBetweenDateAndToday}")
         val nextWaterDate = todayDate.plusDays(plant.waterEveryDays.toLong())
         plant.waterDate = ParseFormatDates()
@@ -58,7 +58,7 @@ class PlantsTodayViewModel(application: Application) : AndroidViewModel(applicat
         plant.mistInDays = Period.between(
             ParseFormatDates().stringToDateDefault(plant.mistDate),
             todayDate
-        ).days.toString()
+        ).days
         val nextMistDate = todayDate.plusDays(plant.mistEveryDays.toLong())
         plant.mistDate = ParseFormatDates()
             .dateToStringDefault(nextMistDate)

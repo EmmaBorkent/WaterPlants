@@ -11,15 +11,15 @@ data class Plant(
     var species: String,
     var image: String,
 
-    var waterEveryDays: String,
+    var waterEveryDays: Int,
     var waterDate: String,
 
-    var mistEveryDays: String,
+    var mistEveryDays: Int,
     var mistDate: String
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 
-    var waterInDays = "1"
-    var mistInDays = "1"
+    var waterInDays = 1
+    var mistInDays = 1
 }
