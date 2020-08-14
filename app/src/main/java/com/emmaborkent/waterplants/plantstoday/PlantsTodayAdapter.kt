@@ -11,9 +11,11 @@ import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.RecyclerViewMistPlantsBinding
 import com.emmaborkent.waterplants.databinding.RecyclerViewWaterPlantsBinding
+import com.emmaborkent.waterplants.model.DateConverter
 import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.util.ParseFormatDates
 import timber.log.Timber
+import java.time.LocalDate
 
 class PlantsTodayAdapter(
     private val viewModel: PlantViewModel,
@@ -90,8 +92,6 @@ class PlantsTodayAdapter(
     inner class WaterPlantsViewHolder(private val binding: RecyclerViewWaterPlantsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        private val todayString = ParseFormatDates().getDefaultDateAsString()
-
         fun bindPlantsWater(plant: Plant, clickListener: () -> Unit) {
             val bitmapOptions = BitmapFactory.Options()
             bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565
@@ -102,8 +102,8 @@ class PlantsTodayAdapter(
                 textRvWaterPlantsName.text = plant.name
 
                 textRvWaterPlantsDate.text =
-                    ParseFormatDates().yearMonthDayStringToDayMonthYearString(plant.waterDate)
-                if (todayString == plant.waterDate) {
+                    DateConverter().localDateToViewDateString(plant.waterDate)
+                if (LocalDate.now() == plant.waterDate) {
                     textRvWaterPlantsDate.visibility = View.INVISIBLE
                 }
 
@@ -131,8 +131,6 @@ class PlantsTodayAdapter(
     inner class MistPlantsViewHolder(private val binding: RecyclerViewMistPlantsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        private val todayString = ParseFormatDates().getDefaultDateAsString()
-
         fun bindPlantsMist(plant: Plant, clickListener: () -> Unit) {
             val bitmapOptions = BitmapFactory.Options()
             bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565
@@ -142,9 +140,8 @@ class PlantsTodayAdapter(
                 imageRvMistPlants.setImageBitmap(plantBitmapImage)
                 textRvMistPlantsName.text = plant.name
 
-                textRvMistPlantsDate.text =
-                    ParseFormatDates().yearMonthDayStringToDayMonthYearString(plant.mistDate)
-                if (todayString == plant.mistDate) {
+                textRvMistPlantsDate.text = DateConverter().localDateToViewDateString(plant.mistDate)
+                if (LocalDate.now() == plant.mistDate) {
                     textRvMistPlantsDate.visibility = View.INVISIBLE
                 }
 

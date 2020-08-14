@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentDetailsBinding
+import com.emmaborkent.waterplants.model.Plant
 import timber.log.Timber
 
 class DetailsFragment : Fragment() {
@@ -28,20 +29,33 @@ class DetailsFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container,
             false)
 
+//        val testPlant = Plant()
+//        testPlant.apply {
+//            name = "TestPlant"
+//            species = "Test"
+//            waterEveryDays = 2
+//        }
+
+        // Get plant ID from navigation arguments and initialize the plant
+        val args = DetailsFragmentArgs.fromBundle(requireArguments())
+        Timber.i("Plant ID: ${args.plantId}")
+        viewModel.initializePlant(args.plantId)
+
         // TODO: 30-7-2020 Change test plant to plant from ID
-        viewModel.updateActionBarTitle(viewModel.testPlant.name)
-        binding.collapsingToolbar.title = viewModel.testPlant.species
+        viewModel.plant.value?.name?.let { viewModel.updateActionBarTitle(it) }
+        binding.collapsingToolbar.title = viewModel.plant.value?.species
 //        binding.plant = viewModel.testPlant
-        binding.plantViewModel = viewModel
 
         // TODO: 16-7-2020 Change plantId to real plant ID
         binding.buttonFabEdit.setOnClickListener {
             view?.findNavController()?.navigate(DetailsFragmentDirections
-                .actionDetailsFragmentToAddEditPlantFragment(1))
+                .actionDetailsFragmentToAddEditPlantFragment(args.plantId))
         }
-        val args = DetailsFragmentArgs.fromBundle(requireArguments())
 
-        Timber.i("Plant ID: ${args.plantId}")
+        // Data Binding to connect ViewModel with UI
+        binding.lifecycleOwner = this
+        binding.plantViewModel = viewModel
+
         return binding.root
     }
 

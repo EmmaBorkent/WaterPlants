@@ -24,3 +24,10 @@ const val PLANT_ID = "userId"
 
 // Tabs
 const val KEY_SELECTED_TAB = "selected_tab"
+
+// AddEditActivity
+const val PICK_IMAGE_CODE = 1000
+const val PERMISSION_CODE = 1001
+const val DATE_PICKER = "date_picker"
+const val DATE_PICKER_DATE = "date_for_date_picker"
+const val DATE_PICKER_BUTTON_WATER = ""

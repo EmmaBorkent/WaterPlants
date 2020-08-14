@@ -2,13 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     
-    <data>
-        
-        <variable
-            name="plant"
-            type="com.emmaborkent.waterplants.model.Plant" />
-    </data>
-    
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,7 +27,6 @@
                 style="@style/AppTheme.TextAppearance.Headline1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@={plant.name}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -45,7 +37,6 @@
                 style="@style/AppTheme.TextAppearance.Headline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@={plant.species}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_plant_name"

@@ -6,8 +6,13 @@
     <data>
         
         <variable
+            name="plant"
+            type="com.emmaborkent.waterplants.model.Plant" />
+        
+        <variable
             name="plantViewModel"
             type="com.emmaborkent.waterplants.PlantViewModel" />
+        
     </data>
     
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -123,7 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:text="@{@plurals/detail_water_in_days(plantViewModel.testPlant.waterInDays, plantViewModel.testPlant.waterInDays)}"
+                    android:text="@{@plurals/detail_water_in_days(plant.waterInDays, plant.waterInDays)}"
                     app:layout_constraintEnd_toEndOf="@+id/button_give_water"
                     app:layout_constraintStart_toStartOf="@+id/button_give_water"
                     app:layout_constraintTop_toBottomOf="@+id/button_give_water"
@@ -135,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:text="@{@plurals/detail_water_in_days(plantViewModel.testPlant.mistInDays, plantViewModel.testPlant.mistInDays)}"
+                    android:text="@{@plurals/detail_water_in_days(plant.mistInDays, plant.mistInDays)}"
                     app:layout_constraintEnd_toEndOf="@+id/button_give_mist"
                     app:layout_constraintStart_toStartOf="@+id/button_give_mist"
                     app:layout_constraintTop_toBottomOf="@+id/button_give_mist"
@@ -147,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginBottom="@dimen/margin_basic"
-                    android:text="@{@plurals/detail_water_repeat(plantViewModel.testPlant.waterEveryDays, plantViewModel.testPlant.waterEveryDays)}"
+                    android:text="@{@plurals/detail_water_repeat(plant.waterEveryDays, plant.waterEveryDays)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/text_days_to_next_water"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -161,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginBottom="@dimen/margin_basic"
-                    android:text="@{@plurals/detail_water_repeat(plantViewModel.testPlant.mistEveryDays, plantViewModel.testPlant.mistEveryDays)}"
+                    android:text="@{@plurals/detail_water_repeat(plant.mistEveryDays, plant.mistEveryDays)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/text_days_to_next_mist"
                     app:layout_constraintStart_toStartOf="@+id/text_days_to_next_mist"

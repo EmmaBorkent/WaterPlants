@@ -6,8 +6,7 @@ import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.model.PlantDatabase
 import com.emmaborkent.waterplants.model.PlantRepository
 import com.emmaborkent.waterplants.util.ParseFormatDates
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import timber.log.Timber
 import java.time.LocalDate
 import java.time.Period
@@ -36,8 +35,16 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     fun updateActionBarTitle(title: String) = _title.postValue(title)
 
+    // Coroutines
+    private var viewModelJob = Job()
+    // Using Dispatchers.Main means that coroutines launched in the uiScope will run on the main
+    // thread. This is sensible for many coroutines started by a ViewModel, because after these
+    // coroutines perform some processing, they result in an update of the UI.
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    var plant = MutableLiveData<Plant>()
+
     init {
-        val plantDao = PlantDatabase.getDatabaseInstance(application).plantDao()
+        val plantDao = PlantDatabase.getDatabaseInstance(application).plantDao
         repository = PlantRepository(plantDao)
 //        plantId = savedStateHandle[PLANT_ID] ?:
 //                throw kotlin.IllegalArgumentException("Missing Plant ID")
@@ -50,49 +57,35 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         Timber.i("PlantViewModel created")
     }
 
-    val testPlant: Plant = Plant(
-        "TestPlant",
-        "Test",
-        R.drawable.ic_image_black_24dp.toString(),
-        1,
-        "2020-07-09",
-        3,
-        "2020-07-09"
-    )
-
-    val newPlant: Plant = Plant(
-        "",
-        "",
-        R.drawable.ic_image_black_24dp.toString(),
-        1,
-        parseFormatDates.getTodayDateAsString(),
-        1,
-        parseFormatDates.getTodayDateAsString()
-    )
+    fun initializePlant(plantId: Int) {
+        uiScope.launch {
+            plant.value = repository.getPlant(plantId)
+        }
+    }
 
     fun select(plant: Plant) {
         _selectedPlant.value = plant
     }
 
-    fun insert(plant: Plant) = viewModelScope.launch(Dispatchers.IO) {
-        repository.insert(plant)
+    fun insert(plant: Plant) {
+        uiScope.launch {
+            repository.insert(plant)
+        }
     }
 
-    fun update(plant: Plant) = viewModelScope.launch(Dispatchers.IO) {
-        repository.update(plant)
+    fun update(plant: Plant) {
+        uiScope.launch {
+            repository.update(plant)
+        }
     }
 
     fun delete(plant: Plant) = viewModelScope.launch(Dispatchers.IO) {
         repository.delete(plant)
     }
 
-    fun deleteAll() = viewModelScope.launch(Dispatchers.IO) {
-        repository.deleteAll()
-    }
-
-    fun getPlant(id: Int) {
-        repository.getPlant(id)
-    }
+//    fun getPlant(id: Int) {
+//        repository.getPlant(id)
+//    }
 
     fun countAllPlantsThatNeedWaterOrMist(): Int {
         return 0
@@ -104,13 +97,12 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 //        Timber.i("giveWater datePlantNeedsWater was ${plant.datePlantNeedsWater}")
         val todayDate = LocalDate.now()
         plant.waterInDays = Period.between(
-            ParseFormatDates().stringToDateDefault(plant.waterDate),
+            plant.waterDate,
             todayDate
         ).days
 //        Timber.i("giveWater daysBetweenDateAndToday is ${plant.daysBetweenDateAndToday}")
         val nextWaterDate = todayDate.plusDays(plant.waterEveryDays.toLong())
-        plant.waterDate = ParseFormatDates()
-            .dateToStringDefault(nextWaterDate)
+        plant.waterDate = nextWaterDate
 //        Timber.i("giveWater datePlantNeedsWater is ${plant.datePlantNeedsWater}")
 
 //                dbHandler.updatePlantInDatabase(plant)
@@ -120,32 +112,29 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 //        Timber.i("undoWaterGift datePlantNeedsWater was ${plant.datePlantNeedsWater}")
         val days = plant.waterEveryDays.toLong() + plant.waterInDays.toLong()
 //        Timber.i("undoWaterGift days is $days")
-        val previousWaterDate =
-            ParseFormatDates().stringToDateDefault(plant.waterDate).minusDays(days)
-        plant.waterDate = ParseFormatDates()
-            .dateToStringDefault(previousWaterDate)
+        val previousWaterDate = plant.waterDate.minusDays(days)
+        plant.waterDate = previousWaterDate
 //        Timber.i("undoWaterGift datePlantNeedsWater is ${plant.datePlantNeedsWater}")
     }
 
     fun giveMist(plant: Plant) {
         val todayDate = LocalDate.now()
         plant.mistInDays = Period.between(
-            ParseFormatDates().stringToDateDefault(plant.mistDate),
+            plant.mistDate,
             todayDate
         ).days
         val nextMistDate = todayDate.plusDays(plant.mistEveryDays.toLong())
-        plant.mistDate = ParseFormatDates()
-            .dateToStringDefault(nextMistDate)
+        plant.mistDate = nextMistDate
     }
 
     fun undoMistGift(plant: Plant) {
         val days = plant.mistEveryDays.toLong() + plant.mistInDays.toLong()
-        val previousMistDate =
-            ParseFormatDates().stringToDateDefault(plant.mistDate).minusDays(days)
-        plant.mistDate = ParseFormatDates()
-            .dateToStringDefault(previousMistDate)
+        val previousMistDate = plant.mistDate.minusDays(days)
+        plant.mistDate = previousMistDate
     }
 
+    // Not necessary to cancel or instantiate a Job when using ViewModelScope, because they get
+    // canceled when the viewModel ends. onCleared only used for lifecycle tracking.
     override fun onCleared() {
         super.onCleared()
         Timber.i("PlantViewModel destroyed")

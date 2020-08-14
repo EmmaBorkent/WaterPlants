@@ -2,20 +2,21 @@ package com.emmaborkent.waterplants.model
 
 import androidx.lifecycle.LiveData
 import com.emmaborkent.waterplants.util.ParseFormatDates
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class PlantRepository(private val plantDao: PlantDao) {
 
     private var parseFormatDates = ParseFormatDates.getParseFormatDatesInstance()
-    private val defaultDateAsString = parseFormatDates.getDefaultDateAsString()
     private val allPlants: LiveData<List<Plant>> = plantDao.getAllPlants()
     private val plantsThatNeedWater: LiveData<List<Plant>> =
-        plantDao.getPlantsThatNeedWater(defaultDateAsString)
+        plantDao.getPlantsThatNeedWater()
     private val plantsThatNeedMist: LiveData<List<Plant>> =
-        plantDao.getPlantsThatNeedMist(defaultDateAsString)
+        plantDao.getPlantsThatNeedMist()
     private val countPlantsThatNeedWater: LiveData<Int> =
-        plantDao.countPlantsThatNeedWater(defaultDateAsString)
+        plantDao.countPlantsThatNeedWater()
     private val countPlantsThatNeedMist: LiveData<Int> =
-        plantDao.countPlantsThatNeedMist(defaultDateAsString)
+        plantDao.countPlantsThatNeedMist()
 
     // The suspend modifiers tell the compiler that they need to be called from a coroutine
     // or another suspending function.
@@ -23,23 +24,33 @@ class PlantRepository(private val plantDao: PlantDao) {
     // takes care of this.
 
     suspend fun insert(plant: Plant) {
-        plantDao.insert(plant)
+        withContext(Dispatchers.IO) {
+            plantDao.insert(plant)
+        }
     }
 
     suspend fun update(plant: Plant) {
-        plantDao.updatePlant(plant)
+        withContext(Dispatchers.IO) {
+            plantDao.update(plant)
+        }
     }
 
     suspend fun delete(plant: Plant) {
-        plantDao.deletePlant(plant)
+        withContext(Dispatchers.IO) {
+            plantDao.deletePlant(plant)
+        }
     }
 
-    suspend fun deleteAll() {
-        plantDao.deleteAllPlants()
+    suspend fun getLatestPlant(): Plant? {
+        return withContext(Dispatchers.IO) {
+            plantDao.getLatestPlant()
+        }
     }
 
-    fun getPlant(id: Int): Plant {
-        return plantDao.getPlant(id)
+    suspend fun getPlant(plantId: Int): Plant? {
+        return withContext(Dispatchers.IO) {
+            plantDao.getPlant(plantId)
+        }
     }
 
     fun getAllPlants(): LiveData<List<Plant>> {
