@@ -5,20 +5,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentDetailsBinding
-import com.emmaborkent.waterplants.model.Plant
 import timber.log.Timber
 
 class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
-    private val viewModel by activityViewModels<PlantViewModel>()
+    private lateinit var viewModelFactory: DetailsViewModelFactory
+    private lateinit var viewModel: DetailsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,36 +28,29 @@ class DetailsFragment : Fragment() {
         Timber.i("onCreateView called")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container,
             false)
+        val plantId = DetailsFragmentArgs.fromBundle(requireArguments()).plantId
+        val application = requireNotNull(this.activity).application
+        viewModelFactory = DetailsViewModelFactory(plantId, application)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(DetailsViewModel::class.java)
+        binding.lifecycleOwner = this
+        binding.detailsViewModel = viewModel
 
-//        val testPlant = Plant()
-//        testPlant.apply {
-//            name = "TestPlant"
-//            species = "Test"
-//            waterEveryDays = 2
-//        }
-
-        // Get plant ID from navigation arguments and initialize the plant
-        val args = DetailsFragmentArgs.fromBundle(requireArguments())
-        Timber.i("Plant ID: ${args.plantId}")
-        viewModel.initializePlant(args.plantId)
-
-        // TODO: 30-7-2020 Change test plant to plant from ID
-        viewModel.plant.value?.name?.let { viewModel.updateActionBarTitle(it) }
+        setActivityTitle(viewModel.plant.value?.name)
         binding.collapsingToolbar.title = viewModel.plant.value?.species
-//        binding.plant = viewModel.testPlant
 
-        // TODO: 16-7-2020 Change plantId to real plant ID
         binding.buttonFabEdit.setOnClickListener {
             view?.findNavController()?.navigate(DetailsFragmentDirections
-                .actionDetailsFragmentToAddEditPlantFragment(args.plantId))
+                .actionDetailsFragmentToAddEditPlantFragment(plantId))
         }
-
-        // Data Binding to connect ViewModel with UI
-        binding.lifecycleOwner = this
-        binding.plantViewModel = viewModel
 
         return binding.root
     }
+
+    private fun Fragment.setActivityTitle(string: String?) {
+        (activity as AppCompatActivity?)!!.supportActionBar?.title = string
+    }
+
+    // Lifecycle Tracking
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

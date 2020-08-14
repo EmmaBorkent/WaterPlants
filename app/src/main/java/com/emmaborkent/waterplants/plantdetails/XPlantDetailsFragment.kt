@@ -1,8 +1,8 @@
 package com.emmaborkent.waterplants.plantdetails
 
 //import android.os.Bundle
-//import android.util.DisplayMetrics
-//import android.util.Log
+//import android.Util.DisplayMetrics
+//import android.Util.Log
 //import androidx.fragment.app.Fragment
 //import android.view.LayoutInflater
 //import android.view.View

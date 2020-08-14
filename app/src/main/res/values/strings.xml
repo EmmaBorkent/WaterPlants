@@ -36,8 +36,8 @@
     <string name="detail_drag_handle">Drag Handle</string>
     <string name="detail_water_in">Water In</string>
     <string name="detail_mist_in">Mist In</string>
-    <string name="detail_days">%s days</string>
-    <string name="detail_every_days">every %s days</string>
+    <string name="detail_days">%d days</string>
+    <string name="detail_every_days">every %d days</string>
     
     <plurals name="detail_water_in_days">
         <item quantity="one">%d day</item>

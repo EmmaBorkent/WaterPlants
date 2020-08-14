@@ -73,6 +73,8 @@ class AddEditPlantFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         viewModelFactory = AddEditPlantViewModelFactory(plantId, application)
         viewModel = ViewModelProvider(this, viewModelFactory).get(AddEditPlantViewModel::class.java)
+        binding.lifecycleOwner = this
+        binding.addEditPlantViewModel = viewModel
 
         isEditActivity = isEditActivity(plantId)
         setHasOptionsMenu(true)
@@ -112,9 +114,6 @@ class AddEditPlantFragment : Fragment() {
                 throw IllegalArgumentException("No value for date")
             }
         }
-
-        binding.lifecycleOwner = this
-        binding.addEditPlantViewModel = viewModel
 
         return binding.root
     }

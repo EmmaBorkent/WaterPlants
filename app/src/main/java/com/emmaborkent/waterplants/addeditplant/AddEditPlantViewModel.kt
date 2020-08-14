@@ -14,7 +14,8 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalDate
 
-class AddEditPlantViewModel(private var plantId: Int, application: Application) : AndroidViewModel(application) {
+class AddEditPlantViewModel(private var plantId: Int, application: Application)
+    : AndroidViewModel(application) {
 
     private val repository: PlantRepository
     private val dateConverter: DateConverter
@@ -23,16 +24,16 @@ class AddEditPlantViewModel(private var plantId: Int, application: Application) 
     private val _waterDate = MutableLiveData<String>()
     val waterDate: LiveData<String>
         get() = _waterDate
-    var waterYear = MutableLiveData<Int>()
-    var waterMonth = MutableLiveData<Int>()
-    var waterDay = MutableLiveData<Int>()
+    val waterYear = MutableLiveData<Int>()
+    val waterMonth = MutableLiveData<Int>()
+    val waterDay = MutableLiveData<Int>()
 
     private val _mistDate = MutableLiveData<String>()
     val mistDate: LiveData<String>
         get() = _mistDate
-    var mistYear = MutableLiveData<Int>()
-    var mistMonth = MutableLiveData<Int>()
-    var mistDay = MutableLiveData<Int>()
+    val mistYear = MutableLiveData<Int>()
+    val mistMonth = MutableLiveData<Int>()
+    val mistDay = MutableLiveData<Int>()
 
     init {
         Timber.i("AddEditPlantViewModel Created")

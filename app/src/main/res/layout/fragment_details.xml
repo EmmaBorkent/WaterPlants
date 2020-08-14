@@ -4,15 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
     
     <data>
-        
         <variable
-            name="plant"
-            type="com.emmaborkent.waterplants.model.Plant" />
-        
-        <variable
-            name="plantViewModel"
-            type="com.emmaborkent.waterplants.PlantViewModel" />
-        
+            name="detailsViewModel"
+            type="com.emmaborkent.waterplants.plantdetails.DetailsViewModel" />
     </data>
     
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -74,7 +68,7 @@
         
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
             
                 <TextView
                     android:id="@+id/text_give_water"
@@ -128,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:text="@{@plurals/detail_water_in_days(plant.waterInDays, plant.waterInDays)}"
+                    android:text="@{@plurals/detail_water_in_days(detailsViewModel.plant.waterInDays, detailsViewModel.plant.waterInDays)}"
                     app:layout_constraintEnd_toEndOf="@+id/button_give_water"
                     app:layout_constraintStart_toStartOf="@+id/button_give_water"
                     app:layout_constraintTop_toBottomOf="@+id/button_give_water"
@@ -140,7 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:text="@{@plurals/detail_water_in_days(plant.mistInDays, plant.mistInDays)}"
+                    android:text="@{@plurals/detail_mist_in_days(detailsViewModel.plant.mistInDays, detailsViewModel.plant.mistInDays)}"
                     app:layout_constraintEnd_toEndOf="@+id/button_give_mist"
                     app:layout_constraintStart_toStartOf="@+id/button_give_mist"
                     app:layout_constraintTop_toBottomOf="@+id/button_give_mist"
@@ -152,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginBottom="@dimen/margin_basic"
-                    android:text="@{@plurals/detail_water_repeat(plant.waterEveryDays, plant.waterEveryDays)}"
+                    android:text="@{@plurals/detail_water_repeat(detailsViewModel.plant.waterEveryDays, detailsViewModel.plant.waterEveryDays)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/text_days_to_next_water"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -166,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginBottom="@dimen/margin_basic"
-                    android:text="@{@plurals/detail_water_repeat(plant.mistEveryDays, plant.mistEveryDays)}"
+                    android:text="@{@plurals/detail_mist_repeat(detailsViewModel.plant.mistEveryDays, detailsViewModel.plant.mistEveryDays)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/text_days_to_next_mist"
                     app:layout_constraintStart_toStartOf="@+id/text_days_to_next_mist"
@@ -174,6 +168,7 @@
                     tools:text="@string/detail_every_days" />
         
             </androidx.constraintlayout.widget.ConstraintLayout>
+            
         </androidx.core.widget.NestedScrollView>
         
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
