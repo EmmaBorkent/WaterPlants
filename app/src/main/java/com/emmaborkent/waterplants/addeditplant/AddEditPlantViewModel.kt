@@ -83,9 +83,15 @@ class AddEditPlantViewModel(private var plantId: Int, application: Application)
         _mistDate.value = dateString
     }
 
-    fun update(plant: Plant) {
-        viewModelScope.launch(Dispatchers.Main) {
+    fun updatePlant(plant: Plant?) {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.update(plant)
+        }
+    }
+
+    fun deletePlant(plant: Plant) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.delete(plant)
         }
     }
 

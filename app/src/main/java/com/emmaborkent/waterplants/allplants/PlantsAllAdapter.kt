@@ -2,19 +2,27 @@ package com.emmaborkent.waterplants.allplants
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.sip.SipSession
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.emmaborkent.waterplants.NavigationDirections
+import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.RecyclerViewAllPlantsBinding
 import com.emmaborkent.waterplants.model.Plant
+import com.emmaborkent.waterplants.util.PlantClickListener
+import timber.log.Timber
 
-class PlantsAllAdapter(private val clickListener: () -> Unit) :
+class PlantsAllAdapter(private val viewModel: PlantViewModel) :
     RecyclerView.Adapter<PlantsAllAdapter.PlantsHolder>() {
 
     private lateinit var binding: RecyclerViewAllPlantsBinding
     private var plants = emptyList<Plant>()
+    private lateinit var listener: PlantClickListener
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -29,18 +37,19 @@ class PlantsAllAdapter(private val clickListener: () -> Unit) :
     override fun getItemCount() = plants.size
 
     override fun onBindViewHolder(holder: PlantsHolder, position: Int) {
-        holder.bindPlants(plants[position], clickListener)
+        holder.bindPlants(plants[position])
     }
 
     internal fun setPlants(plants: List<Plant>) {
         this.plants = plants
+        // TODO: 3-9-2020 remove notify data set changed
         notifyDataSetChanged()
     }
 
     inner class PlantsHolder(binding: RecyclerViewAllPlantsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindPlants(plant: Plant, clickListener: () -> Unit) {
+        fun bindPlants(plant: Plant) {
             val bitmapOptions = BitmapFactory.Options()
             bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565
             val plantBitmapImage = BitmapFactory.decodeFile(plant.image, bitmapOptions)
@@ -48,10 +57,16 @@ class PlantsAllAdapter(private val clickListener: () -> Unit) :
             binding.apply {
                 imageRvAllPlants.setImageBitmap(plantBitmapImage)
                 textRvAllPlants.text = plant.name
+                cardRvAllPlants.setOnClickListener {
+                    val id = plant.id
+                    listener.onItemClick(id)
+                    Timber.i("Adapter Plant ID: $id")
+                }
             }
-
-            // TODO: 11-7-2020 Change itemView to binding with Click Listener
-            itemView.setOnClickListener { clickListener() }
         }
+    }
+
+    fun setOnItemClickListener(listener: PlantClickListener) {
+        this.listener = listener
     }
 }

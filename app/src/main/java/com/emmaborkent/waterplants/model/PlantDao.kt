@@ -12,7 +12,7 @@ interface PlantDao {
     fun insert(vararg plant: Plant)
 
     @Update
-    fun update(vararg plant: Plant)
+    fun update(vararg plant: Plant?)
 
     @Delete
     fun deletePlant(vararg plant: Plant)

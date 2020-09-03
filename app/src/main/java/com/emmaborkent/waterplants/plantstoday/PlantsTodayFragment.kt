@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,12 +15,12 @@ import com.emmaborkent.waterplants.NavigationDirections
 import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentPlantsTodayBinding
+import com.emmaborkent.waterplants.util.PlantClickListener
 import timber.log.Timber
 
 class PlantsTodayFragment : Fragment() {
 
     private lateinit var binding: FragmentPlantsTodayBinding
-//    private lateinit var plantViewModel: PlantViewModel
     private val viewModel by activityViewModels<PlantViewModel>()
     private lateinit var waterPlantsLayoutManager: LinearLayoutManager
     private lateinit var waterPlantsAdapter: PlantsTodayAdapter
@@ -33,8 +32,6 @@ class PlantsTodayFragment : Fragment() {
         Timber.i("onCreateView called")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_plants_today, container,
             false)
-//        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
-//        Timber.i("ViewModelProviders called")
         return binding.root
     }
 
@@ -42,14 +39,12 @@ class PlantsTodayFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         Timber.i("onActivityCreated called")
 
-        waterPlantsAdapter =
-            PlantsTodayAdapter(
-                viewModel
-            ) {
-                // TODO: 15-7-2020 Change Plant ID to real plant ID
-                view?.findNavController()
-                    ?.navigate(NavigationDirections.actionGlobalDetailsFragment(1))
+        waterPlantsAdapter = PlantsTodayAdapter(viewModel)
+        waterPlantsAdapter.setOnItemClickListener(object : PlantClickListener {
+            override fun onItemClick(plantId: Int) {
+                view?.findNavController()?.navigate(NavigationDirections.actionGlobalDetailsFragment(plantId))
             }
+        })
 
         waterPlantsLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL,
             false)

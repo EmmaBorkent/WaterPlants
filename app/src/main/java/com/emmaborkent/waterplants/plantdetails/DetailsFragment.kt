@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.emmaborkent.waterplants.R
@@ -35,8 +36,13 @@ class DetailsFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.detailsViewModel = viewModel
 
-        setActivityTitle(viewModel.plant.value?.name)
-        binding.collapsingToolbar.title = viewModel.plant.value?.species
+        viewModel.plant.observe(viewLifecycleOwner, Observer { plant ->
+            setActivityTitle(plant.name)
+            binding.collapsingToolbar.title = plant.species
+        })
+
+//        setActivityTitle(viewModel.plant.value?.name)
+//        binding.collapsingToolbar.title = viewModel.plant.value?.species
 
         binding.buttonFabEdit.setOnClickListener {
             view?.findNavController()?.navigate(DetailsFragmentDirections

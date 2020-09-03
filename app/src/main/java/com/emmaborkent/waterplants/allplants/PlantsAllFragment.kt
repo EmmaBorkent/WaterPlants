@@ -8,15 +8,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.emmaborkent.waterplants.NavigationDirections
 import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentPlantsAllBinding
+import com.emmaborkent.waterplants.util.PlantClickListener
 import timber.log.Timber
 
 class PlantsAllFragment : Fragment() {
@@ -32,8 +31,6 @@ class PlantsAllFragment : Fragment() {
     ): View? {
         Timber.i("onCreateView called")
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_plants_all, container, false)
-//        plantViewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
-//        Timber.i("ViewModelProviders called")
         return binding.root
     }
 
@@ -41,12 +38,13 @@ class PlantsAllFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         Timber.i("onActivityCreated called")
 
-        adapter = PlantsAllAdapter {
-            // TODO: 15-7-2020 Change Plant ID to real Plant ID
-//            Timber.i("PlantID = ${viewModel.testPlant.id}")
-            view?.findNavController()
-                ?.navigate(NavigationDirections.actionGlobalDetailsFragment(2))
-        }
+        adapter = PlantsAllAdapter(viewModel)
+        adapter.setOnItemClickListener(object : PlantClickListener {
+            override fun onItemClick(plantId: Int) {
+                Timber.i("Plant ID: $plantId")
+                view?.findNavController()?.navigate(NavigationDirections.actionGlobalDetailsFragment(plantId))
+            }
+        })
 
         layoutManager = GridLayoutManager(context, 2)
 

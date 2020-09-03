@@ -29,6 +29,7 @@ class DetailsViewModel(private var plantId: Int, application: Application)
         viewModelScope.launch(Dispatchers.Main) {
             plant.value = repository.getPlant(plantId)
         }
+        Timber.i("Plant Initialized")
     }
 
     override fun onCleared() {

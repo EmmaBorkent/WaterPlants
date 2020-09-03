@@ -29,7 +29,7 @@ class PlantRepository(private val plantDao: PlantDao) {
         }
     }
 
-    suspend fun update(plant: Plant) {
+    suspend fun update(plant: Plant?) {
         withContext(Dispatchers.IO) {
             plantDao.update(plant)
         }

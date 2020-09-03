@@ -6,8 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
-import android.widget.DatePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.checkSelfPermission
@@ -17,13 +15,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentAddEditPlantBinding
-import com.emmaborkent.waterplants.model.DateConverter
-import com.emmaborkent.waterplants.util.DATE_PICKER
-import com.emmaborkent.waterplants.util.DATE_PICKER_DATE
 import com.emmaborkent.waterplants.util.PERMISSION_CODE
 import com.emmaborkent.waterplants.util.PICK_IMAGE_CODE
 import timber.log.Timber
 import java.time.LocalDate
+import java.time.Period
 
 class AddEditPlantFragment : Fragment() {
 
@@ -185,24 +181,12 @@ class AddEditPlantFragment : Fragment() {
         when (item.itemId) {
             // TODO: 9-7-2020 There should be only one savePlant function used from the view model
             R.id.action_save_new -> {
-                // TODO: 13-8-2020 Create Function
-//                val updatePlant = viewModel.plant
-//                updatePlant.value?.apply {
-//                    name = binding.editPlantName.text.toString()
-//                    species = binding.editPlantSpecies.text.toString()
-//                    // TODO: 9-8-2020 update plant image
-//                    waterDate = DateConverter().viewDateStringToLocalDate(binding.buttonDatePlantsNeedsWater.text.toString())
-//                }
-//
-//                // save plant
-//                val updatedPlant = Plant()
-//                viewModel.insert(updatedPlant)
+                updatePlant()
                 view?.findNavController()
                     ?.navigate(AddEditPlantFragmentDirections.actionAddEditPlantFragmentToTabbedFragment())
             }
             R.id.action_save_update -> {
-                // update plant
-                // TODO: 16-7-2020 Change to real Plant ID
+                updatePlant()
                 view?.findNavController()?.navigate(
                     AddEditPlantFragmentDirections.actionAddEditPlantFragmentToDetailsFragment(1)
                 )
@@ -211,11 +195,30 @@ class AddEditPlantFragment : Fragment() {
                 // are you sure?
                 // delete plant
                 // TODO: 13-8-2020 Create function
+                viewModel.deletePlant(viewModel.plant.value!!)
                 view?.findNavController()
                     ?.navigate(AddEditPlantFragmentDirections.actionAddEditPlantFragmentToTabbedFragment())
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun updatePlant() {
+        viewModel.plant.value?.apply {
+            name = binding.editPlantName.text.toString()
+            species = binding.editPlantSpecies.text.toString()
+            // TODO: 14-8-2020 Set Plant Image parameter
+            waterEveryDays = binding.editWaterEveryDays.text.toString().toInt()
+            waterDate = viewModel.plant.value?.waterDate!!
+            mistEveryDays = binding.editMistEveryDays.text.toString().toInt()
+            mistDate = viewModel.plant.value?.mistDate!!
+
+            val today = LocalDate.now()
+            waterInDays = Period.between(today, waterDate).days
+            mistInDays = Period.between(today, mistDate).days
+        }
+
+        viewModel.updatePlant(viewModel.plant.value)
     }
 
 

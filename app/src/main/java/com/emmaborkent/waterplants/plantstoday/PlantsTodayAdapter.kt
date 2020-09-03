@@ -14,17 +14,16 @@ import com.emmaborkent.waterplants.databinding.RecyclerViewWaterPlantsBinding
 import com.emmaborkent.waterplants.model.DateConverter
 import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.util.ParseFormatDates
+import com.emmaborkent.waterplants.util.PlantClickListener
 import timber.log.Timber
 import java.time.LocalDate
 
-class PlantsTodayAdapter(
-    private val viewModel: PlantViewModel,
-    private val clickListener: () -> Unit
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PlantsTodayAdapter(private val viewModel: PlantViewModel) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    // TODO: 11-7-2020 Test if removing emptyList helps in getting a plant in clickListener
     private var plantsThatNeedWater = emptyList<Plant>()
     private var plantsThatNeedMist = emptyList<Plant>()
+    private lateinit var listener: PlantClickListener
 
     companion object {
         const val VIEW_TYPE_WATER = 0
@@ -69,12 +68,10 @@ class PlantsTodayAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is WaterPlantsViewHolder -> holder.bindPlantsWater(
-                plantsThatNeedWater[position],
-                clickListener
+                plantsThatNeedWater[position]
             )
             is MistPlantsViewHolder -> holder.bindPlantsMist(
-                plantsThatNeedMist[position - plantsThatNeedWater.size],
-                clickListener
+                plantsThatNeedMist[position - plantsThatNeedWater.size]
             )
         }
     }
@@ -92,7 +89,7 @@ class PlantsTodayAdapter(
     inner class WaterPlantsViewHolder(private val binding: RecyclerViewWaterPlantsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindPlantsWater(plant: Plant, clickListener: () -> Unit) {
+        fun bindPlantsWater(plant: Plant) {
             val bitmapOptions = BitmapFactory.Options()
             bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565
             val plantBitmapImage = BitmapFactory.decodeFile(plant.image, bitmapOptions)
@@ -109,10 +106,12 @@ class PlantsTodayAdapter(
 
                 toggleRvWaterPlants.setOnClickListener { waterCheckBox(plant) }
 
+                cardRvWaterPlants.setOnClickListener {
+                    val id = plant.id
+                    listener.onItemClick(id)
+                    Timber.i("Adapter Plant ID: $id")
+                }
             }
-
-            // TODO: 11-7-2020 Change itemView to binding with Click Listener
-            itemView.setOnClickListener { clickListener() }
         }
 
         // TODO: 5-6-2020 Check if checked state is correctly recycled or not.
@@ -131,7 +130,7 @@ class PlantsTodayAdapter(
     inner class MistPlantsViewHolder(private val binding: RecyclerViewMistPlantsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindPlantsMist(plant: Plant, clickListener: () -> Unit) {
+        fun bindPlantsMist(plant: Plant) {
             val bitmapOptions = BitmapFactory.Options()
             bitmapOptions.inPreferredConfig = Bitmap.Config.RGB_565
             val plantBitmapImage = BitmapFactory.decodeFile(plant.image, bitmapOptions)
@@ -146,10 +145,13 @@ class PlantsTodayAdapter(
                 }
 
                 toggleRvMistPlants.setOnClickListener { mistCheckBox(plant) }
-            }
 
-            // TODO: 11-7-2020 Change itemView to binding with Click Listener
-            itemView.setOnClickListener { clickListener() }
+                cardRvMistPlants.setOnClickListener {
+                    val id = plant.id
+                    listener.onItemClick(id)
+                    Timber.i("Adapter Plant ID: $id")
+                }
+            }
         }
 
         private fun mistCheckBox(plant: Plant) {
@@ -161,5 +163,9 @@ class PlantsTodayAdapter(
                 viewModel.undoMistGift(plant)
             }
         }
+    }
+
+    fun setOnItemClickListener(listener: PlantClickListener) {
+        this.listener = listener
     }
 }

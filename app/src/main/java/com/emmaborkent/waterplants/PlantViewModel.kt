@@ -57,7 +57,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         Timber.i("PlantViewModel created")
     }
 
-    fun initializePlant(plantId: Int) {
+    fun setPlant(plantId: Int) {
         uiScope.launch {
             plant.value = repository.getPlant(plantId)
         }
