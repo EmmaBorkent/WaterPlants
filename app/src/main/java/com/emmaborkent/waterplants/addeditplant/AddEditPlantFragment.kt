@@ -188,7 +188,7 @@ class AddEditPlantFragment : Fragment() {
             R.id.action_save_update -> {
                 updatePlant()
                 view?.findNavController()?.navigate(
-                    AddEditPlantFragmentDirections.actionAddEditPlantFragmentToDetailsFragment(1)
+                    AddEditPlantFragmentDirections.actionAddEditPlantFragmentToDetailsFragment(viewModel.plant.value!!.id)
                 )
             }
             R.id.action_delete -> {

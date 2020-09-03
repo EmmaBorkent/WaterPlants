@@ -10,10 +10,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentDetailsBinding
+import kotlinx.android.synthetic.main.fragment_tabbed.view.*
 import timber.log.Timber
+
 
 class DetailsFragment : Fragment() {
 
@@ -27,8 +31,10 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Timber.i("onCreateView called")
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container,
-            false)
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_details, container,
+            false
+        )
         val plantId = DetailsFragmentArgs.fromBundle(requireArguments()).plantId
         val application = requireNotNull(this.activity).application
         viewModelFactory = DetailsViewModelFactory(plantId, application)
@@ -45,9 +51,13 @@ class DetailsFragment : Fragment() {
 //        binding.collapsingToolbar.title = viewModel.plant.value?.species
 
         binding.buttonFabEdit.setOnClickListener {
-            view?.findNavController()?.navigate(DetailsFragmentDirections
-                .actionDetailsFragmentToAddEditPlantFragment(plantId))
+            view?.findNavController()?.navigate(
+                DetailsFragmentDirections
+                    .actionDetailsFragmentToAddEditPlantFragment(plantId)
+            )
         }
+
+
 
         return binding.root
     }
