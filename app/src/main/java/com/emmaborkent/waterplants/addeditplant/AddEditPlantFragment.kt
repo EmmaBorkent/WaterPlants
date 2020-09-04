@@ -23,10 +23,13 @@ import java.time.Period
 
 class AddEditPlantFragment : Fragment() {
 
+    // TODO: 4-9-2020 Create string resources for all strings
+
     private lateinit var binding: FragmentAddEditPlantBinding
     private lateinit var viewModelFactory: AddEditPlantViewModelFactory
     private lateinit var viewModel: AddEditPlantViewModel
     private var isEditActivity: Boolean = false
+    private var imageIsChanged: Boolean = false
 
     private lateinit var clickedButtonView: View
     private val dateSetListener =
@@ -41,19 +44,7 @@ class AddEditPlantFragment : Fragment() {
             }
         }
 
-
-//    private var imageIsChanged = false
-
 //    companion object {
-//        const val EXTRA_REPLY_NAME = "com.emmaborkent.waterplants.REPLY_NAME"
-//        const val EXTRA_REPLY_SPECIES = "com.emmaborkent.waterplants.REPLY_SPECIES"
-//        const val EXTRA_REPLY_IMAGE = "com.emmaborkent.waterplants.REPLY_IMAGE"
-//        const val EXTRA_REPLY_WATER_DATE = "com.emmaborkent.waterplants.REPLY_WATER_DATE"
-//        const val EXTRA_REPLY_WATER_EVERY_DAYS =
-//            "com.emmaborkent.waterplants.REPLY_WATER_EVERY_DAYS"
-//        const val EXTRA_REPLY_MIST_DATE = "com.emmaborkent.waterplants.REPLY_MIST_DATE"
-//        const val EXTRA_REPLY_MIST_EVERY_DAYS = "com.emmaborkent.waterplants.REPLY_MIST_EVERY_DAYS"
-//
 //        const val PICK_IMAGE_CODE = 1000
 //        const val PERMISSION_CODE = 1001
 //    }
@@ -151,7 +142,7 @@ class AddEditPlantFragment : Fragment() {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager
                     .PERMISSION_DENIED) {
                 // Permission from popup is denied
-                Toast.makeText(requireContext(), "Permission Denied", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Please grant permission to add an image", Toast.LENGTH_LONG).show()
             } else {
                 // Permission from popup is granted
                 openImageGallery()
@@ -170,9 +161,8 @@ class AddEditPlantFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == PICK_IMAGE_CODE) {
-            // TODO: 13-8-2020 Implement functionality
-//            imageIsChanged = true
-//            image_plant.setImageURI(data?.data)
+            imageIsChanged = true
+            binding.imagePlant.setImageURI(data?.data)
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -181,15 +171,19 @@ class AddEditPlantFragment : Fragment() {
         when (item.itemId) {
             // TODO: 9-7-2020 There should be only one savePlant function used from the view model
             R.id.action_save_new -> {
-                updatePlant()
-                view?.findNavController()
-                    ?.navigate(AddEditPlantFragmentDirections.actionAddEditPlantFragmentToTabbedFragment())
+                if (checkViewsForValidInput()) {
+                    updatePlant()
+                    view?.findNavController()
+                        ?.navigate(AddEditPlantFragmentDirections.actionAddEditPlantFragmentToTabbedFragment())
+                }
             }
             R.id.action_save_update -> {
-                updatePlant()
-                view?.findNavController()?.navigate(
-                    AddEditPlantFragmentDirections.actionAddEditPlantFragmentToDetailsFragment(viewModel.plant.value!!.id)
-                )
+                if (checkViewsForValidInput()) {
+                    updatePlant()
+                    view?.findNavController()?.navigate(
+                        AddEditPlantFragmentDirections.actionAddEditPlantFragmentToDetailsFragment(viewModel.plant.value!!.id)
+                    )
+                }
             }
             R.id.action_delete -> {
                 // are you sure?
@@ -201,6 +195,16 @@ class AddEditPlantFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun checkViewsForValidInput(): Boolean {
+        return if (binding.editPlantName.text.isNullOrEmpty()) {
+            Toast.makeText(context, "No Plant Name is Entered", Toast.LENGTH_SHORT).show()
+            false
+        } else if (!isEditActivity && !imageIsChanged) {
+            Toast.makeText(context, "There is no image selected", Toast.LENGTH_SHORT).show()
+            false
+        } else true
     }
 
     private fun updatePlant() {
