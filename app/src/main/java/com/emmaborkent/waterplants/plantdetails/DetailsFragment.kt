@@ -1,6 +1,7 @@
 package com.emmaborkent.waterplants.plantdetails
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +11,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentDetailsBinding
-import kotlinx.android.synthetic.main.fragment_tabbed.view.*
 import timber.log.Timber
 
 
@@ -45,6 +43,8 @@ class DetailsFragment : Fragment() {
         viewModel.plant.observe(viewLifecycleOwner, Observer { plant ->
             setActivityTitle(plant.name)
             binding.collapsingToolbar.title = plant.species
+            val imageUri: Uri = Uri.parse(plant.image)
+            binding.imagePlant.setImageURI(imageUri)
         })
 
 //        setActivityTitle(viewModel.plant.value?.name)

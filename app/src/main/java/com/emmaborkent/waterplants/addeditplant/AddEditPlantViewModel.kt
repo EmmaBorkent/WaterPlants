@@ -1,6 +1,7 @@
 package com.emmaborkent.waterplants.addeditplant
 
 import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
