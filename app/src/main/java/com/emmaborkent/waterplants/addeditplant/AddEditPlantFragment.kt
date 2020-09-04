@@ -1,9 +1,8 @@
 package com.emmaborkent.waterplants.addeditplant
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -40,8 +39,6 @@ class AddEditPlantFragment : Fragment() {
     private lateinit var viewModelFactory: AddEditPlantViewModelFactory
     private lateinit var viewModel: AddEditPlantViewModel
     private var isEditActivity: Boolean = false
-    private var imageIsChanged: Boolean = false
-
     private lateinit var clickedButtonView: View
     private val dateSetListener =
         DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
@@ -54,6 +51,7 @@ class AddEditPlantFragment : Fragment() {
                 }
             }
         }
+    private var imageIsChanged: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -128,19 +126,6 @@ class AddEditPlantFragment : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar?.title = getString(id)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.toolbar_menu_add_edit_plant, menu)
-        if (isEditActivity) {
-            val saveNewPlantMenuItem = menu.findItem(R.id.action_save_new)
-            saveNewPlantMenuItem.isVisible = false
-            val updatePlantMenuItem = menu.findItem(R.id.action_save_update)
-            updatePlantMenuItem.isVisible = true
-            val deleteMenuItem: MenuItem = menu.findItem(R.id.action_delete)
-            deleteMenuItem.isVisible = true
-        }
-    }
-
     private fun pickImage() {
         if (checkSelfPermission(
                 requireContext(),
@@ -154,9 +139,7 @@ class AddEditPlantFragment : Fragment() {
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager
                     .PERMISSION_DENIED
@@ -191,9 +174,21 @@ class AddEditPlantFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.toolbar_menu_add_edit_plant, menu)
+        if (isEditActivity) {
+            val saveNewPlantMenuItem = menu.findItem(R.id.action_save_new)
+            saveNewPlantMenuItem.isVisible = false
+            val updatePlantMenuItem = menu.findItem(R.id.action_save_update)
+            updatePlantMenuItem.isVisible = true
+            val deleteMenuItem: MenuItem = menu.findItem(R.id.action_delete)
+            deleteMenuItem.isVisible = true
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            // TODO: 9-7-2020 There should be only one savePlant function used from the view model
             R.id.action_save_new -> {
                 if (checkViewsForValidInput()) {
                     updatePlant()
@@ -212,12 +207,7 @@ class AddEditPlantFragment : Fragment() {
                 }
             }
             R.id.action_delete -> {
-                // are you sure?
-                // delete plant
-                // TODO: 13-8-2020 Create function
-                viewModel.deletePlant(viewModel.plant.value!!)
-                view?.findNavController()
-                    ?.navigate(AddEditPlantFragmentDirections.actionAddEditPlantFragmentToTabbedFragment())
+                warnBeforeDeleteDialog()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -257,9 +247,7 @@ class AddEditPlantFragment : Fragment() {
     private fun saveImageToInternalStorage(): Uri {
         val drawable = binding.imagePlant.drawable as BitmapDrawable
         val bitmap = drawable.bitmap
-        val wrapper = ContextWrapper(context)
-        var file = wrapper.getDir("plant_images", Context.MODE_PRIVATE)
-        file = File(file, "${UUID.randomUUID()}.jpg")
+        val file = File(context?.filesDir, "${UUID.randomUUID()}.jpg")
         val stream: OutputStream = FileOutputStream(file)
         try {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 30, stream)
@@ -274,5 +262,35 @@ class AddEditPlantFragment : Fragment() {
 
         Timber.d("New Image Successfully Saved to Internal Storage")
         return Uri.parse(file.absolutePath)
+    }
+
+    private fun warnBeforeDeleteDialog() {
+        val builder = AlertDialog.Builder(context)
+        builder
+            .setTitle("Delete Plant?")
+            .setIcon(R.drawable.ic_delete_black_24dp)
+            .setMessage("All data will be lost")
+            .setPositiveButton("Yes") { _, _ ->
+                deletePlantReturnHome()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+        val alert = builder.create()
+        alert.show()
+    }
+
+    private fun deletePlantReturnHome() {
+        // Delete from database
+        viewModel.deletePlant(viewModel.plant.value!!)
+
+        // Delete image from internal files
+        val file = File(viewModel.plant.value!!.image)
+        file.setExecutable(true)
+        file.delete()
+
+        // Return to home
+        view?.findNavController()
+            ?.navigate(AddEditPlantFragmentDirections.actionAddEditPlantFragmentToTabbedFragment())
     }
 }

@@ -1,7 +1,6 @@
 package com.emmaborkent.waterplants.addeditplant
 
 import android.app.Application
-import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,6 +12,7 @@ import com.emmaborkent.waterplants.model.PlantRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.io.File
 import java.time.LocalDate
 
 class AddEditPlantViewModel(private var plantId: Int, application: Application)
