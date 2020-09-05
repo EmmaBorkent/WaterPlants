@@ -11,6 +11,7 @@
     <string name="main_subtitle_zero">You don\'t have any plants to water today!</string>
     <string name="main_all_plants">All plants</string>
     <string name="main_no_plants_to_water">You don\'t have to water any plants today!</string>
+    <string name="main_no_plants">You don\t have any plants yet</string>
     
     <!-- recycler_view_water_plants.xml -->
     <!-- recycler_view_all_plants.xml -->

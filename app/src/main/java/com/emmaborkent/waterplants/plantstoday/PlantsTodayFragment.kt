@@ -72,7 +72,7 @@ class PlantsTodayFragment : Fragment() {
     }
 
 
-    
+
     // Lifecycle Logging
 
     override fun onAttach(context: Context) {

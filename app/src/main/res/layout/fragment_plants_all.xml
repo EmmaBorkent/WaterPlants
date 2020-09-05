@@ -23,6 +23,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
             
+            <TextView
+                android:id="@+id/text_no_plants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_basic"
+                android:textAppearance="@style/AppTheme.TextAppearance.Body1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_title"
+                android:text="@string/main_no_plants" />
+            
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_all_plants"
                 android:layout_width="match_parent"
