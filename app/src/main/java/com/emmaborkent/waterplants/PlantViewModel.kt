@@ -26,6 +26,9 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         get() = _selectedPlant
     val plantsThatNeedWater: LiveData<List<Plant>>
     val plantsThatNeedMist: LiveData<List<Plant>>
+    private val countPlantsThatNeedWater: LiveData<Int>
+    private val countPlantsThatNeedMist: LiveData<Int>
+    val countAllPlantsThatNeedWaterOrMist: LiveData<Int>
     val allPlants: LiveData<List<Plant>>
     private var parseFormatDates: ParseFormatDates
 
@@ -52,9 +55,17 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         parseFormatDates = ParseFormatDates.getParseFormatDatesInstance()
         plantsThatNeedWater = repository.getPlantsThatNeedWater()
         plantsThatNeedMist = repository.getPlantsThatNeedMist()
+        countPlantsThatNeedWater = repository.countPlantsThatNeedWater()
+        countPlantsThatNeedMist = repository.countPlantsThatNeedMist()
+        countAllPlantsThatNeedWaterOrMist = repository.countAllPlantsThatNeedWaterOrMist()
+
         allPlants = repository.getAllPlants()
 
         Timber.i("PlantViewModel created")
+    }
+
+    private fun count(x: Int, y: Int) : Int {
+        return x + y
     }
 
     fun setPlant(plantId: Int) {

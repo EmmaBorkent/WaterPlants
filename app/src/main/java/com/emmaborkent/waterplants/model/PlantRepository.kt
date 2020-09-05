@@ -17,6 +17,8 @@ class PlantRepository(private val plantDao: PlantDao) {
         plantDao.countPlantsThatNeedWater()
     private val countPlantsThatNeedMist: LiveData<Int> =
         plantDao.countPlantsThatNeedMist()
+    private val countAllPlantsThatNeedWaterOrMist: LiveData<Int> =
+        plantDao.countAllPlantsThatNeedWaterOrMist()
 
     // The suspend modifiers tell the compiler that they need to be called from a coroutine
     // or another suspending function.
@@ -71,6 +73,10 @@ class PlantRepository(private val plantDao: PlantDao) {
 
     fun countPlantsThatNeedMist(): LiveData<Int> {
         return countPlantsThatNeedMist
+    }
+
+    fun countAllPlantsThatNeedWaterOrMist(): LiveData<Int> {
+        return countAllPlantsThatNeedWaterOrMist
     }
 
 //    private val databaseHandler: XPlantDatabaseHandler = XPlantDatabaseHandler.getInstance(MainActivity())

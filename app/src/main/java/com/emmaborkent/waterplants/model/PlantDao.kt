@@ -55,4 +55,7 @@ interface PlantDao {
 
     @Query("SELECT COUNT(*) FROM PLANT_TABLE WHERE mistDate <= Date('now')")
     fun countPlantsThatNeedMist(): LiveData<Int>
+
+    @Query("SELECT COUNT(*) FROM PLANT_TABLE WHERE waterDate <= Date('now') OR mistDate <= Date('now')")
+    fun countAllPlantsThatNeedWaterOrMist(): LiveData<Int>
 }

@@ -60,23 +60,19 @@ class PlantsTodayFragment : Fragment() {
         viewModel.plantsThatNeedMist.observe(viewLifecycleOwner, Observer { mistPlants ->
             mistPlants?.let { waterPlantsAdapter.setMistPlants(it) }
         })
-
-//        setTextHowManyPlantsNeedAction()
+        viewModel.countAllPlantsThatNeedWaterOrMist.observe(viewLifecycleOwner, Observer { count ->
+            count?.let {
+                binding.textSubtitle.text = if (count != 0) {
+                    resources.getQuantityString(R.plurals.main_subtitle, it, it)
+                } else {
+                    resources.getString(R.string.main_subtitle_zero)
+                }
+            }
+        })
     }
 
-    // TODO: 25-6-2020 Create function setTextHowManyPlantsNeedAction() After the viewmodel works
-//    private fun setTextHowManyPlantsNeedAction() {
-//        val plantCount = PlantViewModel.allPlants.size
-//        if (textHowManyActions != 0) {
-//            text_subtitle.text = resources
-//                .getQuantityString(R.plurals.main_subtitle, textHowManyActions, textHowManyActions)
-//        } else {
-//            text_subtitle.text = resources.getString(R.string.main_subtitle_zero)
-//        }
-//    }
 
-
-
+    
     // Lifecycle Logging
 
     override fun onAttach(context: Context) {
