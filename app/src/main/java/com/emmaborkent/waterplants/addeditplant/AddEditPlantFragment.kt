@@ -3,6 +3,7 @@ package com.emmaborkent.waterplants.addeditplant
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -11,12 +12,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentAddEditPlantBinding
 import com.emmaborkent.waterplants.util.PERMISSION_CODE
@@ -80,11 +83,6 @@ class AddEditPlantFragment : Fragment() {
             viewModel.setupPageToAddPlant()
         }
 
-        viewModel.plant.observe(viewLifecycleOwner, androidx.lifecycle.Observer { plant ->
-            val plantImageUri = Uri.parse(plant.image)
-            binding.imagePlant.setImageURI(plantImageUri)
-        })
-
         binding.buttonPickImage.setOnClickListener {
             pickImage()
         }
@@ -122,6 +120,14 @@ class AddEditPlantFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.plant.observe(viewLifecycleOwner, androidx.lifecycle.Observer { plant ->
+            val plantImageUri = Uri.parse(plant.image)
+            binding.imagePlant.setImageURI(plantImageUri)
+        })
+    }
+
     private fun isEditActivity(plantId: Int): Boolean {
         return plantId != 0
     }
@@ -143,7 +149,11 @@ class AddEditPlantFragment : Fragment() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         if (requestCode == PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager
                     .PERMISSION_DENIED
@@ -212,6 +222,10 @@ class AddEditPlantFragment : Fragment() {
             }
             R.id.action_delete -> {
                 warnBeforeDeleteDialog()
+            }
+            android.R.id.home -> {
+                viewModel.deletePlant(viewModel.plant.value!!)
+                Timber.i("Plant Deleted")
             }
         }
         return super.onOptionsItemSelected(item)
@@ -293,8 +307,40 @@ class AddEditPlantFragment : Fragment() {
         file.setExecutable(true)
         file.delete()
 
+        Timber.i("Plant Deleted")
+
         // Return to home
         view?.findNavController()
             ?.navigate(AddEditPlantFragmentDirections.actionAddEditPlantFragmentToTabbedFragment())
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Timber.i("onAttach called")
+    }
+    override fun onStart() {
+        super.onStart()
+        Timber.i("onStart called")
+    }
+    override fun onResume() {
+        super.onResume()
+        Timber.i("onResume called")
+    }
+    override fun onPause() {
+        super.onPause()
+        Timber.i("onPause called")
+    }
+    override fun onStop() {
+        super.onStop()
+        Timber.i("onStop called")
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Timber.i("onDestroyView called")
+    }
+    override fun onDetach() {
+        super.onDetach()
+        Timber.i("onDetach called")
     }
 }
