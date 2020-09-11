@@ -57,6 +57,12 @@ class AddEditPlantFragment : Fragment() {
             }
         }
     private var imageIsChanged: Boolean = false
+    private var callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+//            Toast.makeText(requireContext(), "TEST", Toast.LENGTH_SHORT).show()
+            deletePlantReturnHome()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,7 +79,9 @@ class AddEditPlantFragment : Fragment() {
         binding.addEditPlantViewModel = viewModel
 
         isEditActivity = isEditActivity(plantId)
+
         setHasOptionsMenu(true)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
         if (isEditActivity) {
             setActivityTitle(R.string.edit_plant_toolbar_title)
@@ -303,9 +311,11 @@ class AddEditPlantFragment : Fragment() {
         viewModel.deletePlant(viewModel.plant.value!!)
 
         // Delete image from internal files
-        val file = File(viewModel.plant.value!!.image)
-        file.setExecutable(true)
-        file.delete()
+        if (viewModel.plant.value!!.image != "") {
+            val file = File(viewModel.plant.value!!.image)
+            file.setExecutable(true)
+            file.delete()
+        }
 
         Timber.i("Plant Deleted")
 
