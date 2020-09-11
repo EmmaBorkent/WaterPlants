@@ -47,11 +47,11 @@ class AddEditPlantFragment : Fragment() {
         DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             when (clickedButtonView) {
                 binding.buttonDatePlantsNeedsWater -> {
-                    Timber.i("Date: $year, $month, $dayOfMonth")
+                    Timber.i("Date: $year, ${month+1}, $dayOfMonth")
                     viewModel.changeWaterDate(year, month + 1, dayOfMonth)
                 }
                 binding.buttonDatePlantsNeedsMist -> {
-                    Timber.i("Date: $year, $month, $dayOfMonth")
+                    Timber.i("Date: $year, ${month+1}, $dayOfMonth")
                     viewModel.changeMistDate(year, month + 1, dayOfMonth)
                 }
             }
@@ -258,14 +258,14 @@ class AddEditPlantFragment : Fragment() {
             image = plantImageUri.toString()
             Timber.d("Plant Image String: $image")
             waterEveryDays = binding.editWaterEveryDays.text.toString().toInt()
-            waterDate = viewModel.plant.value?.waterDate!!
             mistEveryDays = binding.editMistEveryDays.text.toString().toInt()
-            mistDate = viewModel.plant.value?.mistDate!!
 
             val today = LocalDate.now()
             waterInDays = Period.between(today, waterDate).days
             mistInDays = Period.between(today, mistDate).days
         }
+
+        Timber.i("Update Plant. WaterDate: ${viewModel.plant.value!!.waterDate}. MistDate: ${viewModel.plant.value!!.mistDate}")
 
         viewModel.updatePlant(viewModel.plant.value)
     }

@@ -74,12 +74,14 @@ class AddEditPlantViewModel(private var plantId: Int, application: Application)
     
     fun changeWaterDate(year: Int, month: Int, day: Int) {
         val date = LocalDate.of(year, month, day)
+        plant.value?.waterDate = date
         val dateString = dateConverter.localDateToViewDateString(date)
         _waterDate.value = dateString
     }
 
     fun changeMistDate(year: Int, month: Int, day: Int) {
         val date = LocalDate.of(year, month, day)
+        plant.value?.mistDate = date
         val dateString = dateConverter.localDateToViewDateString(date)
         _mistDate.value = dateString
     }
