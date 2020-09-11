@@ -15,6 +15,7 @@ import com.emmaborkent.waterplants.model.DateConverter
 import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.util.ParseFormatDates
 import com.emmaborkent.waterplants.util.PlantClickListener
+import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
 import java.time.LocalDate
 
@@ -120,9 +121,13 @@ class PlantsTodayAdapter(private val viewModel: PlantViewModel) :
             if (binding.toggleRvWaterPlants.isChecked) {
                 Timber.i("Plant ${plant.name}: Water Is Checked")
                 viewModel.giveWater(plant)
-            } else {
-                Timber.i("Plant ${plant.name}: Water Is NOT Checked")
-                viewModel.undoWaterGift(plant)
+                Snackbar
+                    .make(binding.cardRvWaterPlants, "Plant was watered", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Undo") {
+                        Timber.i("Plant ${plant.name}: Water Is NOT Checked")
+                        viewModel.undoWaterGift(plant)
+                    }
+                    .show()
             }
         }
     }

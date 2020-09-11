@@ -67,10 +67,6 @@ class TabbedFragment : Fragment() {
         binding.tabLayout.getTabAt(selectedTab)?.select()
 //        binding.tabLayout.setScrollPosition(selectedTab, 0f, true)
 
-
-        binding.floatingActionButton.setOnClickListener {
-            view?.findNavController()?.navigate(TabbedFragmentDirections.actionTabbedFragmentToAddEditPlantFragment())
-        }
         Timber.i("onCreateView called")
         return binding.root
     }

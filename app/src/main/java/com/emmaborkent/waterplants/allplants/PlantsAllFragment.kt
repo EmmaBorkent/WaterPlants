@@ -16,6 +16,7 @@ import com.emmaborkent.waterplants.NavigationDirections
 import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentPlantsAllBinding
+import com.emmaborkent.waterplants.main.TabbedFragmentDirections
 import com.emmaborkent.waterplants.util.PlantClickListener
 import timber.log.Timber
 
@@ -52,6 +53,9 @@ class PlantsAllFragment : Fragment() {
         binding.apply {
             recyclerViewAllPlants.adapter = adapter
             recyclerViewAllPlants.layoutManager = layoutManager
+            floatingActionButton.setOnClickListener {
+                view?.findNavController()?.navigate(TabbedFragmentDirections.actionTabbedFragmentToAddEditPlantFragment())
+            }
         }
 
         viewModel.allPlants.observe(viewLifecycleOwner, Observer { plants ->

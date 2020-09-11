@@ -2,6 +2,8 @@ package com.emmaborkent.waterplants
 
 import android.app.Application
 import androidx.lifecycle.*
+import androidx.navigation.findNavController
+import com.emmaborkent.waterplants.main.TabbedFragmentDirections
 import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.model.PlantDatabase
 import com.emmaborkent.waterplants.model.PlantRepository
@@ -105,27 +107,26 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     // TODO: 26-7-2020 Apply DataBinding with ViewModel and DataBinding to all functions and views
     // TODO: 19-6-2020 check correctness of function
     fun giveWater(plant: Plant) {
-//        Timber.i("giveWater datePlantNeedsWater was ${plant.datePlantNeedsWater}")
+        Timber.i("giveWater datePlantNeedsWater was ${plant.waterDate}")
         val todayDate = LocalDate.now()
         plant.waterInDays = Period.between(
             plant.waterDate,
             todayDate
         ).days
-//        Timber.i("giveWater daysBetweenDateAndToday is ${plant.daysBetweenDateAndToday}")
+        Timber.i("giveWater daysBetweenDateAndToday is ${plant.waterInDays}")
         val nextWaterDate = todayDate.plusDays(plant.waterEveryDays.toLong())
         plant.waterDate = nextWaterDate
-//        Timber.i("giveWater datePlantNeedsWater is ${plant.datePlantNeedsWater}")
-
-//                dbHandler.updatePlantInDatabase(plant)
+        Timber.i("giveWater datePlantNeedsWater is ${plant.waterDate}")
+        update(plant)
     }
 
     fun undoWaterGift(plant: Plant) {
-//        Timber.i("undoWaterGift datePlantNeedsWater was ${plant.datePlantNeedsWater}")
+        Timber.i("undoWaterGift datePlantNeedsWater was ${plant.waterDate}")
         val days = plant.waterEveryDays.toLong() + plant.waterInDays.toLong()
-//        Timber.i("undoWaterGift days is $days")
+        Timber.i("undoWaterGift days is $days")
         val previousWaterDate = plant.waterDate.minusDays(days)
         plant.waterDate = previousWaterDate
-//        Timber.i("undoWaterGift datePlantNeedsWater is ${plant.datePlantNeedsWater}")
+        Timber.i("undoWaterGift datePlantNeedsWater is ${plant.waterDate}")
     }
 
     fun giveMist(plant: Plant) {

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/tabbed_coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         
@@ -37,14 +38,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="48dp" />
-        
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floating_action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/margin_basic"
-            app:srcCompat="@drawable/ic_add_black_24dp" />
     
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

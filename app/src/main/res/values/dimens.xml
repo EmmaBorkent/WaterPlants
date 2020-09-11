@@ -3,6 +3,7 @@
     <dimen name="margin_basic">16dp</dimen>
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_add_edit_plant_image">48dp</dimen>
+    <dimen name="margin_fab_plus_basic">88dp</dimen>
     
     <dimen name="toolbar_height">384dp</dimen>
     <dimen name="toolbar_collapsed">192dp</dimen>
