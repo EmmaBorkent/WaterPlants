@@ -90,6 +90,22 @@
         <item name="android:textColor">@color/colorError</item>
         <item name="android:textSize">@dimen/text_size_subtitle2</item>
     </style>
+    
+    <style name="AppTheme.TextAppearance.CollapsingToolbar.Expended" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
+        <item name="fontFamily">@font/open_sans_bold</item>
+        <item name="android:shadowColor">@color/colorOnPrimary</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">0.6</item>
+        <item name="android:textColor">@color/colorOnSecondary</item>
+    </style>
+    
+    <style name="AppTheme.TextAppearance.AppCompat.Title" parent="@style/TextAppearance.AppCompat.Title">
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">0.6</item>
+        <item name="android:textColor">@color/colorOnSecondary</item>
+    </style>
 
     <style name="AppTheme.TextAppearance.Body1" parent="TextAppearance.MaterialComponents.Body1"></style>
 

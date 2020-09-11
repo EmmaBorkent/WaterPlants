@@ -5,8 +5,8 @@
     <string name="main_title">Water today</string>
     <string name="main_subtitle">You have no plants to water today</string>
     <plurals name="main_subtitle">
-        <item quantity="one">You have %1$d plant that needs water or mist</item>
-        <item quantity="other">You have %1$d plants that need water or mist</item>
+        <item quantity="one">You have %1$d plant that needs some love</item>
+        <item quantity="other">You have %1$d plants that need some love</item>
     </plurals>
     <string name="main_subtitle_zero">You don\'t have any plants to water today!</string>
     <string name="main_all_plants">All plants</string>
@@ -41,6 +41,7 @@
     <string name="detail_days">%d days</string>
     <string name="detail_every_days">every %d days</string>
     
+    <string name="detail_in_zero_days">Today!</string>
     <plurals name="detail_water_in_days">
         <item quantity="one">%d day</item>
         <item quantity="other">%d days</item>

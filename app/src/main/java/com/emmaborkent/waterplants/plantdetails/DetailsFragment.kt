@@ -41,10 +41,20 @@ class DetailsFragment : Fragment() {
         binding.detailsViewModel = viewModel
 
         viewModel.plant.observe(viewLifecycleOwner, Observer { plant ->
-            setActivityTitle(plant.name)
-            binding.collapsingToolbar.title = plant.species
+            setActivityTitle(plant.species)
+//            binding.collapsingToolbar.title = plant.species
             val imageUri: Uri = Uri.parse(plant.image)
             binding.imagePlant.setImageURI(imageUri)
+            binding.textDaysToNextWater.text = (if (plant.waterInDays != 0) {
+                resources.getQuantityString(R.plurals.detail_water_in_days, plant.waterInDays, plant.waterInDays)
+            } else {
+                resources.getString(R.string.detail_in_zero_days)
+            }).toString()
+            binding.textDaysToNextMist.text = (if (plant.waterInDays != 0) {
+                resources.getQuantityString(R.plurals.detail_water_in_days, plant.waterInDays, plant.waterInDays)
+            } else {
+                resources.getString(R.string.detail_in_zero_days)
+            }).toString()
         })
 
 //        setActivityTitle(viewModel.plant.value?.name)
@@ -56,8 +66,6 @@ class DetailsFragment : Fragment() {
                     .actionDetailsFragmentToAddEditPlantFragment(plantId)
             )
         }
-
-
 
         return binding.root
     }

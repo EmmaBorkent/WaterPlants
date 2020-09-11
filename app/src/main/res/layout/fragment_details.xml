@@ -21,10 +21,12 @@
                 android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:title="@{detailsViewModel.plant.name}"
                 app:expandedTitleGravity="top"
-                app:expandedTitleTextAppearance="@style/AppTheme.TextAppearance.Headline1"
-                app:collapsedTitleGravity="top"
-                app:collapsedTitleTextAppearance="@style/AppTheme.TextAppearance.Headline2"
+                app:expandedTitleTextAppearance="@style/AppTheme.TextAppearance.CollapsingToolbar.Expended"
+                app:collapsedTitleGravity="bottom"
+                app:collapsedTitleTextAppearance="@style/AppTheme.TextAppearance.AppCompat.Title"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
     
                 <ImageView
@@ -122,7 +124,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:text="@{@plurals/detail_water_in_days(detailsViewModel.plant.waterInDays, detailsViewModel.plant.waterInDays)}"
                     app:layout_constraintEnd_toEndOf="@+id/button_give_water"
                     app:layout_constraintStart_toStartOf="@+id/button_give_water"
                     app:layout_constraintTop_toBottomOf="@+id/button_give_water"
@@ -134,7 +135,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
-                    android:text="@{@plurals/detail_mist_in_days(detailsViewModel.plant.mistInDays, detailsViewModel.plant.mistInDays)}"
                     app:layout_constraintEnd_toEndOf="@+id/button_give_mist"
                     app:layout_constraintStart_toStartOf="@+id/button_give_mist"
                     app:layout_constraintTop_toBottomOf="@+id/button_give_mist"
