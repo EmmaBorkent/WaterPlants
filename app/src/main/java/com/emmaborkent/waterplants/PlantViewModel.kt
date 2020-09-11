@@ -127,22 +127,31 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         val previousWaterDate = plant.waterDate.minusDays(days)
         plant.waterDate = previousWaterDate
         Timber.i("undoWaterGift datePlantNeedsWater is ${plant.waterDate}")
+        update(plant)
     }
 
     fun giveMist(plant: Plant) {
+        Timber.i("giveMist datePlantNeedsMist was ${plant.mistDate}")
         val todayDate = LocalDate.now()
         plant.mistInDays = Period.between(
             plant.mistDate,
             todayDate
         ).days
+        Timber.i("giveMist daysBetweenDateAndToday is ${plant.mistInDays}")
         val nextMistDate = todayDate.plusDays(plant.mistEveryDays.toLong())
         plant.mistDate = nextMistDate
+        Timber.i("giveMist datePlantNeedsMist is ${plant.mistDate}")
+        update(plant)
     }
 
     fun undoMistGift(plant: Plant) {
+        Timber.i("undoMistGift datePlantNeedsMist was ${plant.mistDate}")
         val days = plant.mistEveryDays.toLong() + plant.mistInDays.toLong()
+        Timber.i("undoMistGift days is $days")
         val previousMistDate = plant.mistDate.minusDays(days)
         plant.mistDate = previousMistDate
+        Timber.i("undoMistGift datePlantNeedsMist is ${plant.mistDate}")
+        update(plant)
     }
 
     // Not necessary to cancel or instantiate a Job when using ViewModelScope, because they get

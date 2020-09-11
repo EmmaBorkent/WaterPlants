@@ -125,6 +125,7 @@ class PlantsTodayAdapter(private val viewModel: PlantViewModel) :
                     .make(binding.cardRvWaterPlants, "Plant was watered", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Undo") {
                         Timber.i("Plant ${plant.name}: Water Is NOT Checked")
+                        binding.toggleRvWaterPlants.isChecked = false
                         viewModel.undoWaterGift(plant)
                     }
                     .show()
@@ -163,9 +164,14 @@ class PlantsTodayAdapter(private val viewModel: PlantViewModel) :
             if (binding.toggleRvMistPlants.isChecked) {
                 Timber.i("Plant ${plant.name}: Mist Is Checked")
                 viewModel.giveMist(plant)
-            } else {
-                Timber.i("Plant ${plant.name}: Mist Is NOT Checked")
-                viewModel.undoMistGift(plant)
+                Snackbar
+                    .make(binding.cardRvMistPlants, "Plant was misted", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Undo") {
+                        Timber.i("Plant ${plant.name}: Mist Is NOT Checked")
+                        binding.toggleRvMistPlants.isChecked = false
+                        viewModel.undoMistGift(plant)
+                    }
+                    .show()
             }
         }
     }
