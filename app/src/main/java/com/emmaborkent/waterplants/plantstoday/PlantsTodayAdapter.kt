@@ -105,6 +105,7 @@ class PlantsTodayAdapter(private val viewModel: PlantViewModel) :
                     textRvWaterPlantsDate.visibility = View.INVISIBLE
                 }
 
+                toggleRvWaterPlants.isChecked = false
                 toggleRvWaterPlants.setOnClickListener { waterCheckBox(plant) }
 
                 cardRvWaterPlants.setOnClickListener {
@@ -115,8 +116,6 @@ class PlantsTodayAdapter(private val viewModel: PlantViewModel) :
             }
         }
 
-        // TODO: 5-6-2020 Check if checked state is correctly recycled or not.
-        //  https://blog.oziomaogbe.com/2017/10/18/android-handling-checkbox-state-in-recycler-views.html
         private fun waterCheckBox(plant: Plant) {
             if (binding.toggleRvWaterPlants.isChecked) {
                 Timber.i("Plant ${plant.name}: Water Is Checked")
@@ -150,6 +149,7 @@ class PlantsTodayAdapter(private val viewModel: PlantViewModel) :
                     textRvMistPlantsDate.visibility = View.INVISIBLE
                 }
 
+                toggleRvMistPlants.isChecked = false
                 toggleRvMistPlants.setOnClickListener { mistCheckBox(plant) }
 
                 cardRvMistPlants.setOnClickListener {
