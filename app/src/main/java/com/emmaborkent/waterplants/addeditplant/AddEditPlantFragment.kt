@@ -44,10 +44,12 @@ class AddEditPlantFragment : Fragment() {
         DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             when (clickedButtonView) {
                 binding.buttonDatePlantsNeedsWater -> {
-                    viewModel.changeWaterDate(year, month, dayOfMonth)
+                    Timber.i("Date: $year, $month, $dayOfMonth")
+                    viewModel.changeWaterDate(year, month + 1, dayOfMonth)
                 }
                 binding.buttonDatePlantsNeedsMist -> {
-                    viewModel.changeMistDate(year, month, dayOfMonth)
+                    Timber.i("Date: $year, $month, $dayOfMonth")
+                    viewModel.changeMistDate(year, month + 1, dayOfMonth)
                 }
             }
         }
@@ -89,10 +91,11 @@ class AddEditPlantFragment : Fragment() {
         binding.buttonDatePlantsNeedsWater.setOnClickListener { v ->
             clickedButtonView = v!!
             if (viewModel.plant.value != null) {
+                Timber.i("Date: ${viewModel.waterYear.value}, ${viewModel.waterMonth.value}, ${viewModel.waterDay.value}")
                 DatePickerDialog(
                     requireContext(), dateSetListener,
                     viewModel.waterYear.value!!,
-                    viewModel.waterMonth.value!!,
+                    viewModel.waterMonth.value!! - 1,
                     viewModel.waterDay.value!!
                 )
                     .show()
@@ -102,11 +105,12 @@ class AddEditPlantFragment : Fragment() {
         }
         binding.buttonDatePlantsNeedsMist.setOnClickListener { v ->
             clickedButtonView = v!!
+            Timber.i("Date: ${viewModel.mistYear.value}, ${viewModel.mistMonth.value}, ${viewModel.mistDay.value}")
             if (viewModel.plant.value != null) {
                 DatePickerDialog(
                     requireContext(), dateSetListener,
                     viewModel.mistYear.value!!,
-                    viewModel.mistMonth.value!!,
+                    viewModel.mistMonth.value!! - 1,
                     viewModel.mistDay.value!!
                 )
                     .show()

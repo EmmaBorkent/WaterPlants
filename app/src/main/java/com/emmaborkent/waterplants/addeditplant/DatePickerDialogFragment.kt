@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.emmaborkent.waterplants.model.DateConverter
 import com.emmaborkent.waterplants.util.DATE_PICKER_DATE
+import timber.log.Timber
 import java.time.LocalDate
 
 class DatePickerDialogFragment : DialogFragment() {
@@ -16,7 +17,7 @@ class DatePickerDialogFragment : DialogFragment() {
 
         val date: LocalDate = getDate()
         val year = date.year
-        val month = date.monthValue - 1
+        val month = date.monthValue
         val day = date.dayOfMonth
         return DatePickerDialog(
             requireActivity(),
