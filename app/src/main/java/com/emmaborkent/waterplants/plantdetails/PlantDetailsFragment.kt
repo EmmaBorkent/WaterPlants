@@ -9,19 +9,19 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.FragmentDetailsBinding
 import timber.log.Timber
 
 
-class DetailsFragment : Fragment() {
+class PlantDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
-    private lateinit var viewModelFactory: DetailsViewModelFactory
-    private lateinit var viewModel: DetailsViewModel
+    private val plantViewModel by activityViewModels<PlantViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,15 +34,16 @@ class DetailsFragment : Fragment() {
             false
         )
         val plantId = DetailsFragmentArgs.fromBundle(requireArguments()).plantId
-        val application = requireNotNull(this.activity).application
-        viewModelFactory = DetailsViewModelFactory(plantId, application)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(DetailsViewModel::class.java)
+        plantViewModel.initializePlant(plantId)
         binding.lifecycleOwner = this
-        binding.detailsViewModel = viewModel
+        binding.plantViewModel = plantViewModel
 
-        viewModel.plant.observe(viewLifecycleOwner, Observer { plant ->
-            setActivityTitle(plant.species)
-//            binding.collapsingToolbar.title = plant.species
+        plantViewModel.plant.observe(viewLifecycleOwner, Observer { plant ->
+            if (plant.species != "") {
+                setActivityTitle(plant.species)
+            } else {
+                setActivityTitle(plant.name)
+            }
             val imageUri: Uri = Uri.parse(plant.image)
             binding.imagePlant.setImageURI(imageUri)
             binding.textDaysToNextWater.text = (if (plant.waterInDays != 0) {
@@ -56,9 +57,6 @@ class DetailsFragment : Fragment() {
                 resources.getString(R.string.detail_in_zero_days)
             }).toString()
         })
-
-//        setActivityTitle(viewModel.plant.value?.name)
-//        binding.collapsingToolbar.title = viewModel.plant.value?.species
 
         binding.buttonFabEdit.setOnClickListener {
             view?.findNavController()?.navigate(

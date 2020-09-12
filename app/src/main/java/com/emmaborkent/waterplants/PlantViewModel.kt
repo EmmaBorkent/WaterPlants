@@ -66,6 +66,13 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         Timber.i("PlantViewModel created")
     }
 
+    fun initializePlant(plantId: Int) {
+        viewModelScope.launch(Dispatchers.Main) {
+            plant.value = repository.getPlant(plantId)
+        }
+        Timber.i("Plant Initialized")
+    }
+
     private fun count(x: Int, y: Int) : Int {
         return x + y
     }
@@ -105,7 +112,6 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     // TODO: 26-7-2020 Apply DataBinding with ViewModel and DataBinding to all functions and views
-    // TODO: 19-6-2020 check correctness of function
     fun giveWater(plant: Plant) {
         Timber.i("giveWater datePlantNeedsWater was ${plant.waterDate}")
         val todayDate = LocalDate.now()

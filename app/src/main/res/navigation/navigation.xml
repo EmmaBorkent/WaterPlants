@@ -37,7 +37,7 @@
     
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.emmaborkent.waterplants.plantdetails.DetailsFragment"
+        android:name="com.emmaborkent.waterplants.plantdetails.PlantDetailsFragment"
         android:label="DetailsFragment"
         tools:layout="@layout/fragment_details">
         <action

@@ -5,8 +5,8 @@
     
     <data>
         <variable
-            name="detailsViewModel"
-            type="com.emmaborkent.waterplants.plantdetails.DetailsViewModel" />
+            name="plantViewModel"
+            type="com.emmaborkent.waterplants.PlantViewModel" />
     </data>
     
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                app:title="@{detailsViewModel.plant.name}"
+                app:title="@{plantViewModel.plant.name}"
                 app:expandedTitleGravity="top"
                 app:expandedTitleTextAppearance="@style/AppTheme.TextAppearance.CollapsingToolbar.Expended"
                 app:collapsedTitleGravity="bottom"
@@ -66,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context=".plantdetails.DetailsFragment">
+            tools:context=".plantdetails.PlantDetailsFragment">
         
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -146,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginBottom="@dimen/margin_basic"
-                    android:text="@{@plurals/detail_water_repeat(detailsViewModel.plant.waterEveryDays, detailsViewModel.plant.waterEveryDays)}"
+                    android:text="@{@plurals/detail_water_repeat(plantViewModel.plant.waterEveryDays, plantViewModel.plant.waterEveryDays)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/text_days_to_next_water"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginBottom="@dimen/margin_basic"
-                    android:text="@{@plurals/detail_mist_repeat(detailsViewModel.plant.mistEveryDays, detailsViewModel.plant.mistEveryDays)}"
+                    android:text="@{@plurals/detail_mist_repeat(plantViewModel.plant.mistEveryDays, plantViewModel.plant.mistEveryDays)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/text_days_to_next_mist"
                     app:layout_constraintStart_toStartOf="@+id/text_days_to_next_mist"
