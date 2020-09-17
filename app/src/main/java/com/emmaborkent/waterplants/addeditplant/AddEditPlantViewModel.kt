@@ -37,11 +37,12 @@ class AddEditPlantViewModel(private var plantId: Int, application: Application)
     val mistDay = MutableLiveData<Int>()
 
     init {
-        Timber.i("AddEditPlantViewModel Created")
-
+        Timber.i("PlantId: $plantId")
         val plantDao = PlantDatabase.getDatabaseInstance(application).plantDao
         repository = PlantRepository(plantDao)
         dateConverter = DateConverter.getDateConverterInstance()
+
+        Timber.i("AddEditPlantViewModel Created")
     }
 
     fun setupPageToAddPlant() {

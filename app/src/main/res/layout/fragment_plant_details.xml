@@ -1,159 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
+    <data>
+        <variable
+            name="plantViewModel"
+            type="com.emmaborkent.waterplants.PlantViewModel" />
+    </data>
+    
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".plantdetails.XPlantDetailsActivity">
+        android:layout_height="match_parent">
         
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="@dimen/toolbar_height">
             
-            <ImageView
-                android:id="@+id/image_plant"
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/plant_image_description"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@drawable/ic_image_black_24dp" />
-            
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/text_plant_name"
-                style="@style/AppTheme.TextAppearance.Headline1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/new_plant_name" />
-            
-            <TextView
-                android:id="@+id/text_plant_species"
-                style="@style/AppTheme.TextAppearance.Headline2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_plant_name"
-                tools:text="@string/new_plant_species" />
-            
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                
-                <!-- PeekHeight programmatically set in MainActivity -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraint_bottom_sheet"
+                android:fitsSystemWindows="true"
+                app:title="@{plantViewModel.plant.name}"
+                app:expandedTitleGravity="top"
+                app:expandedTitleTextAppearance="@style/AppTheme.TextAppearance.CollapsingToolbar.Expended"
+                app:collapsedTitleGravity="bottom"
+                app:collapsedTitleTextAppearance="@style/AppTheme.TextAppearance.AppCompat.Title"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+    
+                <ImageView
+                    android:id="@+id/image_plant"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/rounded_bottom_sheet"
-                    app:behavior_hideable="false"
-                    app:behavior_peekHeight="250dp"
-                    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-                    
-                    <ImageView
-                        android:id="@+id/image_drag_handle"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:contentDescription="@string/detail_drag_handle"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_drag_handle_black_24dp" />
-                    
-                    <TextView
-                        android:id="@+id/text_give_water"
-                        style="@style/AppTheme.TextAppearance.Headline4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_small"
-                        android:text="@string/detail_water_in"
-                        app:layout_constraintEnd_toStartOf="@id/image_drag_handle"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    
-                    <TextView
-                        android:id="@+id/text_give_mist"
-                        style="@style/AppTheme.TextAppearance.Headline4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_small"
-                        android:text="@string/detail_mist_in"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/image_drag_handle"
-                        app:layout_constraintTop_toTopOf="parent" />
-                    
-                    <CheckBox
-                        android:id="@+id/button_give_water"
-                        style="@style/toggleButton"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_margin="@dimen/margin_small"
-                        android:button="@drawable/toggle_water_detail"
-                        app:layout_constraintEnd_toEndOf="@id/text_give_water"
-                        app:layout_constraintStart_toStartOf="@id/text_give_water"
-                        app:layout_constraintTop_toBottomOf="@id/text_give_water" />
-                    
-                    <CheckBox
-                        android:id="@+id/button_give_mist"
-                        style="@style/toggleButton"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_margin="@dimen/margin_small"
-                        android:button="@drawable/toggle_mist_detail"
-                        app:layout_constraintDimensionRatio="1"
-                        app:layout_constraintEnd_toEndOf="@id/text_give_mist"
-                        app:layout_constraintStart_toStartOf="@id/text_give_mist"
-                        app:layout_constraintTop_toBottomOf="@id/text_give_mist" />
-                    
-                    <TextView
-                        android:id="@+id/text_days_to_next_water"
-                        style="@style/AppTheme.TextAppearance.Headline4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="@id/button_give_water"
-                        app:layout_constraintStart_toStartOf="@id/button_give_water"
-                        app:layout_constraintTop_toBottomOf="@id/button_give_water"
-                        tools:text="@string/detail_days" />
-                    
-                    <TextView
-                        android:id="@+id/text_days_to_next_mist"
-                        style="@style/AppTheme.TextAppearance.Headline4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="@id/button_give_mist"
-                        app:layout_constraintStart_toStartOf="@id/button_give_mist"
-                        app:layout_constraintTop_toBottomOf="@id/button_give_mist"
-                        tools:text="@string/detail_days" />
-                    
-                    <TextView
-                        android:id="@+id/text_water_every_days"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="@id/text_days_to_next_water"
-                        app:layout_constraintStart_toStartOf="@id/text_days_to_next_water"
-                        app:layout_constraintTop_toBottomOf="@id/text_days_to_next_water"
-                        tools:text="@string/detail_every_days" />
-                    
-                    <TextView
-                        android:id="@+id/text_mist_every_days"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="@id/text_days_to_next_mist"
-                        app:layout_constraintStart_toStartOf="@id/text_days_to_next_mist"
-                        app:layout_constraintTop_toBottomOf="@id/text_days_to_next_mist"
-                        tools:text="@string/detail_every_days" />
+                    android:contentDescription="@string/plant_image_description"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_collapseMode="parallax"
+                    app:layout_collapseParallaxMultiplier="0.5"
+                    app:srcCompat="@drawable/ic_image_black_24dp"
+                    tools:srcCompat="@drawable/ic_image_black_24dp" />
                 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.appcompat.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/toolbar_collapsed"
+                    style="@style/AppTheme.TextAppearance.Headline1"
+                    app:layout_collapseMode="pin"/>
+                
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
             
-            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </com.google.android.material.appbar.AppBarLayout>
         
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/button_fab_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_mode_edit_black_24dp"
+            android:layout_margin="@dimen/margin_basic"
+            app:layout_anchor="@id/collapsing_toolbar"
+            app:layout_anchorGravity="bottom|end" />
     
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:context=".plantdetails.PlantDetailsFragment">
+        
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            
+                <TextView
+                    android:id="@+id/text_give_water"
+                    style="@style/AppTheme.TextAppearance.Headline4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_basic"
+                    android:text="@string/detail_water_in"
+                    app:layout_constraintEnd_toStartOf="@+id/text_give_mist"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            
+                <TextView
+                    android:id="@+id/text_give_mist"
+                    style="@style/AppTheme.TextAppearance.Headline4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_basic"
+                    android:text="@string/detail_mist_in"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/text_give_water"
+                    app:layout_constraintTop_toTopOf="parent" />
+            
+                <CheckBox
+                    android:id="@+id/button_give_water"
+                    style="@style/toggleButton"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:button="@drawable/toggle_water_detail"
+                    app:layout_constraintEnd_toEndOf="@+id/text_give_water"
+                    app:layout_constraintStart_toStartOf="@+id/text_give_water"
+                    app:layout_constraintTop_toBottomOf="@+id/text_give_water" />
+            
+                <CheckBox
+                    android:id="@+id/button_give_mist"
+                    style="@style/toggleButton"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:button="@drawable/toggle_mist_detail"
+                    app:layout_constraintEnd_toEndOf="@+id/text_give_mist"
+                    app:layout_constraintStart_toStartOf="@+id/text_give_mist"
+                    app:layout_constraintTop_toBottomOf="@+id/text_give_mist" />
+            
+                <TextView
+                    android:id="@+id/text_days_to_next_water"
+                    style="@style/AppTheme.TextAppearance.Headline4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    app:layout_constraintEnd_toEndOf="@+id/button_give_water"
+                    app:layout_constraintStart_toStartOf="@+id/button_give_water"
+                    app:layout_constraintTop_toBottomOf="@+id/button_give_water"
+                    tools:text="@string/detail_days" />
+            
+                <TextView
+                    android:id="@+id/text_days_to_next_mist"
+                    style="@style/AppTheme.TextAppearance.Headline4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    app:layout_constraintEnd_toEndOf="@+id/button_give_mist"
+                    app:layout_constraintStart_toStartOf="@+id/button_give_mist"
+                    app:layout_constraintTop_toBottomOf="@+id/button_give_mist"
+                    tools:text="@string/detail_days" />
+            
+                <TextView
+                    android:id="@+id/text_water_every_days"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginBottom="@dimen/margin_basic"
+                    android:text="@{@plurals/detail_water_repeat(plantViewModel.plant.waterEveryDays, plantViewModel.plant.waterEveryDays)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/text_days_to_next_water"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/text_days_to_next_water"
+                    app:layout_constraintTop_toBottomOf="@+id/text_days_to_next_water"
+                    tools:text="@string/detail_every_days" />
+            
+                <TextView
+                    android:id="@+id/text_mist_every_days"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginBottom="@dimen/margin_basic"
+                    android:text="@{@plurals/detail_mist_repeat(plantViewModel.plant.mistEveryDays, plantViewModel.plant.mistEveryDays)}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/text_days_to_next_mist"
+                    app:layout_constraintStart_toStartOf="@+id/text_days_to_next_mist"
+                    app:layout_constraintTop_toBottomOf="@+id/text_days_to_next_mist"
+                    tools:text="@string/detail_every_days" />
+        
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            
+        </androidx.core.widget.NestedScrollView>
+        
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    
 </layout>

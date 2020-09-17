@@ -81,7 +81,9 @@ class AddEditPlantFragment : Fragment() {
         isEditActivity = isEditActivity(plantId)
 
         setHasOptionsMenu(true)
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+        if (plantId == 0) {
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+        }
 
         if (isEditActivity) {
             setActivityTitle(R.string.edit_plant_toolbar_title)
@@ -232,8 +234,10 @@ class AddEditPlantFragment : Fragment() {
                 warnBeforeDeleteDialog()
             }
             android.R.id.home -> {
-                viewModel.deletePlant(viewModel.plant.value!!)
-                Timber.i("Plant Deleted")
+                if (plantId == 0) {
+                    viewModel.deletePlant(viewModel.plant.value!!)
+                    Timber.i("Plant Deleted")
+                }
             }
         }
         return super.onOptionsItemSelected(item)

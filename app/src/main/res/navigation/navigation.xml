@@ -39,7 +39,7 @@
         android:id="@+id/detailsFragment"
         android:name="com.emmaborkent.waterplants.plantdetails.PlantDetailsFragment"
         android:label="DetailsFragment"
-        tools:layout="@layout/fragment_details">
+        tools:layout="@layout/fragment_plant_details">
         <action
             android:id="@+id/action_detailsFragment_to_addEditPlantFragment"
             app:destination="@id/addEditPlantFragment" />

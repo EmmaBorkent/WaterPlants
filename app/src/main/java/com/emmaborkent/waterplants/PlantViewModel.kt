@@ -1,9 +1,9 @@
 package com.emmaborkent.waterplants
 
 import android.app.Application
+import android.widget.CheckBox
+import androidx.databinding.BaseObservable
 import androidx.lifecycle.*
-import androidx.navigation.findNavController
-import com.emmaborkent.waterplants.main.TabbedFragmentDirections
 import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.model.PlantDatabase
 import com.emmaborkent.waterplants.model.PlantRepository
@@ -103,12 +103,14 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         repository.delete(plant)
     }
 
-//    fun getPlant(id: Int) {
-//        repository.getPlant(id)
-//    }
-
-    fun countAllPlantsThatNeedWaterOrMist(): Int {
-        return 0
+    // TODO: 12-9-2020 check how I made this function in the adapter
+    fun checkCheckboxStateBeforeWater(plant: Plant, checkboxView: CheckBox) {
+        val isChecked = checkboxView.isChecked
+        if (isChecked) {
+            giveWater(plant)
+        } else {
+            undoWaterGift(plant)
+        }
     }
 
     // TODO: 26-7-2020 Apply DataBinding with ViewModel and DataBinding to all functions and views
