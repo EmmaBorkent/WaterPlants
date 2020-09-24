@@ -2,6 +2,7 @@
   <dictionary name="emma_">
     <words>
       <w>addeditplant</w>
+      <w>allplants</w>
       <w>autofill</w>
       <w>bottomsheet</w>
       <w>coroutine</w>
@@ -11,6 +12,7 @@
       <w>overline</w>
       <w>plantdetails</w>
       <w>plante</w>
+      <w>plantstoday</w>
       <w>strelizia</w>
       <w>viewmodel</w>
       <w>waterplants</w>

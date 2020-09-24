@@ -11,6 +11,9 @@ import com.emmaborkent.waterplants.model.PlantDao
 import com.emmaborkent.waterplants.model.PlantDatabase
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNull
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.junit.*
 import org.junit.runner.RunWith
 import java.io.IOException
@@ -22,6 +25,7 @@ class PlantDatabaseTest {
 
     private lateinit var plantDao: PlantDao
     private lateinit var db: PlantDatabase
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     @Before
     fun createDb() {
@@ -43,7 +47,7 @@ class PlantDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndGetLatestPlant() {
+    suspend fun insertAndGetLatestPlant() {
         val plant = Plant()
         plantDao.insert(plant)
         val latestPlant = plantDao.getLatestPlant()
@@ -53,7 +57,7 @@ class PlantDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndGetById() {
+    suspend fun insertAndGetById() {
         val plant = Plant()
         plantDao.insert(plant)
         val getPlantById = plantDao.getPlant(1)
@@ -62,7 +66,7 @@ class PlantDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertTwoGetLatest() {
+    suspend fun insertTwoGetLatest() {
         val plant1 = Plant()
         val plant2 = Plant()
         plantDao.apply {
@@ -75,7 +79,7 @@ class PlantDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndUpdate() {
+    suspend fun insertAndUpdate() {
         val newPlant = Plant()
         plantDao.insert(newPlant)
         val getPlant = plantDao.getLatestPlant()
@@ -90,7 +94,7 @@ class PlantDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndDelete() {
+    suspend fun insertAndDelete() {
         val plant = Plant()
         plantDao.insert(plant)
         val plantFromDb = plantDao.getLatestPlant()
@@ -102,7 +106,7 @@ class PlantDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun deleteUserTest() {
+    suspend fun deleteUserTest() {
         val plant = Plant()
         plantDao.insert(plant)
         var plantFromDb = plantDao.getLatestPlant()
@@ -115,7 +119,7 @@ class PlantDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndCountAllPlants() {
+    suspend fun insertAndCountAllPlants() {
         val plant1 = Plant()
         val plant2 = Plant()
         plantDao.apply {
@@ -128,7 +132,7 @@ class PlantDatabaseTest {
 
     @Test
     @Throws(Exception::class)
-    fun insertAndGetAllPlants() {
+    suspend fun insertAndGetAllPlants() {
         val plant1 = Plant()
         val plant2 = Plant()
         plantDao.apply {
@@ -146,9 +150,11 @@ class PlantDatabaseTest {
     fun getAllPlantsAsLiveDataTest() {
         val plant1 = Plant()
         val plant2 = Plant()
-        plantDao.apply {
-            insert(plant1)
-            insert(plant2)
+        scope.launch {
+            plantDao.apply {
+                insert(plant1)
+                insert(plant2)
+            }
         }
         val allPlantsWrappedNLiveData = plantDao.getAllPlants()
         val plantFromDb = allPlantsWrappedNLiveData.getValueBlocking()
@@ -162,18 +168,21 @@ class PlantDatabaseTest {
         val plant1 = Plant()
         plant1.waterDate = plant1.waterDate.plusDays(1)
         val plant2 = Plant()
-        plantDao.apply {
-            insert(plant1)
-            insert(plant2)
+        scope.launch {
+            plantDao.apply {
+                insert(plant1)
+                insert(plant2)
+            }
         }
-
         val getAllPlantsThatNeedWaterLiveData = plantDao.getPlantsThatNeedWater()
         val getAllPlantsThatNeedWaterList = getAllPlantsThatNeedWaterLiveData.getValueBlocking()
         val plantsThatNeedWater = getAllPlantsThatNeedWaterList?.size
         Assert.assertEquals(plantsThatNeedWater, 1)
 
-        val countAllPlants = plantDao.countAllPlants()
-        Assert.assertEquals(countAllPlants, 2)
+        scope.launch {
+            val countAllPlants = plantDao.countAllPlants()
+            Assert.assertEquals(countAllPlants, 2)
+        }
 
         val countPlantsThatNeedWaterLiveData = plantDao.countPlantsThatNeedWater()
         val countPlantsThatNeedWater = countPlantsThatNeedWaterLiveData.getValueBlocking()
@@ -186,24 +195,26 @@ class PlantDatabaseTest {
         val plant1 = Plant()
         plant1.mistDate = plant1.mistDate.plusDays(1)
         val plant2 = Plant()
-        plantDao.apply {
-            insert(plant1)
-            insert(plant2)
+        scope.launch {
+            plantDao.apply {
+                insert(plant1)
+                insert(plant2)
+            }
         }
-
         val getAllPlantsThatNeedMistLiveData = plantDao.getPlantsThatNeedMist()
         val getAllPlantsThatNeedMistList = getAllPlantsThatNeedMistLiveData.getValueBlocking()
         val plantsThatNeedMist = getAllPlantsThatNeedMistList?.size
         Assert.assertEquals(plantsThatNeedMist, 1)
 
-        val countAllPlants = plantDao.countAllPlants()
-        Assert.assertEquals(countAllPlants, 2)
+        scope.launch {
+            val countAllPlants = plantDao.countAllPlants()
+            Assert.assertEquals(countAllPlants, 2)
+        }
 
         val countPlantsThatNeedMistLiveData = plantDao.countPlantsThatNeedMist()
         val countPlantsThatNeedMist = countPlantsThatNeedMistLiveData.getValueBlocking()
         Assert.assertEquals(countPlantsThatNeedMist, 1)
     }
-
 
     @Throws(InterruptedException::class)
     fun <T> LiveData<T>.getValueBlocking(): T? {

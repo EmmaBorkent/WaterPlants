@@ -12,7 +12,7 @@ import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.util.PlantClickListener
 import timber.log.Timber
 
-class PlantsAllAdapter() :
+class PlantsAllAdapter :
     RecyclerView.Adapter<PlantsAllAdapter.PlantsHolder>() {
 
     private lateinit var binding: RecyclerViewAllPlantsBinding

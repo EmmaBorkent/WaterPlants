@@ -1,12 +1,11 @@
 package com.emmaborkent.waterplants
 
 import android.app.Application
-import android.widget.CheckBox
 import androidx.lifecycle.*
 import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.model.PlantDatabase
 import com.emmaborkent.waterplants.model.PlantRepository
-import com.emmaborkent.waterplants.util.ParseFormatDates
+import com.emmaborkent.waterplants.util.DateConverter
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.time.LocalDate
@@ -15,16 +14,13 @@ import java.time.Period
 class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: PlantRepository
-//    private val plantId: Int
-//    val plant: LiveData<Plant>
-    private var _selectedPlant = MutableLiveData<Plant>()
     val plantsThatNeedWater: LiveData<List<Plant>>
     val plantsThatNeedMist: LiveData<List<Plant>>
     private val countPlantsThatNeedWater: LiveData<Int>
     private val countPlantsThatNeedMist: LiveData<Int>
     val countAllPlantsThatNeedWaterOrMist: LiveData<Int>
     val allPlants: LiveData<List<Plant>>
-    private var parseFormatDates: ParseFormatDates
+    private var parseFormatDates: DateConverter
 
     private val _title = MutableLiveData<String>()
     val title: LiveData<String>
@@ -46,7 +42,7 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 //        plantId = savedStateHandle[PLANT_ID] ?:
 //                throw kotlin.IllegalArgumentException("Missing Plant ID")
 //        plant = repository.getPlant(plantId)
-        parseFormatDates = ParseFormatDates.getParseFormatDatesInstance()
+        parseFormatDates = DateConverter.getDateConverterInstance()
         plantsThatNeedWater = repository.getPlantsThatNeedWater()
         plantsThatNeedMist = repository.getPlantsThatNeedMist()
         countPlantsThatNeedWater = repository.countPlantsThatNeedWater()
@@ -65,20 +61,10 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         Timber.i("Plant Initialized")
     }
 
-    fun insert(plant: Plant) {
-        uiScope.launch {
-            repository.insert(plant)
-        }
-    }
-
-    fun update(plant: Plant) {
+    private fun update(plant: Plant) {
         uiScope.launch {
             repository.update(plant)
         }
-    }
-
-    fun delete(plant: Plant) = viewModelScope.launch(Dispatchers.IO) {
-        repository.delete(plant)
     }
 
     // TODO: 26-7-2020 Apply DataBinding with ViewModel and DataBinding to all functions and views

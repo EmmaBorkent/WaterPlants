@@ -22,8 +22,8 @@ class PlantsAllFragment : Fragment() {
 
     private lateinit var binding: FragmentPlantsAllBinding
     private val viewModel by activityViewModels<PlantViewModel>()
-    lateinit var adapter: PlantsAllAdapter
-    lateinit var layoutManager: GridLayoutManager
+    private lateinit var adapter: PlantsAllAdapter
+    private lateinit var layoutManager: GridLayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -11,8 +11,8 @@ import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.RecyclerViewMistPlantsBinding
 import com.emmaborkent.waterplants.databinding.RecyclerViewWaterPlantsBinding
-import com.emmaborkent.waterplants.model.DateConverter
 import com.emmaborkent.waterplants.model.Plant
+import com.emmaborkent.waterplants.util.DateConverter
 import com.emmaborkent.waterplants.util.PlantClickListener
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber
@@ -24,6 +24,7 @@ class PlantsTodayAdapter(private val viewModel: PlantViewModel) :
     private var plantsThatNeedWater = emptyList<Plant>()
     private var plantsThatNeedMist = emptyList<Plant>()
     private lateinit var listener: PlantClickListener
+    private val dateConverterInstance = DateConverter.getDateConverterInstance()
 
     companion object {
         const val VIEW_TYPE_WATER = 0
@@ -99,7 +100,7 @@ class PlantsTodayAdapter(private val viewModel: PlantViewModel) :
                 textRvWaterPlantsName.text = plant.name
 
                 textRvWaterPlantsDate.text =
-                    DateConverter().localDateToViewDateString(plant.waterDate)
+                    dateConverterInstance.localDateToViewDateString(plant.waterDate)
                 if (LocalDate.now() == plant.waterDate) {
                     textRvWaterPlantsDate.visibility = View.INVISIBLE
                 }
@@ -143,7 +144,7 @@ class PlantsTodayAdapter(private val viewModel: PlantViewModel) :
                 imageRvMistPlants.setImageBitmap(plantBitmapImage)
                 textRvMistPlantsName.text = plant.name
 
-                textRvMistPlantsDate.text = DateConverter().localDateToViewDateString(plant.mistDate)
+                textRvMistPlantsDate.text = dateConverterInstance.localDateToViewDateString(plant.mistDate)
                 if (LocalDate.now() == plant.mistDate) {
                     textRvMistPlantsDate.visibility = View.INVISIBLE
                 }

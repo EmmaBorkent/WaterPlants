@@ -97,9 +97,11 @@ class AddEditPlantFragment : Fragment() {
         setHasOptionsMenu(true)
 
         if (isEditActivity) {
+            // Edit Plant Activity
             setActivityTitle(R.string.edit_plant_toolbar_title)
             viewModel.setupPageToEditPlant()
         } else {
+            // Add Plant Activity
             setActivityTitle(R.string.add_plant_toolbar_title)
             viewModel.setupPageToAddPlant()
             requireActivity().onBackPressedDispatcher.addCallback(
@@ -112,7 +114,6 @@ class AddEditPlantFragment : Fragment() {
             pickImage()
         }
 
-        // TODO: 24-9-2020 Create function for buttons
         binding.buttonDatePlantsNeedsWater.setOnClickListener { v ->
             clickedButtonView = v!!
             if (viewModel.plant.value != null) {

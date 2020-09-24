@@ -5,10 +5,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.emmaborkent.waterplants.model.DateConverter
 import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.model.PlantDatabase
 import com.emmaborkent.waterplants.model.PlantRepository
+import com.emmaborkent.waterplants.util.DateConverter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber

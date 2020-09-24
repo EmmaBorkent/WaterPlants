@@ -7,7 +7,7 @@ import com.emmaborkent.waterplants.util.DATABASE_TABLE_PLANTS
 import java.time.LocalDate
 
 @Entity(tableName = DATABASE_TABLE_PLANTS)
-@TypeConverters(DateConverter::class)
+@TypeConverters(DatabaseDateConverter::class)
 data class Plant(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,

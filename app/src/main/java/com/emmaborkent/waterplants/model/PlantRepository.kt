@@ -1,7 +1,6 @@
 package com.emmaborkent.waterplants.model
 
 import androidx.lifecycle.LiveData
-import com.emmaborkent.waterplants.util.ParseFormatDates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -25,23 +24,19 @@ class PlantRepository(private val plantDao: PlantDao) {
     // takes care of this.
 
     suspend fun insert(plant: Plant) {
-        withContext(Dispatchers.IO) {
-            plantDao.insert(plant)
-        }
+        plantDao.insert(plant)
     }
 
     suspend fun update(plant: Plant?) {
-        withContext(Dispatchers.IO) {
-            plantDao.update(plant)
-        }
+        plantDao.update(plant)
     }
 
     suspend fun delete(plant: Plant) {
-        withContext(Dispatchers.IO) {
-            plantDao.deletePlant(plant)
-        }
+        plantDao.deletePlant(plant)
     }
 
+    // TODO: 24-9-2020 Return LiveData
+    //  https://www.raywenderlich.com/7414647-coroutines-with-room-persistence-library
     suspend fun getLatestPlant(): Plant? {
         return withContext(Dispatchers.IO) {
             plantDao.getLatestPlant()
@@ -111,11 +106,11 @@ class PlantRepository(private val plantDao: PlantDao) {
 //    }
 //
 //    private fun getPlantsThatNeedWater(): ArrayList<Plant> {
-//        return databaseHandler.getPlantsThatNeedWater(ParseFormatDates().getDefaultDateAsString())
+//        return databaseHandler.getPlantsThatNeedWater(DateConverter().getDefaultDateAsString())
 //    }
 //
 //    private fun getPlantsThatNeedMist(): ArrayList<Plant> {
-//        return databaseHandler.getPlantsThatNeedMist(ParseFormatDates().getDefaultDateAsString())
+//        return databaseHandler.getPlantsThatNeedMist(DateConverter().getDefaultDateAsString())
 //    }
 
 }
