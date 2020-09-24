@@ -38,8 +38,6 @@ class XPlant {
     var daysToNextMist = Period.between(
         ParseFormatDates().stringToDateDefault(datePlantNeedsMist), now()).days.absoluteValue
 
-    private var daysBetweenDateAndToday: Int = 0
-
     private fun setNeedsWater(date: String) {
         needsWater = checkIfDateIsTodayOrBefore(date)
 //        Log.d(classNameTag, "needsWater is $needsWater")

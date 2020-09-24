@@ -36,14 +36,14 @@ class PlantsTodayFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         Timber.i("onActivityCreated called")
 
         waterPlantsAdapter = PlantsTodayAdapter(viewModel)
         waterPlantsAdapter.setOnItemClickListener(object : PlantClickListener {
             override fun onItemClick(plantId: Int) {
-                view?.findNavController()?.navigate(NavigationDirections.actionGlobalDetailsFragment(plantId))
+                view.findNavController().navigate(NavigationDirections.actionGlobalDetailsFragment(plantId))
             }
         })
 
@@ -54,17 +54,17 @@ class PlantsTodayFragment : Fragment() {
             recyclerViewWaterPlants.adapter = waterPlantsAdapter
             recyclerViewWaterPlants.layoutManager = waterPlantsLayoutManager
             floatingActionButton.setOnClickListener {
-                view?.findNavController()?.navigate(TabbedFragmentDirections.actionTabbedFragmentToAddEditPlantFragment())
+                view.findNavController().navigate(TabbedFragmentDirections.actionTabbedFragmentToAddEditPlantFragment())
             }
         }
 
-        viewModel.plantsThatNeedWater.observe(viewLifecycleOwner, Observer { waterPlants ->
+        viewModel.plantsThatNeedWater.observe(viewLifecycleOwner, { waterPlants ->
             waterPlants?.let { waterPlantsAdapter.setWaterPlants(it) }
         })
-        viewModel.plantsThatNeedMist.observe(viewLifecycleOwner, Observer { mistPlants ->
+        viewModel.plantsThatNeedMist.observe(viewLifecycleOwner, { mistPlants ->
             mistPlants?.let { waterPlantsAdapter.setMistPlants(it) }
         })
-        viewModel.countAllPlantsThatNeedWaterOrMist.observe(viewLifecycleOwner, Observer { count ->
+        viewModel.countAllPlantsThatNeedWaterOrMist.observe(viewLifecycleOwner, { count ->
             count?.let {
                 binding.textSubtitle.text = if (count != 0) {
                     resources.getQuantityString(R.plurals.main_subtitle, it, it)
@@ -74,8 +74,6 @@ class PlantsTodayFragment : Fragment() {
             }
         })
     }
-
-
 
     // Lifecycle Logging
 

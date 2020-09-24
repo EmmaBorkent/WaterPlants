@@ -1,7 +1,6 @@
 package com.emmaborkent.waterplants.allplants
 
 import android.content.Context
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.emmaborkent.waterplants.NavigationDirections
@@ -36,15 +34,15 @@ class PlantsAllFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        Timber.i("onActivityCreated called")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Timber.i("onViewCreated called")
 
-        adapter = PlantsAllAdapter(viewModel)
+        adapter = PlantsAllAdapter()
         adapter.setOnItemClickListener(object : PlantClickListener {
             override fun onItemClick(plantId: Int) {
                 Timber.i("Plant ID: $plantId")
-                view?.findNavController()?.navigate(NavigationDirections.actionGlobalDetailsFragment(plantId))
+                view.findNavController().navigate(NavigationDirections.actionGlobalDetailsFragment(plantId))
             }
         })
 
@@ -54,11 +52,11 @@ class PlantsAllFragment : Fragment() {
             recyclerViewAllPlants.adapter = adapter
             recyclerViewAllPlants.layoutManager = layoutManager
             floatingActionButton.setOnClickListener {
-                view?.findNavController()?.navigate(TabbedFragmentDirections.actionTabbedFragmentToAddEditPlantFragment())
+                view.findNavController().navigate(TabbedFragmentDirections.actionTabbedFragmentToAddEditPlantFragment())
             }
         }
 
-        viewModel.allPlants.observe(viewLifecycleOwner, Observer { plants ->
+        viewModel.allPlants.observe(viewLifecycleOwner, { plants ->
             plants?.let {
                 adapter.setPlants(it)
                 if (plants.isNotEmpty()) {

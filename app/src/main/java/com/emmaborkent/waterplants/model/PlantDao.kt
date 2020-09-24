@@ -2,7 +2,6 @@ package com.emmaborkent.waterplants.model
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import java.time.LocalDate
 
 @Dao
 @TypeConverters(DateConverter::class)

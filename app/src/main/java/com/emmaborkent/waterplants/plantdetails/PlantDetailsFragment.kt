@@ -44,7 +44,7 @@ class PlantDetailsFragment : Fragment() {
         binding.lifecycleOwner = this
         binding.plantViewModel = plantViewModel
 
-        plantViewModel.plant.observe(viewLifecycleOwner, Observer { plant ->
+        plantViewModel.plant.observe(viewLifecycleOwner, { plant ->
             if (plant.species != "") {
                 setActivityTitle(plant.species)
             } else {

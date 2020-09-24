@@ -2,22 +2,17 @@ package com.emmaborkent.waterplants.allplants
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.sip.SipSession
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.emmaborkent.waterplants.NavigationDirections
-import com.emmaborkent.waterplants.PlantViewModel
 import com.emmaborkent.waterplants.R
 import com.emmaborkent.waterplants.databinding.RecyclerViewAllPlantsBinding
 import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.util.PlantClickListener
 import timber.log.Timber
 
-class PlantsAllAdapter(private val viewModel: PlantViewModel) :
+class PlantsAllAdapter() :
     RecyclerView.Adapter<PlantsAllAdapter.PlantsHolder>() {
 
     private lateinit var binding: RecyclerViewAllPlantsBinding

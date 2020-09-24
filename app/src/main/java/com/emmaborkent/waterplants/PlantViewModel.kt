@@ -2,7 +2,6 @@ package com.emmaborkent.waterplants
 
 import android.app.Application
 import android.widget.CheckBox
-import androidx.databinding.BaseObservable
 import androidx.lifecycle.*
 import com.emmaborkent.waterplants.model.Plant
 import com.emmaborkent.waterplants.model.PlantDatabase
@@ -15,17 +14,10 @@ import java.time.Period
 
 class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
-    companion object {
-        const val VIEW_TYPE_WATER = 0
-        const val VIEW_TYPE_MIST = 1
-    }
-
     private val repository: PlantRepository
 //    private val plantId: Int
 //    val plant: LiveData<Plant>
     private var _selectedPlant = MutableLiveData<Plant>()
-    val selectedPlant: LiveData<Plant>
-        get() = _selectedPlant
     val plantsThatNeedWater: LiveData<List<Plant>>
     val plantsThatNeedMist: LiveData<List<Plant>>
     private val countPlantsThatNeedWater: LiveData<Int>
@@ -73,20 +65,6 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
         Timber.i("Plant Initialized")
     }
 
-    private fun count(x: Int, y: Int) : Int {
-        return x + y
-    }
-
-    fun setPlant(plantId: Int) {
-        uiScope.launch {
-            plant.value = repository.getPlant(plantId)
-        }
-    }
-
-    fun select(plant: Plant) {
-        _selectedPlant.value = plant
-    }
-
     fun insert(plant: Plant) {
         uiScope.launch {
             repository.insert(plant)
@@ -101,16 +79,6 @@ class PlantViewModel(application: Application) : AndroidViewModel(application) {
 
     fun delete(plant: Plant) = viewModelScope.launch(Dispatchers.IO) {
         repository.delete(plant)
-    }
-
-    // TODO: 12-9-2020 check how I made this function in the adapter
-    fun checkCheckboxStateBeforeWater(plant: Plant, checkboxView: CheckBox) {
-        val isChecked = checkboxView.isChecked
-        if (isChecked) {
-            giveWater(plant)
-        } else {
-            undoWaterGift(plant)
-        }
     }
 
     // TODO: 26-7-2020 Apply DataBinding with ViewModel and DataBinding to all functions and views

@@ -13,7 +13,6 @@ import com.emmaborkent.waterplants.databinding.RecyclerViewMistPlantsBinding
 import com.emmaborkent.waterplants.databinding.RecyclerViewWaterPlantsBinding
 import com.emmaborkent.waterplants.model.DateConverter
 import com.emmaborkent.waterplants.model.Plant
-import com.emmaborkent.waterplants.util.ParseFormatDates
 import com.emmaborkent.waterplants.util.PlantClickListener
 import com.google.android.material.snackbar.Snackbar
 import timber.log.Timber

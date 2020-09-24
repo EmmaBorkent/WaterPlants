@@ -1,11 +1,8 @@
 package com.emmaborkent.waterplants.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.emmaborkent.waterplants.PlantViewModel
@@ -25,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navControllerMain)
 
         viewModel = ViewModelProvider(this).get(PlantViewModel::class.java)
-        viewModel.title.observe(this, Observer {
+        viewModel.title.observe(this, {
             supportActionBar?.title = it
         })
     }

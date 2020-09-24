@@ -7,7 +7,6 @@ import kotlinx.coroutines.withContext
 
 class PlantRepository(private val plantDao: PlantDao) {
 
-    private var parseFormatDates = ParseFormatDates.getParseFormatDatesInstance()
     private val allPlants: LiveData<List<Plant>> = plantDao.getAllPlants()
     private val plantsThatNeedWater: LiveData<List<Plant>> =
         plantDao.getPlantsThatNeedWater()

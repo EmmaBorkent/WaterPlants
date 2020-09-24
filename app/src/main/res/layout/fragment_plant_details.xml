@@ -127,7 +127,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/button_give_water"
                     app:layout_constraintStart_toStartOf="@+id/button_give_water"
                     app:layout_constraintTop_toBottomOf="@+id/button_give_water"
-                    tools:text="@string/detail_days" />
+                    tools:text="@string/new_plant_days" />
             
                 <TextView
                     android:id="@+id/text_days_to_next_mist"
@@ -138,8 +138,8 @@
                     app:layout_constraintEnd_toEndOf="@+id/button_give_mist"
                     app:layout_constraintStart_toStartOf="@+id/button_give_mist"
                     app:layout_constraintTop_toBottomOf="@+id/button_give_mist"
-                    tools:text="@string/detail_days" />
-            
+                    tools:text="@string/new_plant_days" />
+    
                 <TextView
                     android:id="@+id/text_water_every_days"
                     android:layout_width="wrap_content"
@@ -149,11 +149,11 @@
                     android:text="@{@plurals/detail_water_repeat(plantViewModel.plant.waterEveryDays, plantViewModel.plant.waterEveryDays)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/text_days_to_next_water"
-                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="@+id/text_days_to_next_water"
                     app:layout_constraintTop_toBottomOf="@+id/text_days_to_next_water"
-                    tools:text="@string/detail_every_days" />
-            
+                    tools:text="@string/detail_every_days_tools_text" />
+    
                 <TextView
                     android:id="@+id/text_mist_every_days"
                     android:layout_width="wrap_content"
@@ -165,7 +165,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/text_days_to_next_mist"
                     app:layout_constraintStart_toStartOf="@+id/text_days_to_next_mist"
                     app:layout_constraintTop_toBottomOf="@+id/text_days_to_next_mist"
-                    tools:text="@string/detail_every_days" />
+                    tools:text="@string/detail_every_days_tools_text" />
         
             </androidx.constraintlayout.widget.ConstraintLayout>
             

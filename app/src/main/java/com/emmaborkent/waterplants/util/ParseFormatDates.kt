@@ -34,18 +34,8 @@ class ParseFormatDates {
 
     private val formatter: DateTimeFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT)
 
-    fun getTodayDateAsString(): String {
-        val localDate = LocalDate.now()
-        return ParseFormatDates()
-            .dateToStringLocalized(localDate)
-    }
-
     fun stringToDateLocalized(date: String): LocalDate {
         return LocalDate.parse(date, formatter)
-    }
-
-    fun yearMonthDayToDate(year: Int, month: Int, day: Int): LocalDate {
-        return LocalDate.of(year, month + 1, day)
     }
 
     fun dateToStringLocalized(date: LocalDate): String {
@@ -62,18 +52,8 @@ class ParseFormatDates {
         return date.toString()
     }
 
-    fun dayMonthYearStringToYearMonthDayString(dateAsDayMonthYear: String): String {
-        return LocalDate.parse(dateAsDayMonthYear, formatter).format(defaultFormat)
-    }
-
     fun yearMonthDayStringToDayMonthYearString(dateAsYearMonthDay: String): String {
         return LocalDate.parse(dateAsYearMonthDay, defaultFormat).format(formatter)
-    }
-
-    // LocalDate is of form Year Month Day
-    fun getDefaultDateAsString(): String {
-        val date = LocalDate.now()
-        return ParseFormatDates().dateToStringDefault(date)
     }
 
     fun getLocalDateAsString(): String {

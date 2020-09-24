@@ -19,15 +19,9 @@ const val KEY_PLANT_MIST_DATE: String = "plant_mist_date"
 const val KEY_PLANT_MIST_EVERY_DAYS: String = "plant_days_to_next_mist"
 const val KEY_PLANT_NEEDS_MIST: String = "plant_needs_mist"
 
-// Other Plant Constants
-const val PLANT_ID = "userId"
-
-// Tabs
-const val KEY_SELECTED_TAB = "selected_tab"
-
 // AddEditActivity
-const val PICK_IMAGE_CODE = 1000
+const val KEY_GET_IMAGE_CODE = "key_get_image_code"
+const val KEY_IMAGE_PERMISSION_CODE = "key_image_permission_code"
 const val PERMISSION_CODE = 1001
-const val DATE_PICKER = "date_picker"
 const val DATE_PICKER_DATE = "date_for_date_picker"
-const val DATE_PICKER_BUTTON_WATER = ""
+
